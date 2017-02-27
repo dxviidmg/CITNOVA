@@ -1,0 +1,7 @@
+<p>Registro de nuevo proveedor</p>
+<form action="." method="post">
+		{%csrf_token%}
+		{{UserProveedorForm.as_p}}
+		{{PerfilProveedorForm.as_p}}
+		<input type="submit" value="Crear Usuario">
+</form>
