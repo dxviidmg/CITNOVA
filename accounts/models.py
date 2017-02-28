@@ -23,7 +23,6 @@ class Banco(models.Model):
 		ordering = ['nombre']
 
 class Perfil(models.Model):
-
 	GradoProfesional_CHOICES = {
 		("Tec.", "Tec."),
 		("T. S. U.", "T. S. U."),
@@ -48,3 +47,9 @@ class Perfil(models.Model):
 		ordering = ['user']
 
 User.add_to_class('departamento', models.ForeignKey(Departamento, blank = True, null=True))
+
+def get_first_name(self):
+#    return self.first_name
+	return '{} {}'.format(self.first_name, self.last_name)
+
+User.add_to_class("__str__", get_first_name)

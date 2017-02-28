@@ -1,0 +1,8 @@
+<h1>Lista de solicitudes</h1>
+{%for solicitud in solicitudes%}
+<p>{{solicitud.pk}}</p>
+{%empty%}
+Lista vacia
+{%endfor%}
+
+<a href="{%url 'solicitudes:CreateViewSolicitud'%}"><p>Nueva solicitud</p></a>
