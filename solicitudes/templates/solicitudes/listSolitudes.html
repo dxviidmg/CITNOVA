@@ -1,8 +1,12 @@
-<h1>Lista de solicitudes</h1>
+{%extends 'base.html'%}
+
+{%block content%}
+<p>Lista de solicitudes de {% now " F Y" %}</p>
+
 {%for solicitud in solicitudes%}
-<p>{{solicitud.pk}}</p>
+<p>{{solicitud.folio}}</p>
 {%empty%}
 Lista vacia
 {%endfor%}
 
-<a href="{%url 'solicitudes:CreateViewSolicitud'%}"><p>Nueva solicitud</p></a>
+{%endblock content%}

@@ -1,0 +1,13 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+
+<p>Lista de empleados de la {{request.user.departamento.nombre}}</p>
+{%for empleado in empleados%}
+<p>{{empleado.first_name}} {{empleado.last_name}}</p>
+{%empty%}
+<p>Lista vacia</p>
+{%endfor%}
+
+{%endblock content%}

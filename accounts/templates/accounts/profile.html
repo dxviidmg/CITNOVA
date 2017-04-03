@@ -1,6 +1,7 @@
-<a href="{%url 'accounts:CreateViewEmpleado'%}"><p>Crear trabajador</p></a>
-<a href="{%url 'accounts:CreateViewProveedor'%}"><p>Crear proveedor</p></a>
+{%extends 'base.html'%}
 
-<a href="{%url 'accounts:ListViewTodos'%}"><p>Lista de usuarios</p></a>
+{%block content%}
+<h1>Bienvenido(a) {{request.user.first_name}} {{request.user.last_name}}</h1>
+{%endblock content%}
 
-<a href="{%url 'accounts:logout'%}"><p>Logout</p></a>
+

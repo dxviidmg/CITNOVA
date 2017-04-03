@@ -16,10 +16,10 @@ class SolicitudRecursoFinanciero(models.Model):
 	metodo_pago = models.CharField(max_length=30, choices= MetodoPago_CHOICES)
 	clabe = models.CharField(max_length=100)
 	creacion = models.DateTimeField(default=timezone.now)
-	solicitante = models.ForeignKey(User, null=True, related_name="solicitante")
+	solicitante = models.ForeignKey(User, related_name="solicitante")
 
 	class Meta:
-		ordering = ['folio']
+		ordering = ['creacion']
 
 	def __str__(self):
 		return '{}'.format(self.folio)

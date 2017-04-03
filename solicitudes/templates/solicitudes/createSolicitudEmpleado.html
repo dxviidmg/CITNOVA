@@ -1,11 +1,11 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<p>Registro de nuevo proveedor</p>
+<p>Folio: {{folio}}</p>
 <form action="." method="post">
 		{%csrf_token%}
-		{{UserProveedorForm.as_p}}
-		{{PerfilProveedorForm.as_p}}
+		{{SolicitudRecursoFinancieroForm.as_p}}
 		<input type="submit" value="Crear Usuario">
 </form>
+
 {%endblock content%}

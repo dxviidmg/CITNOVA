@@ -23,6 +23,11 @@ class UserProfileInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = 'perfil'
 
+class UserDInline(admin.StackedInline):
+    model = Departamento
+    can_delete = False
+    verbose_name_plural = 'departamento'
+
 # Define a new User admin
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )

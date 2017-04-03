@@ -1,31 +1,100 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View 
 from .models import *
 from .forms import *
+from accounts.models import Perfil
+import datetime
 
 class ListViewSolicitudes(View):
 	#@method_decorator(login_required)
 	def get(self, request):
-		template_name = "solicitudes/listSolitudes.html"
 
-		solicitudes = SolicitudRecursoFinanciero.objects.all()
+		template_name = "solicitudes/listSolitudes.html"
+		hoy = datetime.datetime.now()
+
+		solicitudes = SolicitudRecursoFinanciero.objects.filter(creacion__year=hoy.year, creacion__month=hoy.month)
 
 		context = {
 			'solicitudes': solicitudes,
 		}
 		return render(request,template_name,context)
 
-class CreateViewSolicitud(View):
+class CreateViewSolicitudEmpleado(View):
 	def get(self, request):
-		departamento = Departamento.objects.get(user=request.user)
+		template_name = "solicitudes/createSolicitudEmpleado.html"
 
-		template_name = "solicitudes/createSolicitud.html"
-				#form = ExcludedDateForm(departamento=departamento)
-		form = SolicitudRecursoFinancieroCreateForm(departamento=departamento)
+		hoy = datetime.datetime.now()
+
+		user = User.objects.get(pk=request.user.pk)
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento)
 
 		context = {
 		'departamento': departamento,
-		'form': form,
+		'folio': folio,
+		'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
 		}
+		return render(request,template_name,context)
 
-		return render(request,template_name,context)		
+	def post(self,request):
+		template_name = "solicitudes/createSolicitudEmpleado.html"
+
+		hoy = datetime.datetime.now()
+
+		user = User.objects.get(pk=request.user.pk)
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(data=request.POST)
+		
+		empleado = User.objects.get(pk=request.POST.get("a_nombre_de"))
+		perfilEmpleado = Perfil.objects.get(user=empleado)
+
+		if NuevoSolicitudRecursoFinancieroForm.is_valid(): 
+			NuevoSolicitudRecursoFinanciero = NuevoSolicitudRecursoFinancieroForm.save(commit=False)
+			NuevoSolicitudRecursoFinanciero.folio = folio
+			NuevoSolicitudRecursoFinanciero.clabe =  perfilEmpleado.CLABE
+			NuevoSolicitudRecursoFinanciero.solicitante = user
+			NuevoSolicitudRecursoFinanciero.save()
+
+		return redirect("solicitudes:ListViewSolicitudes")
+
+class CreateViewSolicitudProveedor(View):
+	def get(self, request):
+		template_name = "solicitudes/createSolicitudProveedor.html"
+
+		hoy = datetime.datetime.now()
+
+		user = User.objects.get(pk=request.user.pk)
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2()
+
+		context = {
+		'departamento': departamento,
+		'folio': folio,
+		'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
+		}
+		return render(request,template_name,context)
+
+	def post(self,request):
+		template_name = "solicitudes/createSolicitudProveedor.html"
+
+		hoy = datetime.datetime.now()
+
+		user = User.objects.get(pk=request.user.pk)
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2(data=request.POST)
+		
+		proveedor = User.objects.get(pk=request.POST.get("a_nombre_de"))
+		perfilProveedor = Perfil.objects.get(user=proveedor)
+
+		if NuevoSolicitudRecursoFinancieroForm.is_valid(): 
+			NuevoSolicitudRecursoFinanciero = NuevoSolicitudRecursoFinancieroForm.save(commit=False)
+			NuevoSolicitudRecursoFinanciero.folio = folio
+			NuevoSolicitudRecursoFinanciero.clabe =  perfilProveedor.CLABE
+			NuevoSolicitudRecursoFinanciero.solicitante = user
+			NuevoSolicitudRecursoFinanciero.save()
+
+		return redirect("solicitudes:ListViewSolicitudes")

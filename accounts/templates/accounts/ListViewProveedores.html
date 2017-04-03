@@ -1,0 +1,12 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<p>Lista de proveedores</p>
+{%for proveedor in proveedores%}
+<p>{{proveedor.first_name}} {{proveedor.last_name}}</p>
+{%empty%}
+<p>Lista vacía</p>
+{%endfor%}
+
+{%endblock content%}

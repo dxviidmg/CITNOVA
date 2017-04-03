@@ -4,17 +4,25 @@ from django.contrib.auth.models import User
 from .forms import *
 from django.db.models import Count
 
-class ListViewTodos(View):
+class ListViewEmpleados(View):
 	#@method_decorator(login_required)
 	def get(self, request):
-		template_name = "accounts/ListViewTodos.html"
+		template_name = "accounts/ListViewEmpleados.html"
 
-		todos = User.objects.filter(is_staff=False).order_by('username')
-		empleados = User.objects.filter(is_staff=False, departamento=request.user.departamento).order_by('username')
-		proveedores = User.objects.filter(is_staff=False, departamento__isnull=True).order_by('username')
+		empleados = User.objects.filter(is_staff=False, is_active=True, departamento=request.user.departamento).order_by('username')
+
 		context = {
-			'todos': todos,
 			'empleados': empleados,
+		}
+		return render(request,template_name,context)
+
+class ListViewProveedores(View):
+	#@method_decorator(login_required)
+	def get(self, request):
+		template_name = "accounts/ListViewProveedores.html"
+
+		proveedores = User.objects.filter(is_staff=False, is_active=True, departamento__isnull=True).order_by('username')
+		context = {
 			'proveedores': proveedores
 		}
 		return render(request,template_name,context)

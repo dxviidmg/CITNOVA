@@ -1,0 +1,20 @@
+
+<a href="{%url 'solicitudes:CreateViewSolicitud'%}"><p>Nueva solicitud</p></a>
+
+{%for año in años2%}
+{{año.creacion.year}}
+
+{%empty%}
+vacio
+{%endfor%}
+
+{% for as in a %}
+
+  {% ifchanged %}<h1>{{as.creaccion}}</h1>{% endifchanged %}
+
+  {{as.folio}}
+  to
+  {{as.folio}}
+  <br>
+
+{% endfor %}
