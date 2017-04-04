@@ -1,0 +1,6 @@
+<p>¿Estas seguro de querer borrar la partida <em>{{partida.codigo}} {{partida.descripcion}}</em>?</p>
+<form action="." method="post">
+	{%csrf_token%}
+	<input type="submit" value="Si">
+	<a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
+</form>

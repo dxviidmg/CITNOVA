@@ -1,0 +1,48 @@
+<style type="text/css">
+	.error{
+		background-color: red;
+	}
+</style>
+<p>Actualizar ejercido</p>
+<p>Mes: {%if mes.mes == 1%}
+		Enero
+	{%elif mes.mes == 2%}
+		Febrero
+	{%elif mes.mes == 3%}
+		Marzo
+	{%elif mes.mes == 4%}
+		Abril
+	{%elif mes.mes == 5%}
+		Mayo
+	{%elif mes.mes == 6%}
+		Junio
+	{%elif mes.mes == 7%}
+		Julio
+	{%elif mes.mes == 8%}
+		Agosto
+	{%elif mes.mes == 9%}
+		Septiembre
+	{%elif mes.mes == 10%}
+		Octubre
+	{%elif mes.mes == 11%}
+		Noviembre
+	{%elif mes.mes == 12%}
+		Diciembre
+	{%endif%}</p>
+<p>Monto por ejercer: {{mes.monto_por_ejercer}}</p>
+<div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+<form action="." method="post">
+	{%csrf_token%}
+	{{NuevaModificacionForm.as_p}}
+		<input type="submit" value="Guardar">
+		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
+</form>

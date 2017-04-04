@@ -1,0 +1,8 @@
+<h3>Edita la informacion de {{object}}</h3>
+<form method="post" enctype="multipart/form-data">
+	{%csrf_token%}
+	{{form.as_p}}
+	<input type="submit" value="Guardar">
+
+	<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
+</form>

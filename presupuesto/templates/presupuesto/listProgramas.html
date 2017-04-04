@@ -1,0 +1,104 @@
+{% load humanize %}
+
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+</style>
+<h1>Lista de programas</h1>
+
+<a href="{%url 'presupuesto:CreateViewPrograma' %}">Crear programa</a>
+
+<table>
+	<thead>
+		<th><p align="center">Nombre</p></th>
+		<th><p align="center">Actividad</p></th>
+		<th><p align="center">Meta</p></th>
+		<th><p align="center">Unidad de medida</p></th>
+		<th><p align="center">Fuente de financiamiento</p></th>
+		<th><p align="center">Año</p></th>
+		<th><p align="center">Monto autorizado</p></th>
+		<th><p align="center">Monto ampliación</p></th>
+		<th><p align="center">Monto reducción</p></th>
+		<th><p align="center">Monto modificado</p></th>
+		<th><p align="center">Monto ejercido</p></th>
+		<th><p align="center">Monto por ejercer</p></th>
+		<th colspan="3"><p align="center">Acciones</p></th>
+	</thead>
+
+{%for programa in programas%}
+	
+	<tr>
+		<td>{{programa.nombre}}</td>
+		<td>{{programa.actividad}}</td>
+		<td>{{programa.meta}}</td>
+		<td>{{programa.unidad_de_medida}}</td>
+		<td>{%if programa.fuente_de_financiamiento == 1%}
+			Federal
+			{%elif programa.fuente_de_financiamiento == 2%}
+			Estatal
+			{%elif programa.fuente_de_financiamiento == 3%}
+			Propios
+			{%endif%}
+		</td>
+		<td>{{programa.año}}</td>
+		<td>{%if programa.MontoAnualAutorizado is None%}
+				{%if programa.monto_anual_autorizado is None%}
+				Por definir
+				{%else%}
+				 ${{programa.monto_anual_autorizado|intcomma}}
+				{%endif%}
+			{%endif%}</td>
+		<td>{%if programa.MontoAnualAmpliacion is None%}
+				{%if programa.monto_anual_ampliacion is None%}
+				Por definir
+				{%else%}
+				 ${{programa.monto_anual_ampliacion|intcomma}}
+				{%endif%}
+			{%endif%}</td>
+		<td>{%if programa.MontoAnualReduccion is None%}
+				{%if programa.monto_anual_reduccion is None%}
+				Por definir
+				{%else%}
+				 ${{programa.monto_anual_reduccion|intcomma}}
+				{%endif%}
+			{%endif%}</td>
+		<td>{%if programa.MontoAnualModificado is None%}
+				{%if programa.monto_anual_modificado is None%}
+				Por definir
+				{%else%}
+				 ${{programa.monto_anual_modificado|intcomma}}
+				{%endif%}
+			{%endif%}</td>
+		<td>{%if programa.MontoAnualEjercido is None%}
+				{%if programa.monto_anual_ejercido is None%}
+				Por definir
+				{%else%}
+				 ${{programa.monto_anual_ejercido|intcomma}}
+				{%endif%}
+			{%endif%}</td>
+		<td>{%if programa.MontoAnualPorEjercer is None%}
+				{%if programa.monto_anual_por_ejercer is None%}
+				Por definir
+				{%else%}
+				 ${{programa.monto_anual_por_ejercer|intcomma}}
+				{%endif%}
+			{%endif%}</td>
+		<td><a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}">Ver capítulos</a></td>
+		<td><a href="{%url 'presupuesto:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
+		<td><a href="{%url 'presupuesto:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>
+	</tr>
+
+{%empty%}
+
+	<tr>
+		<td colspan="12"><p align="center">Lista de programas vacia</p></td>
+	</tr>
+</table>
+
+{%endfor%}

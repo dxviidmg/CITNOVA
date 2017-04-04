@@ -1,12 +1,11 @@
 from django.db import models
-
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 class Departamento(models.Model):
 	nombre = models.CharField(max_length=100)
 	codigo = models.CharField(max_length=10)
-
+	
 	def __str__(self):
 		return '{}'.format(self.nombre)
 
@@ -23,15 +22,17 @@ class Banco(models.Model):
 		ordering = ['nombre']
 
 class Perfil(models.Model):
+	
 	GradoProfesional_CHOICES = {
 		("Tec.", "Tec."),
 		("T. S. U.", "T. S. U."),
 		("Lic.", "Lic."),
-		("Arq.", "Arq̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣̣."),
+		("Arq.", "Arq."),
 		("Ing.", "Ing."),
 		("Mtro(a).", "Mtro(a)."),
-		("Dr.", "Dr."),
+		("Dr.", "Dr.")
 	}
+
 	user = models.OneToOneField(User)
 	grado_profesional = models.CharField(max_length=30, choices=GradoProfesional_CHOICES, blank=True, default="C.")
 	puesto = models.CharField(max_length=30, blank=True, null=True)
