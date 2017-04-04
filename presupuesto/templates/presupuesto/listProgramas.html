@@ -10,12 +10,13 @@ th, td {
     text-align: left;    
 }
 </style>
-<h1>Lista de programas</h1>
+<h1>Lista de programas del {% now "Y" %}</h1>
 
 <a href="{%url 'presupuesto:CreateViewPrograma' %}">Crear programa</a>
 
 <table>
 	<thead>
+		<th><p align="center">Departamento</p></th>
 		<th><p align="center">Nombre</p></th>
 		<th><p align="center">Actividad</p></th>
 		<th><p align="center">Meta</p></th>
@@ -34,6 +35,7 @@ th, td {
 {%for programa in programas%}
 	
 	<tr>
+		<td>{{programa.departamento}}</td>
 		<td>{{programa.nombre}}</td>
 		<td>{{programa.actividad}}</td>
 		<td>{{programa.meta}}</td>

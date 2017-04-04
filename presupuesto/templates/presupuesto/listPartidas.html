@@ -15,7 +15,6 @@ th, td {
 <p>Objetivo: {{programa.objetivo}}</p>
 <p>Año: {{programa.año}}</p>
 <p>Capítulo: {{capitulo.codigo}} {{capitulo.nombre}}</p>
-{{total_monto_anual_autorizado}}
 <a href="{%url 'presupuesto:CreateViewPartida' capitulo.pk%}">Crear Partida</a>
 <a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}">Regresar</a>
 <p align="center">Lista de Partidas</p>

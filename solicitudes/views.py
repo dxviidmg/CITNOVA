@@ -4,6 +4,7 @@ from .models import *
 from .forms import *
 from accounts.models import Perfil
 import datetime
+from presupuesto.models import *
 
 class ListViewSolicitudes(View):
 	#@method_decorator(login_required)
@@ -29,11 +30,13 @@ class CreateViewSolicitudEmpleado(View):
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
 		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento)
+		programas = Programa.objects.all()
 
 		context = {
-		'departamento': departamento,
-		'folio': folio,
-		'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
+			'departamento': departamento,
+			'folio': folio,
+			'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
+			'programas': programas,
 		}
 		return render(request,template_name,context)
 
@@ -71,9 +74,9 @@ class CreateViewSolicitudProveedor(View):
 		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2()
 
 		context = {
-		'departamento': departamento,
-		'folio': folio,
-		'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
+			'departamento': departamento,
+			'folio': folio,
+			'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
 		}
 		return render(request,template_name,context)
 

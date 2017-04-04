@@ -8,11 +8,13 @@ from .forms import *
 from django.contrib import messages
 from decimal import Decimal
 from django.contrib import messages
+import datetime
 
 class ListViewProgramas(View):
 	def get(self, request):
 		template_name = "presupuesto/listProgramas.html"
-		programas = Programa.objects.all().order_by('nombre')
+		hoy = datetime.datetime.now()
+		programas = Programa.objects.filter(año=hoy.year).order_by('nombre')
 		context = {
 		'programas': programas,
 		}
@@ -135,13 +137,13 @@ class ListViewMeses(View):
 class CreateViewPrograma(CreateView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
-	fields = ['nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
+	fields = ['departamento', 'nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
 		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año']
 
 class UpdateViewPrograma(UpdateView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
-	fields = ['nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
+	fields = ['departamento', 'nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
 		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año',]
 
 class DeleteViewPrograma(DeleteView):

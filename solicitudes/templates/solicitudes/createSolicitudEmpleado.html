@@ -1,6 +1,12 @@
 {%extends 'base.html'%}
 
+
 {%block content%}
+
+{%for p in programas%}
+{{p.nombre}}
+{%endfor%}
+
 <p>Folio: {{folio}}</p>
 <form action="." method="post">
 		{%csrf_token%}
