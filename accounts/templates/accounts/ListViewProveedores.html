@@ -1,10 +1,10 @@
-{%extends 'base.html'%}
+{%extends 'baseUser.html'%}
 
 {%block content%}
 
 <p>Lista de proveedores</p>
 {%for proveedor in proveedores%}
-<p>{{proveedor.first_name}} {{proveedor.last_name}}</p>
+<a href="{%url 'accounts:UpdateViewProveedor' proveedor.pk%}"><p>{{proveedor.first_name}} {{proveedor.last_name}}</p></a>
 {%empty%}
 <p>Lista vacía</p>
 {%endfor%}

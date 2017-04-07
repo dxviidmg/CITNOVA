@@ -126,3 +126,6 @@ from django.core.urlresolvers import reverse_lazy
 
 #LOGIN_REDIRECT_URL = reverse_lazy('accounts:ListViewTodos')
 LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login')
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'

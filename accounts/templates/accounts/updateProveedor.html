@@ -1,0 +1,15 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+<p>Información del Proveedor</p>
+
+<form action="." method="post">
+	{%csrf_token%}
+	{{EdicionProveedorForm.as_p}}
+	{{EdicionPerfilForm.as_p}}
+	{{EdicionExpedienteForm.as_p}}
+	<input type="submit" value="Guardar">
+</form>
+
+
+{%endblock content%}

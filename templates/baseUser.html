@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Administración CITNOVA</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<nav>
+
+
+    {%if request.user.perfil.puesto == "Director"%}
+    <a href="{% url 'accounts:CreateViewEmpleado' %}">Registrar Empleado</a> |
+    <a href="{% url 'accounts:CreateViewProveedor' %}">Registrar Proveedor</a> |
+    <a href="{% url 'accounts:ListViewEmpleados' %}">Lista de Personal</a> |
+    <a href="{% url 'accounts:ListViewProveedores' %}">Lista de Proveedores</a> |
+    <a href="{% url 'solicitudes:ListViewSolicitudesPropias' %}">Mis Solicitudes</a> |
+    <a href="{% url 'solicitudes:CreateViewSolicitudEmpleado' %}">Nueva solicitud de Empleado</a> |
+    <a href="{% url 'solicitudes:CreateViewSolicitudProveedor' %}">Nueva solicitud de Proveedor</a> |
+    {%endif%}
+    {%if request.user.username == "administrador"%}
+    <a href="{%url 'presupuesto:CreateViewPrograma' %}">Crear programa</a>
+    <a href="{% url 'presupuesto:ListViewProgramas' %}">
+    Lista de programas</a> |
+    <a href="{% url 'solicitudes:ListViewSolicitudesPendientes' %}">
+    Lista de solicitudes pendientes</a> |
+    {%endif%}
+    <a href="{%url 'accounts:logout'%}">Logout</a></li>
+
+</ul>
+</nav>
+{%block content%}
+{%endblock content%}
+</body>
+</html>

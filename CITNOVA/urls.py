@@ -18,10 +18,19 @@ from django.contrib import admin
 from accounts import urls as accountsUrls
 from solicitudes import urls as solicitudesUrls
 from presupuesto import urls as presupuestoUrls
+#Libreria para importar imagenes
+from django.views.static import serve
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^', include(accountsUrls, namespace="accounts")),
 	url(r'^', include(solicitudesUrls, namespace="solicitudes")),
-    url(r'^', include(presupuestoUrls, namespace="presupuesto")), 
+    url(r'^', include(presupuestoUrls, namespace="presupuesto")),
+    #Direccion para buscar imagenes
+    url(
+            regex=r'^media/(?P<path>.*)$',
+            view=serve,
+            kwargs ={'document_root':settings.MEDIA_ROOT}
+),
 ]

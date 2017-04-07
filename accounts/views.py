@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from django.contrib.auth.models import User
 from .forms import *
@@ -22,6 +22,7 @@ class ListViewProveedores(View):
 		template_name = "accounts/ListViewProveedores.html"
 
 		proveedores = User.objects.filter(is_staff=False, is_active=True, departamento__isnull=True).order_by('username')
+
 		context = {
 			'proveedores': proveedores
 		}
@@ -58,7 +59,7 @@ class CreateViewEmpleado(View):
 			NuevoPerfil = NuevoPerfilForm.save(commit=False)
 			NuevoPerfil.user = NuevoUser
 			NuevoPerfil.save()
-		return redirect("accounts:ListViewTodos")
+		return redirect("accounts:ListViewEmpleados")
 
 class CreateViewProveedor(View):
 	#@method_decorator(login_required)
@@ -67,10 +68,12 @@ class CreateViewProveedor(View):
 		
 		UserProveedorForm = UserProveedorCreateForm()
 		PerfilProveedorForm = PerfilProveedorCreateForm()
+		ExpedienteProveedorForm = ExpedienteProveedorCreateForm()
 		
 		context = {
 			'UserProveedorForm': UserProveedorForm,
 			'PerfilProveedorForm': PerfilProveedorForm,
+			'ExpedienteProveedorForm': ExpedienteProveedorForm,
 		}
 		return render(request,template_name,context)
 	def post(self,request):
@@ -81,6 +84,7 @@ class CreateViewProveedor(View):
 
 		NuevoUserForm = UserProveedorCreateForm(request.POST)
 		NuevoPerfilForm = PerfilProveedorCreateForm(request.POST)
+		NuevoExpedienteForm = ExpedienteProveedorCreateForm(request.POST)
 		
 		if NuevoUserForm.is_valid(): 
 			NuevoUser = NuevoUserForm.save(commit=False)
@@ -91,7 +95,86 @@ class CreateViewProveedor(View):
 			NuevoPerfil = NuevoPerfilForm.save(commit=False)
 			NuevoPerfil.user = NuevoUser
 			NuevoPerfil.save()
-		return redirect("accounts:ListViewTodos")
+
+		if NuevoExpedienteForm.is_valid():
+			NuevoExpediente = NuevoExpedienteForm.save(commit=False)
+			NuevoExpediente.perfil = NuevoPerfil
+			NuevoExpediente.save()
+
+		return redirect("accounts:ListViewProveedores")
+
+class profile(View):
+	#@method_decorator(login_required)
+	def get(self, request):
+		template_name = "accounts/profile.html"
+		return render(request,template_name)
+
+class UpdateViewEmpleado(View):
+	def get(self, request, pk):
+		template_name = "accounts/updateEmpleado.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+
+		EdicionEmpleadoForm=UserEmpleadoCreateForm(instance=user)
+		EdicionPerfilForm=PerfilEmpleadoCreateForm(instance=perfil)
+	
+		context = {
+			'EdicionEmpleadoForm': EdicionEmpleadoForm,
+			'EdicionPerfilForm': EdicionPerfilForm,
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "accounts/updateEmpleado.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+
+		EdicionEmpleadoForm=UserEmpleadoCreateForm(instance=user, data=request.POST)
+		EdicionPerfilForm=PerfilEmpleadoCreateForm(instance=perfil, data=request.POST)
+
+		if EdicionEmpleadoForm.is_valid:
+			EdicionEmpleadoForm.save()
+
+		if EdicionPerfilForm.is_valid:
+			EdicionPerfilForm.save()
+		return redirect("accounts:UpdateViewEmpleado", pk=user.pk)
+
+class UpdateViewProveedor(View):
+	def get(self, request, pk):
+		template_name = "accounts/updateProveedor.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		expediente = Expediente.objects.get(perfil=perfil)
+
+		EdicionProveedorForm=UserProveedorCreateForm(instance=user)
+		EdicionPerfilForm=PerfilProveedorCreateForm(instance=perfil)
+		EdicionExpedienteForm=ExpedienteProveedorCreateForm(instance=expediente)
+		context = {
+			'expediente': expediente,
+			'EdicionProveedorForm': EdicionProveedorForm,
+			'EdicionPerfilForm': EdicionPerfilForm,
+			'EdicionExpedienteForm': EdicionExpedienteForm
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "accounts/updateProveedor.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		expediente = Expediente.objects.get(perfil=perfil)
+		
+		EdicionProveedorForm=UserProveedorCreateForm(instance=user, data=request.POST)
+		EdicionPerfilForm=PerfilProveedorCreateForm(instance=perfil, data=request.POST)
+		EdicionExpedienteForm=ExpedienteProveedorCreateForm(instance=expediente, data=request.POST)
+		
+		if EdicionProveedorForm.is_valid:
+			EdicionProveedorForm.save()
+
+		if EdicionPerfilForm.is_valid:
+			EdicionPerfilForm.save()
+
+		if EdicionExpedienteForm.is_valid():
+			EdicionExpedienteForm.save()
+
+		return redirect("accounts:UpdateViewProveedor", pk=user.pk)
 
 class profile(View):
 	#@method_decorator(login_required)

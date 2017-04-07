@@ -1,6 +1,12 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <form action="." method="post">
 	{%csrf_token%}
 	{{NuevaPartidaForm.as_p}}
 	<input type="submit" value="Crear">
 	<a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%block content%}

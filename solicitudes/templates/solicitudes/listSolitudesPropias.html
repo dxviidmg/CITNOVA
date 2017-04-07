@@ -1,0 +1,12 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+<p>Lista de solicitudes de {% now " F Y" %}</p>
+
+{%for solicitud in solicitudes%}
+<a href="{%url 'solicitudes:DetailViewSolicitudPropia' solicitud.pk%}"><p>{{solicitud.folio}}</p></a>
+{%empty%}
+Lista vacia
+{%endfor%}
+
+{%endblock content%}

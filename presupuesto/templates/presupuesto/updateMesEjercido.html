@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <style type="text/css">
 	.error{
 		background-color: red;
@@ -46,3 +50,5 @@
 		<input type="submit" value="Guardar">
 		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%endblock content%}

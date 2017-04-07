@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 {% load humanize %}
 
 <style>
@@ -11,8 +15,6 @@ th, td {
 }
 </style>
 <h1>Lista de programas del {% now "Y" %}</h1>
-
-<a href="{%url 'presupuesto:CreateViewPrograma' %}">Crear programa</a>
 
 <table>
 	<thead>
@@ -104,3 +106,5 @@ th, td {
 </table>
 
 {%endfor%}
+
+{%endblock content%}

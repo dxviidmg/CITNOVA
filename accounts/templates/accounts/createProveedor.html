@@ -1,4 +1,4 @@
-{%extends 'base.html'%}
+{%extends 'baseUser.html'%}
 
 {%block content%}
 <p>Registro de nuevo proveedor</p>
@@ -6,6 +6,7 @@
 		{%csrf_token%}
 		{{UserProveedorForm.as_p}}
 		{{PerfilProveedorForm.as_p}}
-		<input type="submit" value="Crear Usuario">
+		{{ExpedienteProveedorForm.as_p}}
+		<input type="submit" value="Registrar proveedor">
 </form>
 {%endblock content%}

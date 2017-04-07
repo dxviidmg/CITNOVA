@@ -1,11 +1,10 @@
-{%extends 'base.html'%}
+{%extends 'baseUser.html'%}
 
 {%block content%}
 
-
-<p>Lista de empleados de la {{request.user.departamento.nombre}}</p>
+<p>Lista del personal de la {{request.user.departamento.nombre}}</p>
 {%for empleado in empleados%}
-<p>{{empleado.first_name}} {{empleado.last_name}}</p>
+<a href="{%url 'accounts:UpdateViewEmpleado' empleado.pk%}"><p>{{empleado.first_name}} {{empleado.last_name}}</p></a>
 {%empty%}
 <p>Lista vacia</p>
 {%endfor%}

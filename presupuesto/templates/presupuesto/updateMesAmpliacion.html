@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <p>Realiza una ampliación</p>
 <p>Mes: {%if mes.mes == 1%}
 		Enero
@@ -33,3 +37,5 @@
 	<input type="submit" value="Guardar">
 	<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%endblock content%}

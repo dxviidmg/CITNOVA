@@ -6,14 +6,14 @@ from accounts.models import Perfil
 import datetime
 from presupuesto.models import *
 
-class ListViewSolicitudes(View):
+class ListViewSolicitudesPropias(View):
 	#@method_decorator(login_required)
 	def get(self, request):
 
-		template_name = "solicitudes/listSolitudes.html"
+		template_name = "solicitudes/listSolitudesPropias.html"
 		hoy = datetime.datetime.now()
 
-		solicitudes = SolicitudRecursoFinanciero.objects.filter(creacion__year=hoy.year, creacion__month=hoy.month)
+		solicitudes = SolicitudRecursoFinanciero.objects.filter(creacion__year=hoy.year, creacion__month=hoy.month, solicitante=request.user)
 
 		context = {
 			'solicitudes': solicitudes,
@@ -29,9 +29,10 @@ class CreateViewSolicitudEmpleado(View):
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
-		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento)
-		programas = Programa.objects.all()
 
+		programas = Programa.objects.filter(año=hoy.year, departamento=departamento)
+		print(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year))
+		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento, )
 		context = {
 			'departamento': departamento,
 			'folio': folio,
@@ -101,3 +102,37 @@ class CreateViewSolicitudProveedor(View):
 			NuevoSolicitudRecursoFinanciero.save()
 
 		return redirect("solicitudes:ListViewSolicitudes")
+
+class DetailViewSolicitudPropia(View):
+	def get(self, request, pk):
+		template_name = "solicitudes/detailSolicitudPropia.html"
+		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
+		context = {
+			'solicitud': solicitud
+		}
+		return render(request, template_name, context)
+
+class ListViewSolicitudesPendientes(View):
+	#@method_decorator(login_required)
+	def get(self, request):
+
+		template_name = "solicitudes/listSolitudesPendientes.html"
+		hoy = datetime.datetime.now()
+
+		solicitudes = SolicitudRecursoFinanciero.objects.filter(pagado=False)
+
+		context = {
+			'solicitudes': solicitudes,
+		}
+		return render(request,template_name,context)
+
+class DetailViewSolicitudPendiente(View):
+	def get(self, request, pk):
+		template_name = "solicitudes/detailSolicitudPendiente.html"
+		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
+		EdicionSolicitudForm=SolicitudRecursoFinancieroEditForm(instance=solicitud)
+		context = {
+			'solicitud': solicitud,
+			'EdicionSolicitudForm': EdicionSolicitudForm,
+		}
+		return render(request, template_name, context)

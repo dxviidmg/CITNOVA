@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 admin.site.register(Perfil)
 admin.site.register(Departamento)
 admin.site.register(Banco)
+admin.site.register(Expediente)
 
 from django.contrib.auth.admin import UserAdmin
 

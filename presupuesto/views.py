@@ -381,6 +381,7 @@ class UpdateViewMesEjercido(View):
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
 		NuevaModificacionForm = ModificacionForm()
+
 		context = {
 		'mes': mes,
 		'partida': partida,

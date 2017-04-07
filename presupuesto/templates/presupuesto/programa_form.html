@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <h3>Edita la informacion de {{object}}</h3>
 <form method="post" enctype="multipart/form-data">
 	{%csrf_token%}
@@ -6,3 +10,5 @@
 
 	<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%endblock content%}

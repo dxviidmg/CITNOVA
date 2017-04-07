@@ -21,3 +21,8 @@ class PerfilProveedorCreateForm(forms.ModelForm):
 	class Meta:
 		model = Perfil
 		fields = ('grado_profesional', 'telefono', 'banco', 'cuenta_bancaria', 'CLABE')
+
+class ExpedienteProveedorCreateForm(forms.ModelForm):
+	class Meta:
+		model = Expediente
+		fields = ('tipo', 'IFE', 'RFC',)

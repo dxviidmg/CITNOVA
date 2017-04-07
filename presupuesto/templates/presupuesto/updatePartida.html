@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <p>Edita la partida <em>{{partida.descripcion}}</em></p>
 <form action="." method="post">
 	{%csrf_token%}
@@ -5,3 +9,5 @@
 	<input type="submit" value="Guardar">
 	<a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%endblock content%}

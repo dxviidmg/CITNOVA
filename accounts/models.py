@@ -47,6 +47,20 @@ class Perfil(models.Model):
 	class Meta:
 		ordering = ['user']
 
+class Expediente(models.Model):
+	Tipo_CHOICES = {
+		("P. Física", "P. Física"),
+		("P. Moral", "P. Moral"),
+	}
+
+	perfil = models.OneToOneField(Perfil)
+	tipo = models.CharField(max_length=20, choices=Tipo_CHOICES)
+	RFC = models.FileField(upload_to='Expedientes/%Y/%m/%d/', null=True, blank=True)
+	IFE = models.ImageField(upload_to='IFE/%Y/%m/%d/', null=True, blank=True)
+		
+	def __str__(self):
+		return 'Expediente de {}'.format(self.perfil)
+
 User.add_to_class('departamento', models.ForeignKey(Departamento, blank = True, null=True))
 
 def get_first_name(self):

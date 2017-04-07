@@ -28,6 +28,7 @@ class Programa(models.Model):
 	monto_anual_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	cuenta_bancaria = models.CharField(max_length=150, null=True, blank=True)
 	pp = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 
 	def SacaPorcentaje(self):  

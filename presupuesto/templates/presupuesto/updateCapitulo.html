@@ -1,6 +1,12 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <form action="." method="post">
 	{%csrf_token%}
 	{{EdicionCapituloForm.as_p}}
 		<input type="submit" value="Crear">
 		<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%endblock content%}

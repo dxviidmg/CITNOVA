@@ -1,0 +1,12 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+<p>Información del Empleado</p>
+<form action="." method="post">
+	{%csrf_token%}
+	{{EdicionEmpleadoForm.as_p}}
+	{{EdicionPerfilForm.as_p}}
+	<input type="submit" value="Guardar">
+</form>
+
+{%endblock content%}

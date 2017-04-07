@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 <p>¿Estas seguro de querer borrar el programa <em>{{object}}</em>?</p>
 <form method="post">
 	{%csrf_token%}
@@ -5,3 +9,5 @@
 	
 	<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
 </form>
+
+{%endblock content%}

@@ -1,3 +1,7 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
 {% load humanize %}
 
 <style>
@@ -11,12 +15,14 @@ th, td {
 }
 </style>
 
-<p>Lista de meses</p>
+
 <p>Programa: {{programa.nombre}}</p>
 <p>Año: {{programa.año}}</p>
 <p>Capitulo: {{capitulo.codigo}} {{capitulo.nombre}}</p>
 <p>Partida especifica: {{partida.codigo}}</p>
 <p>Descripción: {{partida.descripcion}}</p>
+
+<p align="center">Lista de meses</p>
 
 <a href="{%url 'presupuesto:CreateViewMes' partida.pk%}">Crear Mes</a>
 <a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}">Regresar</a>
@@ -110,3 +116,5 @@ th, td {
 			{%endif%}
 		</td>
 </table>
+
+{%endblock content%}
