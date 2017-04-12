@@ -29,8 +29,8 @@ urlpatterns = [
     url(r'^', include(presupuestoUrls, namespace="presupuesto")),
     #Direccion para buscar imagenes
     url(
-            regex=r'^media/(?P<path>.*)$',
-            view=serve,
-            kwargs ={'document_root':settings.MEDIA_ROOT}
-),
+        regex=r'^media/(?P<path>.*)$',
+        view=serve,
+        kwargs ={'document_root':settings.MEDIA_ROOT}
+    ),
 ]

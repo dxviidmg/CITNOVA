@@ -10,7 +10,7 @@ class SolicitudRecursoFinancieroCreateForm(forms.ModelForm):
 
 	class Meta:
 		model = SolicitudRecursoFinanciero
-		fields = ('a_nombre_de', 'programa','concepto', 'importe_numero', 'importe_letra', 'metodo_pago')
+		fields = ('a_nombre_de', 'programa','concepto', 'importe_numero', 'importe_letra', 'metodo_pago', 'comprobante')
 
 	def __init__(self, departamento=None, **kwargs):
 		super(SolicitudRecursoFinancieroCreateForm, self).__init__(**kwargs)
@@ -23,7 +23,7 @@ class SolicitudRecursoFinancieroCreateForm2(forms.ModelForm):
 
 	class Meta:
 		model = SolicitudRecursoFinanciero
-		fields = ('a_nombre_de', 'concepto', 'importe_numero', 'importe_letra', 'metodo_pago')
+		fields = ('a_nombre_de', 'concepto', 'importe_numero', 'importe_letra', 'metodo_pago', 'comprobante')
 
 	def __init__(self, *args, **kwargs):
 		super(SolicitudRecursoFinancieroCreateForm2, self).__init__(**kwargs)

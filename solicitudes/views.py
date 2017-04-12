@@ -61,7 +61,7 @@ class CreateViewSolicitudEmpleado(View):
 			NuevoSolicitudRecursoFinanciero.solicitante = user
 			NuevoSolicitudRecursoFinanciero.save()
 
-		return redirect("solicitudes:ListViewSolicitudes")
+		return redirect("solicitudes:ListViewSolicitudesPropias")
 
 class CreateViewSolicitudProveedor(View):
 	def get(self, request):
@@ -89,7 +89,7 @@ class CreateViewSolicitudProveedor(View):
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
-		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2(data=request.POST)
+		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2(request.POST, request.FILES)
 		
 		proveedor = User.objects.get(pk=request.POST.get("a_nombre_de"))
 		perfilProveedor = Perfil.objects.get(user=proveedor)
@@ -101,7 +101,7 @@ class CreateViewSolicitudProveedor(View):
 			NuevoSolicitudRecursoFinanciero.solicitante = user
 			NuevoSolicitudRecursoFinanciero.save()
 
-		return redirect("solicitudes:ListViewSolicitudes")
+		return redirect("solicitudes:ListViewSolicitudesPropias")
 
 class DetailViewSolicitudPropia(View):
 	def get(self, request, pk):

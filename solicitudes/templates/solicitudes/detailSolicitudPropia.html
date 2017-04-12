@@ -11,5 +11,7 @@
 <p>Metodo: {{solicitud.metodo_pago}}</p>
 <p>CLABE: {{solicitud.clabe}}</p>
 <p>Cración: {{solicitud.creacion}}</p>
+<p>Comprobante: {{solicitud.comprobante.url}}</p>
+<a href="{{solicitud.comprobante.url}}">Ver documento</a>
 
 {%endblock content%}

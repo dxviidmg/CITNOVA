@@ -82,25 +82,26 @@ class CreateViewProveedor(View):
 		users = User.objects.filter(is_staff=False).count()
 		userActual = users + 1
 
-		NuevoUserForm = UserProveedorCreateForm(request.POST)
-		NuevoPerfilForm = PerfilProveedorCreateForm(request.POST)
-		NuevoExpedienteForm = ExpedienteProveedorCreateForm(request.POST)
-		
+		NuevoUserForm = UserProveedorCreateForm(request.POST)		
 		if NuevoUserForm.is_valid(): 
 			NuevoUser = NuevoUserForm.save(commit=False)
 			NuevoUser.username = 'PROV' + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.last_name[0].upper()) + str(userActual)
 			NuevoUser.save()
 
+		NuevoPerfilForm = PerfilProveedorCreateForm(request.POST)
 		if NuevoPerfilForm.is_valid():
 			NuevoPerfil = NuevoPerfilForm.save(commit=False)
 			NuevoPerfil.user = NuevoUser
 			NuevoPerfil.save()
 
+			print(NuevoPerfil)
+
+		NuevoExpedienteForm = ExpedienteProveedorCreateForm(request.POST, request.FILES)
 		if NuevoExpedienteForm.is_valid():
 			NuevoExpediente = NuevoExpedienteForm.save(commit=False)
-			NuevoExpediente.perfil = NuevoPerfil
-			NuevoExpediente.save()
-
+			NuevoExpedienteForm.perfil = NuevoPerfil
+			NuevoExpedienteForm.save()
+			
 		return redirect("accounts:ListViewProveedores")
 
 class profile(View):

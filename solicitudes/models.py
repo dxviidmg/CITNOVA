@@ -12,7 +12,7 @@ class SolicitudRecursoFinanciero(models.Model):
 	folio = models.CharField(max_length=10)
 	programa = models.ForeignKey(Programa, related_name="programa", null=True, blank=True)
 	a_nombre_de = models.ForeignKey(User, related_name="a_nombre_de")
-	concepto = models.CharField(max_length=100)
+	concepto = models.TextField()
 	importe_numero = models.DecimalField(max_digits=20,decimal_places=2)
 	importe_letra = models.CharField(max_length=100)
 	metodo_pago = models.CharField(max_length=30, choices= MetodoPago_CHOICES)
@@ -20,23 +20,10 @@ class SolicitudRecursoFinanciero(models.Model):
 	creacion = models.DateTimeField(default=timezone.now)
 	solicitante = models.ForeignKey(User, related_name="solicitante")
 	pagado = models.BooleanField(default=False)
+	comprobante = models.FileField(upload_to='Comprobantes/%Y/%m/%d/', null=True, blank=True)
 
 	class Meta:
 		ordering = ['creacion']
 
 	def __str__(self):
 		return '{}'.format(self.folio)
-
-class Comprobante(models.Model):
-	nombre = models.CharField(max_length=100)
-	no_factuta = models.CharField(max_length=100)
-	fecha = models.DateField()
-	importe = models.DecimalField(max_digits=20,decimal_places=2)
-	scan = models.ImageField(upload_to="comprobantes/%Y/%m/%d/")
-	srf = models.ForeignKey(SolicitudRecursoFinanciero, related_name="SRF")
-
-	class Meta:
-		ordering = ['srf']
-
-	def __str__(self):
-		return 'Combrobante de {}'.format(self.srf)

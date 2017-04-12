@@ -25,4 +25,4 @@ class PerfilProveedorCreateForm(forms.ModelForm):
 class ExpedienteProveedorCreateForm(forms.ModelForm):
 	class Meta:
 		model = Expediente
-		fields = ('tipo', 'IFE', 'RFC',)
+		fields = ('tipo', 'RFC', 'IFE')

@@ -40,7 +40,7 @@ class Perfil(models.Model):
 	banco = models.ForeignKey(Banco, blank=True, null=True)
 	cuenta_bancaria = models.CharField(max_length=16, blank=True, null=True)
 	CLABE = models.CharField(max_length=20, blank=True, null=True)
-
+	RFC = models.ImageField(upload_to='RFC/%Y/%m/%d/', blank=True, null=True)
 	def __str__(self):
 		return '{} {}'.format(self.user.last_name, self.user.first_name)
 
@@ -52,11 +52,10 @@ class Expediente(models.Model):
 		("P. Física", "P. Física"),
 		("P. Moral", "P. Moral"),
 	}
-
-	perfil = models.OneToOneField(Perfil)
+	perfil = models.OneToOneField(Perfil, related_name='perfil')
 	tipo = models.CharField(max_length=20, choices=Tipo_CHOICES)
-	RFC = models.FileField(upload_to='Expedientes/%Y/%m/%d/', null=True, blank=True)
-	IFE = models.ImageField(upload_to='IFE/%Y/%m/%d/', null=True, blank=True)
+	RFC = models.ImageField(upload_to='RFC/%Y/%m/%d/')
+	IFE = models.ImageField(upload_to='IFE/%Y/%m/%d/')
 		
 	def __str__(self):
 		return 'Expediente de {}'.format(self.perfil)
