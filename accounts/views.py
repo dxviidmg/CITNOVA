@@ -9,7 +9,7 @@ class ListViewEmpleados(View):
 	def get(self, request):
 		template_name = "accounts/ListViewEmpleados.html"
 
-		empleados = User.objects.filter(is_staff=False, is_active=True, departamento=request.user.departamento).order_by('username')
+		empleados = User.objects.filter(username__startswith='EMPL' ,is_staff=False, is_active=True, departamento=request.user.departamento).order_by('username')
 
 		context = {
 			'empleados': empleados,
@@ -21,7 +21,7 @@ class ListViewProveedores(View):
 	def get(self, request):
 		template_name = "accounts/ListViewProveedores.html"
 
-		proveedores = User.objects.filter(is_staff=False, is_active=True, departamento__isnull=True).order_by('username')
+		proveedores = User.objects.filter(is_staff=False, is_active=True, username__startswith='PROV').order_by('username')
 
 		context = {
 			'proveedores': proveedores
@@ -83,24 +83,24 @@ class CreateViewProveedor(View):
 		userActual = users + 1
 
 		NuevoUserForm = UserProveedorCreateForm(request.POST)		
+		NuevoPerfilForm = PerfilProveedorCreateForm(request.POST)
+		NuevoExpedienteForm = ExpedienteProveedorCreateForm(request.POST, request.FILES)
+
 		if NuevoUserForm.is_valid(): 
 			NuevoUser = NuevoUserForm.save(commit=False)
 			NuevoUser.username = 'PROV' + str(NuevoUser.first_name[0].upper()) + str(NuevoUser.last_name[0].upper()) + str(userActual)
 			NuevoUser.save()
 
-		NuevoPerfilForm = PerfilProveedorCreateForm(request.POST)
+
 		if NuevoPerfilForm.is_valid():
 			NuevoPerfil = NuevoPerfilForm.save(commit=False)
 			NuevoPerfil.user = NuevoUser
 			NuevoPerfil.save()
 
-			print(NuevoPerfil)
-
-		NuevoExpedienteForm = ExpedienteProveedorCreateForm(request.POST, request.FILES)
 		if NuevoExpedienteForm.is_valid():
 			NuevoExpediente = NuevoExpedienteForm.save(commit=False)
-			NuevoExpedienteForm.perfil = NuevoPerfil
-			NuevoExpedienteForm.save()
+			NuevoExpediente.perfil = NuevoPerfil
+			NuevoExpediente.save()
 			
 		return redirect("accounts:ListViewProveedores")
 

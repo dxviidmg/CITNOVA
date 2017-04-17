@@ -52,10 +52,10 @@ class Expediente(models.Model):
 		("P. Física", "P. Física"),
 		("P. Moral", "P. Moral"),
 	}
-	perfil = models.OneToOneField(Perfil, related_name='perfil')
+	perfil = models.OneToOneField(Perfil, related_name='perfil', blank=True, null=True)
 	tipo = models.CharField(max_length=20, choices=Tipo_CHOICES)
-	RFC = models.ImageField(upload_to='RFC/%Y/%m/%d/')
-	IFE = models.ImageField(upload_to='IFE/%Y/%m/%d/')
+	IFE = models.FileField(upload_to='IFE/%Y/%m/%d/', null=True, blank=True)
+	RFC = models.FileField(upload_to='RFC/%Y/%m/%d/', null=True, blank=True)
 		
 	def __str__(self):
 		return 'Expediente de {}'.format(self.perfil)
