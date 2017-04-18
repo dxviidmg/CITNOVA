@@ -3,7 +3,7 @@
 {%block content%}
 <p>Información del Proveedor</p>
 
-<form action="." method="post">
+<form action="." method="post" enctype="multipart/form-data">
 	{%csrf_token%}
 	{{EdicionProveedorForm.as_p}}
 	{{EdicionPerfilForm.as_p}}

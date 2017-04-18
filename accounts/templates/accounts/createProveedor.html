@@ -2,7 +2,7 @@
 
 {%block content%}
 <p>Registro de nuevo proveedor</p>
-<form action="." method="post">
+<form action="." method="post" enctype="multipart/form-data">
 		{%csrf_token%}
 		{{UserProveedorForm.as_p}}
 		{{PerfilProveedorForm.as_p}}
