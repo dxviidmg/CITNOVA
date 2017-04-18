@@ -136,3 +136,12 @@ class DetailViewSolicitudPendiente(View):
 			'EdicionSolicitudForm': EdicionSolicitudForm,
 		}
 		return render(request, template_name, context)
+	def post (self, request, pk):
+		template_name = "solicitudes/detailSolicitudPendiente.html"
+		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
+		EdicionSolicitudForm=SolicitudRecursoFinancieroEditForm(instance=solicitud, data=request.POST)
+
+		if EdicionSolicitudForm.is_valid():
+			EdicionSolicitudForm.save()
+
+		return redirect("solicitudes:DetailViewSolicitudPendiente", pk=solicitud.pk)

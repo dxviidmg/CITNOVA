@@ -164,7 +164,7 @@ class UpdateViewProveedor(View):
 		
 		EdicionProveedorForm=UserProveedorCreateForm(instance=user, data=request.POST)
 		EdicionPerfilForm=PerfilProveedorCreateForm(instance=perfil, data=request.POST)
-		EdicionExpedienteForm=ExpedienteProveedorCreateForm(instance=expediente, data=request.POST)
+		EdicionExpedienteForm=ExpedienteProveedorCreateForm(instance=expediente, data=request.POST, files=request.FILES)
 		
 		if EdicionProveedorForm.is_valid:
 			EdicionProveedorForm.save()

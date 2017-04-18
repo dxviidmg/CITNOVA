@@ -11,7 +11,11 @@
 <p>Metodo: {{solicitud.metodo_pago}}</p>
 <p>CLABE: {{solicitud.clabe}}</p>
 <p>Cración: {{solicitud.creacion}}</p>
-<p>Comprobante: {{solicitud.comprobante}}</p>
+{%if solicitud.comprobante%} 
+<p><a href="{{solicitud.comprobante.url}}">Ver comprobante(s)</a></p>
+{%else%}
+<p>Falta comprobante</p>
+{%endif%}
 
 <form action="." method="post">
 	{%csrf_token%}
