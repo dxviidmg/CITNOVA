@@ -1,14 +1,21 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
-<h3>Edita la informacion de {{object}}</h3>
-<form method="post" enctype="multipart/form-data">
-	{%csrf_token%}
-	{{form.as_p}}
-	<input type="submit" value="Guardar">
+	{%if object%}
+	<h3>Edita el programa <i>{{object}}</i></h3>
+	{%else%}
+	<h3>Crea un programa</h3>
+	{%endif%}
 
-	<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
-</form>
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{form | bootstrap}}
+		<input type="submit" value="Guardar">
+
+		<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
 
 {%endblock content%}

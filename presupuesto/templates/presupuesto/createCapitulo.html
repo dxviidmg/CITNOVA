@@ -1,12 +1,15 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
-<form action="." method="post">
-	{%csrf_token%}
-	{{NuevoCapituloForm.as_p}}
-	<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input type="submit" value="Crear"></a>
-	<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
-</form>
+	<form action="." method="post">
+		<h3>Crea un capitulo para el programa {{programa.nombre}}</h3>
+		{%csrf_token%}
+		{{NuevoCapituloForm | bootstrap}}
+		<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input type="submit" value="Crear"></a>
+		<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
 
 {%endblock content%}

@@ -1,13 +1,15 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
-<p>Edita la partida <em>{{partida.descripcion}}</em></p>
-<form action="." method="post">
-	{%csrf_token%}
-	{{EdicionPartidaForm.as_p}}
-	<input type="submit" value="Guardar">
-	<a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
-</form>
+	<h3>Edita la partida <i>{{partida.descripcion}}</i></h3>
+	<form action="." method="post">
+		{%csrf_token%}
+		{{EdicionPartidaForm | bootstrap}}
+		<input type="submit" value="Guardar">
+		<a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
 
 {%endblock content%}

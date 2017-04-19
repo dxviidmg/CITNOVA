@@ -1,12 +1,14 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
-<form action="." method="post">
-	{%csrf_token%}
-	{{EdicionCapituloForm.as_p}}
-		<input type="submit" value="Crear">
-		<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
-</form>
+	<form action="." method="post">
+		{%csrf_token%}
+		{{EdicionCapituloForm | bootstrap}}
+			<input type="submit" value="Crear">
+			<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
 
 {%endblock content%}

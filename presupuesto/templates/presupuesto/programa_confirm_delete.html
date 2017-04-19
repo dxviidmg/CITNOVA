@@ -2,12 +2,17 @@
 
 {%block content%}
 
-<p>¿Estas seguro de querer borrar el programa <em>{{object}}</em>?</p>
-<form method="post">
-	{%csrf_token%}
-	<input class="" type="submit" value="Si">
+	<div class="row justify-content-center text-center">
+		<div class="col-xs-12">
 	
-	<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
-</form>
-
+		<form method="post">
+			<p>¿Estas seguro de querer borrar el programa <em>{{object}}</em>?</p>
+			{%csrf_token%}
+			<input class="" type="submit" value="Si">
+	
+			<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
+		</form>
+		</div>
+	</div>
+	
 {%endblock content%}

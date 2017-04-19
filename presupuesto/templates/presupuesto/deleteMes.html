@@ -2,37 +2,40 @@
 
 {%block content%}
 
-<p>	¿Esta seguro en eliminar el mes de <em>
-			{%if mes.mes == 1%}
-				Enero
-			{%elif mes.mes == 2%}
-				Febrero
-			{%elif mes.mes == 3%}
-				Marzo
-			{%elif mes.mes == 4%}
-				Abril
-			{%elif mes.mes == 5%}
-				Mayo
-			{%elif mes.mes == 6%}
-				Junio
-			{%elif mes.mes == 7%}
-				Julio
-			{%elif mes.mes == 8%}
-				Agosto
-			{%elif mes.mes == 9%}
-				Septiembre
-			{%elif mes.mes == 10%}
-				Octubre
-			{%elif mes.mes == 11%}
-				Noviembre
-			{%elif mes.mes == 12%}
-				Diciembre
-			{%endif%}?</em></p>
-<form action="." method="post">
-	{%csrf_token%}
+	<div class="row justify-content-center text-center">
+		<div class="col-xs-12">
+			<form action="." method="post">
+				<p>	¿Esta seguro en eliminar el mes de <em>
+						{%if mes.mes == 1%}
+							Enero
+						{%elif mes.mes == 2%}
+							Febrero
+						{%elif mes.mes == 3%}
+							Marzo
+						{%elif mes.mes == 4%}
+							Abril
+						{%elif mes.mes == 5%}
+							Mayo
+						{%elif mes.mes == 6%}
+							Junio
+						{%elif mes.mes == 7%}
+							Julio
+						{%elif mes.mes == 8%}
+							Agosto
+						{%elif mes.mes == 9%}
+							Septiembre
+						{%elif mes.mes == 10%}
+							Octubre
+						{%elif mes.mes == 11%}
+							Noviembre
+						{%elif mes.mes == 12%}
+							Diciembre
+						{%endif%}?</em></p>
+						{%csrf_token%}
 
-	<input type="submit" value="Si">
-	<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
-</form>
-
+				<input type="submit" value="Si">
+				<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
+			</form>
+		</div>
+	</div>
 {%endblock content%}

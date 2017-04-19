@@ -1,9 +1,11 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
-<p>Realiza una ampliación</p>
-<p>Mes: {%if mes.mes == 1%}
+<h4>Realizar una ampliación del mes de
+	{%if mes.mes == 1%}
 		Enero
 	{%elif mes.mes == 2%}
 		Febrero
@@ -27,15 +29,18 @@
 		Noviembre
 	{%elif mes.mes == 12%}
 		Diciembre
-	{%endif%}</p>
-<p>Monto actual: {{mes.monto_modificado}}</p>
-<p>Monto ampliado: {{mes.monto_ampliacion}}</p>
+	{%endif%} de la partida {{partida.codigo}} {{partida.descripcion}}</h4>
+	<br>
+	<h5>Informacion: </h5>
 
-<form action="." method="post">
-	{%csrf_token%}
-	{{NuevaModificacionForm.as_p}}
-	<input type="submit" value="Guardar">
-	<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
-</form>
+	<p>Monto actual: {{mes.monto_modificado}}</p>
+	<p>Monto ampliado: {{mes.monto_ampliacion}}</p>
+
+	<form action="." method="post">
+		{%csrf_token%}
+		{{NuevaModificacionForm | bootstrap}}
+		<input type="submit" value="Guardar">
+		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
 
 {%endblock content%}

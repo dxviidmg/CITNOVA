@@ -1,12 +1,14 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
 
-<form action="." method="post">
-	{%csrf_token%}
-	{{NuevoMesForm.as_p}}
-	<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input type="submit" value="Crear"></a>
-	<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
-</form>
+	<form action="." method="post">
+		{%csrf_token%}
+		{{NuevoMesForm | bootstrap}}
+		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input type="submit" value="Crear"></a>
+		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
 
 {%endblock content%}
