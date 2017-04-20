@@ -1,7 +1,7 @@
 {%extends 'baseUser.html'%}
 
 {%block content%}
-	<h4 class="text-center">Lista de solicitudes por pagar</h4>
+	<h4 class="text-center">Lista de solicitudes pagadas en la ultima semana</h4>
 
 	<div class="table-responsive">
 		<table class="table">
@@ -15,7 +15,7 @@
 
 				<tr>
 					<td>{{solicitud.folio}}</td>
-					<td><a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}">Confirmar pago</a></td>
+					<td><a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}">Verificar</a></td>
 				</tr>
 	
 	{%empty%}

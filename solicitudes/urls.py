@@ -13,5 +13,6 @@ urlpatterns = [
 	
 	#Urls de listas de solicitudes
 	url(r'^solicitudes/por_pagar/$',views.ListViewSolicitudesPendientes.as_view(), name='ListViewSolicitudesPendientes'),
+	url(r'^solicitudes/pagadas/$',views.ListViewSolicitudesPagadas.as_view(), name='ListViewSolicitudesPagadas'),
 	url(r'^solicitudes/$',views.ListViewSolicitudesPropias.as_view(), name='ListViewSolicitudesPropias'),
 ]

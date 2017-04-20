@@ -6,6 +6,7 @@ from accounts.models import Perfil
 import datetime
 from presupuesto.models import *
 from django.contrib import messages
+from datetime import timedelta
 
 #Lista de solicitudes propias
 class ListViewSolicitudesPropias(View):
@@ -50,7 +51,7 @@ class CreateViewSolicitudEmpleado(View):
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
-		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(data=request.POST)
+		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(data=request.POST, files=request.FILES)
 		
 		empleado = User.objects.get(pk=request.POST.get("a_nombre_de"))
 		perfilEmpleado = Perfil.objects.get(user=empleado)
@@ -140,12 +141,29 @@ class DetailViewSolicitudPendiente(View):
 		}
 		return render(request, template_name, context)
 	def post (self, request, pk):
+
+		hoy = datetime.datetime.now()
+
 		template_name = "solicitudes/detailSolicitudPendiente.html"
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
 		EdicionSolicitudForm=SolicitudRecursoFinancieroEditForm(instance=solicitud, data=request.POST)
 
 		if EdicionSolicitudForm.is_valid():
-			messages.success(request, "Se cambió el estatus correctamente")
 			EdicionSolicitudForm.save()
-			
+			messages.success(request, "Se cambió el estatus correctamente")			
+
 		return redirect("solicitudes:DetailViewSolicitudPendiente", pk=solicitud.pk)
+
+class ListViewSolicitudesPagadas(View):
+	#@method_decorator(login_required)
+	def get(self, request):
+		template_name = "solicitudes/listSolitudesPagadas.html"
+		hoy = datetime.datetime.now()
+		semana_pasada = hoy - timedelta(days=7)
+
+		solicitudes = SolicitudRecursoFinanciero.objects.filter(fecha_pagado__isnull=False, fecha_pagado__range=[semana_pasada, hoy])
+
+		context = {
+			'solicitudes': solicitudes,
+		}
+		return render(request,template_name,context)

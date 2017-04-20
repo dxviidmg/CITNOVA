@@ -21,9 +21,15 @@ class SolicitudRecursoFinanciero(models.Model):
 	solicitante = models.ForeignKey(User, related_name="solicitante")
 	pagado = models.BooleanField(default=False)
 	comprobante = models.FileField(upload_to='Comprobantes/%Y/%m/%d/', null=True, blank=True)
+	fecha_pagado = models.DateTimeField(blank=True, null=True)
 
 	class Meta:
 		ordering = ['creacion']
 
 	def __str__(self):
 		return '{}'.format(self.folio)
+
+	def FechaPagado(self):
+		if self.pagado==True:
+			self.fecha_pagado = timezone.now()
+			self.save()
