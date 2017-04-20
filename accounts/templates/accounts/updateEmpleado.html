@@ -1,12 +1,15 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
-<p>Información del Empleado</p>
-<form action="." method="post">
-	{%csrf_token%}
-	{{EdicionEmpleadoForm.as_p}}
-	{{EdicionPerfilForm.as_p}}
-	<input type="submit" value="Guardar">
-</form>
+
+	<h4>Información del Empleado</h4>
+	<form action="." method="post">
+		{%csrf_token%}
+		{{EdicionEmpleadoForm | bootstrap}}
+		{{EdicionPerfilForm | bootstrap}}
+		<input type="submit" value="Guardar">
+	</form>
 
 {%endblock content%}

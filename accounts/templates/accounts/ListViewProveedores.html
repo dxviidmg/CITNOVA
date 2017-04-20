@@ -2,11 +2,16 @@
 
 {%block content%}
 
-<p>Lista de proveedores</p>
-{%for proveedor in proveedores%}
-<a href="{%url 'accounts:UpdateViewProveedor' proveedor.pk%}"><p>{{proveedor.first_name}} {{proveedor.last_name}}</p></a>
-{%empty%}
-<p>Lista vacía</p>
-{%endfor%}
+	<h4 class="text-center">Catalogo de proveedores</h4>
+
+	{%for proveedor in proveedores%}
+
+	<a href="{%url 'accounts:UpdateViewProveedor' proveedor.pk%}"><p class="text-center">{{proveedor.first_name}} {{proveedor.last_name}}</p></a>
+
+	{%empty%}
+
+	<p>Lista vacía</p>
+
+	{%endfor%}
 
 {%endblock content%}

@@ -11,9 +11,10 @@
 				
 				{%csrf_token%}
 				{{ form|bootstrap }}
+				
 				<div class="text-center">
 					<input type="hidden" name="next" value="{{next}}">
-					<input type="submit" value="Iniciar sesión" class="btn btn-primary">
+					<input type="submit" value="Iniciar sesión">
 				</div>
 			</form>
 		</div>

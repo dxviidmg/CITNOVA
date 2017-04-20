@@ -2,11 +2,16 @@
 
 {%block content%}
 
-<p>Lista del personal de la {{request.user.departamento.nombre}}</p>
-{%for empleado in empleados%}
-<a href="{%url 'accounts:UpdateViewEmpleado' empleado.pk%}"><p>{{empleado.first_name}} {{empleado.last_name}}</p></a>
-{%empty%}
-<p>Lista vacia</p>
-{%endfor%}
+	<h4 class="text-center">Catalogo del personal de la {{request.user.departamento.nombre}}</h4>
+
+	{%for empleado in empleados%}
+	
+	<a href="{%url 'accounts:UpdateViewEmpleado' empleado.pk%}"><p class="text-center">{{empleado.first_name}} {{empleado.last_name}}</p></a>
+	
+	{%empty%}
+	
+	<p>Lista vacia</p>
+	
+	{%endfor%}
 
 {%endblock content%}

@@ -28,106 +28,107 @@
 				<th>Monto anual por ejercer</th>
 				<th colspan="3">Acciones</th>
 			</thead>
-
+			<tbody>
 		{%for partida in partidas%}
 
-			<tr>
-				<td>{{partida.codigo}}</td>
-				<td>{{partida.descripcion}}</td>
-				<td>{% if partida.MontoAnualAutorizado is None%}
-						{%if partida.monto_anual_autorizado is None%}
-							Por definir
-						{%else%}
-							${{partida.monto_anual_autorizado|intcomma}}
+				<tr>
+					<td>{{partida.codigo}}</td>
+					<td>{{partida.descripcion}}</td>
+					<td>{% if partida.MontoAnualAutorizado is None%}
+							{%if partida.monto_anual_autorizado is None%}
+								Por definir
+							{%else%}
+								${{partida.monto_anual_autorizado|intcomma}}
+							{%endif%}
 						{%endif%}
-					{%endif%}
-				</td>
-				<td>{% if partida.MontoAnualAmpliacion is None%}
-						{%if partida.monto_anual_ampliacion is None%}
-							Por definir
-						{%else%}
-							${{partida.monto_anual_ampliacion|intcomma}}
+					</td>
+					<td>{% if partida.MontoAnualAmpliacion is None%}
+							{%if partida.monto_anual_ampliacion is None%}
+								Por definir
+							{%else%}
+								${{partida.monto_anual_ampliacion|intcomma}}
+							{%endif%}
 						{%endif%}
-					{%endif%}
-				</td>
-				<td>{% if partida.MontoAnualReduccion is None%}
-						{%if partida.monto_anual_reduccion is None%}
-							Por definir
-						{%else%}
-							${{partida.monto_anual_reduccion|intcomma}}
+					</td>
+					<td>{% if partida.MontoAnualReduccion is None%}
+							{%if partida.monto_anual_reduccion is None%}
+								Por definir
+							{%else%}
+								${{partida.monto_anual_reduccion|intcomma}}
+							{%endif%}
 						{%endif%}
-					{%endif%}
-				</td>
-				<td>{% if partida.MontoAnualModificado is None%}
-						{%if partida.monto_anual_modificado is None%}
-							Por definir
-						{%else%}
-							${{partida.monto_anual_modificado|intcomma}}
+					</td>
+					<td>{% if partida.MontoAnualModificado is None%}
+							{%if partida.monto_anual_modificado is None%}
+								Por definir
+							{%else%}
+								${{partida.monto_anual_modificado|intcomma}}
+							{%endif%}
 						{%endif%}
-					{%endif%}
-				</td>
-				<td>{% if partida.MontoAnualEjercido is None%}
-						{%if partida.monto_anual_ejercido is None%}
-							Por definir
-						{%else%}
-							 ${{partida.monto_anual_ejercido|intcomma}}
+					</td>
+					<td>{% if partida.MontoAnualEjercido is None%}
+							{%if partida.monto_anual_ejercido is None%}
+								Por definir
+							{%else%}
+								 ${{partida.monto_anual_ejercido|intcomma}}
+							{%endif%}
 						{%endif%}
-					{%endif%}
-				</td>
-				<td>{% if partida.MontoAnualPorEjercer is None%}
-						{%if partida.monto_anual_por_ejercer is None%}
-							Por definir
-						{%else%}
-							${{partida.monto_anual_por_ejercer|intcomma}}
+					</td>
+					<td>{% if partida.MontoAnualPorEjercer is None%}
+							{%if partida.monto_anual_por_ejercer is None%}
+								Por definir
+							{%else%}
+								${{partida.monto_anual_por_ejercer|intcomma}}
+							{%endif%}
 						{%endif%}
-					{%endif%}
-				</td>
-				<td><a href="{%url 'presupuesto:ListViewMeses' partida.pk%}">Ver por meses</a></td>
-				<td><a href="{%url 'presupuesto:UpdateViewPartida' partida.pk%}">Editar</a></td>
-				<td><a href="{%url 'presupuesto:DeleteViewPartida' partida.pk%}">Eliminar</a></td>
-			</tr>
+					</td>
+					<td><a href="{%url 'presupuesto:ListViewMeses' partida.pk%}">Ver por meses</a></td>
+					<td><a href="{%url 'presupuesto:UpdateViewPartida' partida.pk%}">Editar</a></td>
+					<td><a href="{%url 'presupuesto:DeleteViewPartida' partida.pk%}">Eliminar</a></td>
+				</tr>
 
 		{%empty%}
 
-			<tr>
-				<td colspan="12"><p align="center">Lista de partidas vacia</p></td>
-			</tr>
+				<tr>
+					<td colspan="12"><p align="center">Lista de partidas vacia</p></td>
+				</tr>
 
 		{%endfor%}
 
-			<tr>
-				<td colspan="2"><p align="right">Total</p></td>
-				<td>{%if total_monto_anual_autorizado is None%}
-					{%else%}
-						${{total_monto_anual_autorizado|intcomma}}
-					{%endif%}
-				</td>
-				<td>{%if total_monto_anual_ampliacion is None%}
-					{%else%}
-						${{total_monto_anual_ampliacion|intcomma}}
-					{%endif%}
-				</td>
-				<td>{%if total_monto_anual_reduccion is None%}
-					{%else%}
-						${{total_monto_anual_reduccion|intcomma}}
-					{%endif%}
-				</td>
-				<td>{%if total_monto_anual_modificado is None%}
-					{%else%}
-						${{total_monto_anual_modificado|intcomma}}
-					{%endif%}
-				</td>
-				<td>{%if total_monto_anual_ejercido is None%}
-					{%else%}
-						${{total_monto_anual_ejercido|intcomma}}
-					{%endif%}
-				</td>
-				<td>{%if total_monto_anual_por_ejercer is None%}
-					{%else%}
-						${{total_monto_anual_por_ejercer|intcomma}}
-					{%endif%}
-				</td>
-			</tr>
+				<tr>
+					<td colspan="2"><p align="right">Total</p></td>
+					<td>{%if total_monto_anual_autorizado is None%}
+						{%else%}
+							${{total_monto_anual_autorizado|intcomma}}
+						{%endif%}
+					</td>
+					<td>{%if total_monto_anual_ampliacion is None%}
+						{%else%}
+							${{total_monto_anual_ampliacion|intcomma}}
+						{%endif%}
+					</td>
+					<td>{%if total_monto_anual_reduccion is None%}
+						{%else%}
+							${{total_monto_anual_reduccion|intcomma}}
+						{%endif%}
+					</td>
+					<td>{%if total_monto_anual_modificado is None%}
+						{%else%}
+							${{total_monto_anual_modificado|intcomma}}
+						{%endif%}
+					</td>
+					<td>{%if total_monto_anual_ejercido is None%}
+						{%else%}
+							${{total_monto_anual_ejercido|intcomma}}
+						{%endif%}
+					</td>
+					<td>{%if total_monto_anual_por_ejercer is None%}
+						{%else%}
+							${{total_monto_anual_por_ejercer|intcomma}}
+						{%endif%}
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 

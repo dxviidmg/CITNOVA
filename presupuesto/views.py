@@ -16,7 +16,7 @@ class ListViewProgramas(View):
 		hoy = datetime.datetime.now()
 		programas = Programa.objects.filter(año=hoy.year).order_by('nombre')
 		context = {
-		'programas': programas,
+			'programas': programas,
 		}
 		return render(request, template_name, context)
 
@@ -45,14 +45,14 @@ class ListViewCapitulos(View):
 		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
 
 		context = {
-		'programa': programa,
-		'capitulos': capitulos,
-		'total_monto_anual_autorizado': total_monto_anual_autorizado,
-		'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
-		'total_monto_anual_reduccion': total_monto_anual_reduccion,
-		'total_monto_anual_modificado': total_monto_anual_modificado,
-		'total_monto_anual_ejercido': total_monto_anual_ejercido,
-		'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
+			'programa': programa,
+			'capitulos': capitulos,
+			'total_monto_anual_autorizado': total_monto_anual_autorizado,
+			'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
+			'total_monto_anual_reduccion': total_monto_anual_reduccion,
+			'total_monto_anual_modificado': total_monto_anual_modificado,
+			'total_monto_anual_ejercido': total_monto_anual_ejercido,
+			'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
 		}
 		return render(request, template_name, context)
 
@@ -82,15 +82,15 @@ class ListViewPartidas(View):
 		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
 
 		context = {
-		'capitulo': capitulo,
-		'partidas': partidas,
-		'programa': programa,
-		'total_monto_anual_autorizado': total_monto_anual_autorizado,
-		'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
-		'total_monto_anual_reduccion': total_monto_anual_reduccion,
-		'total_monto_anual_modificado': total_monto_anual_modificado,
-		'total_monto_anual_ejercido': total_monto_anual_ejercido,
-		'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
+			'capitulo': capitulo,
+			'partidas': partidas,
+			'programa': programa,
+			'total_monto_anual_autorizado': total_monto_anual_autorizado,
+			'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
+			'total_monto_anual_reduccion': total_monto_anual_reduccion,
+			'total_monto_anual_modificado': total_monto_anual_modificado,
+			'total_monto_anual_ejercido': total_monto_anual_ejercido,
+			'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
 		}
 		return render(request, template_name, context)
 
@@ -121,16 +121,16 @@ class ListViewMeses(View):
 		total_monto_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
 		
 		context = {
-		'partida': partida,
-		'meses': meses,
-		'capitulo': capitulo,
-		'programa': programa,
-		'total_monto_autorizado': total_monto_autorizado,
-		'total_monto_ampliacion': total_monto_ampliacion,
-		'total_monto_reduccion': total_monto_reduccion,
-		'total_monto_modificado': total_monto_modificado,
-		'total_monto_ejercido': total_monto_ejercido,
-		'total_monto_por_ejercer': total_monto_por_ejercer,
+			'partida': partida,
+			'meses': meses,
+			'capitulo': capitulo,
+			'programa': programa,
+			'total_monto_autorizado': total_monto_autorizado,
+			'total_monto_ampliacion': total_monto_ampliacion,
+			'total_monto_reduccion': total_monto_reduccion,
+			'total_monto_modificado': total_monto_modificado,
+			'total_monto_ejercido': total_monto_ejercido,
+			'total_monto_por_ejercer': total_monto_por_ejercer,
 		}
 		return render(request, template_name, context)
 
@@ -157,8 +157,8 @@ class CreateViewCapitulo(View):
 		programa = get_object_or_404(Programa, pk=pk)
 		NuevoCapituloForm=CapituloCreateForm()
 		context = {
-		'programa': programa,
-		'NuevoCapituloForm': NuevoCapituloForm,
+			'programa': programa,
+			'NuevoCapituloForm': NuevoCapituloForm,
 		}
 		return render(request, template_name, context)
 	def post(self, request, pk):
@@ -178,8 +178,8 @@ class UpdateViewCapitulo(View):
 		programa = Programa.objects.get(capitulo=capitulo)
 		EdicionCapituloForm=CapituloCreateForm(instance=capitulo)
 		context = {
-		'programa': programa,
-		'EdicionCapituloForm': EdicionCapituloForm,
+			'programa': programa,
+			'EdicionCapituloForm': EdicionCapituloForm,
 		}
 		return render(request, template_name, context)
 	def post(self,request, pk):
@@ -197,8 +197,8 @@ class DeleteViewCapitulo(View):
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		programa = Programa.objects.get(capitulo=capitulo)
 		context = {
-		'capitulo': capitulo,
-		'programa': programa,
+			'capitulo': capitulo,
+			'programa': programa,
 		}
 		return render(request, template_name, context)
 	def post(self, request, pk):
@@ -215,8 +215,8 @@ class CreateViewPartida(View):
 		capitulo = get_object_or_404(Capitulo, pk=pk)
 		NuevaPartidaForm=PartidaCreateForm()
 		context = {
-		'capitulo': capitulo,
-		'NuevaPartidaForm': NuevaPartidaForm,
+			'capitulo': capitulo,
+			'NuevaPartidaForm': NuevaPartidaForm,
 		}
 		return render(request, template_name, context)
 	def post(self, request, pk):
@@ -256,8 +256,8 @@ class DeleteViewPartida(View):
 		partida = get_object_or_404(Partida, pk=pk)
 		capitulo = Capitulo.objects.get(partida=partida)
 		context = {
-		'partida': partida,
-		'capitulo': capitulo,
+			'partida': partida,
+			'capitulo': capitulo,
 		}
 		return render(request, template_name, context)
 	def post(self, request, pk):
@@ -274,8 +274,8 @@ class CreateViewMes(View):
 		partida = get_object_or_404(Partida, pk=pk)
 		NuevoMesForm=MesCreateForm()
 		context = {
-		'partida': partida,
-		'NuevoMesForm': NuevoMesForm,
+			'partida': partida,
+			'NuevoMesForm': NuevoMesForm,
 		}
 		return render(request, template_name, context)
 	def post(self,request, pk):
@@ -295,9 +295,9 @@ class UpdateViewMes(View):
 		partida = Partida.objects.get(mes=mes)
 		EdicionMesForm = MesEditForm(instance=mes)
 		context = {
-		'mes': mes,
-		'partida': partida,
-		'EdicionMesForm': EdicionMesForm,
+			'mes': mes,
+			'partida': partida,
+			'EdicionMesForm': EdicionMesForm,
 		}
 		return render(request, template_name, context)
 	def post(self,request, pk):
@@ -317,8 +317,8 @@ class DeleteViewMes(View):
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
 		context = {
-		'mes': mes,
-		'partida': partida,
+			'mes': mes,
+			'partida': partida,
 		}
 		return render(request, template_name, context)
 	def post(self, request, pk):
@@ -336,9 +336,9 @@ class UpdateViewMesAmpliacion(View):
 		partida = Partida.objects.get(mes=mes)
 		NuevaModificacionForm = ModificacionForm()
 		context = {
-		'mes': mes,
-		'partida': partida,
-		'NuevaModificacionForm': NuevaModificacionForm
+			'mes': mes,
+			'partida': partida,
+			'NuevaModificacionForm': NuevaModificacionForm
 		}
 		return render(request, template_name, context)	
 	def post(self,request, pk):
@@ -359,9 +359,9 @@ class UpdateViewMesReduccion(View):
 		partida = Partida.objects.get(mes=mes)
 		NuevaModificacionForm = ModificacionForm()
 		context = {
-		'mes': mes,
-		'partida': partida,
-		'NuevaModificacionForm': NuevaModificacionForm
+			'mes': mes,
+			'partida': partida,
+			'NuevaModificacionForm': NuevaModificacionForm
 		}
 		return render(request, template_name, context)	
 	def post(self,request, pk):
@@ -381,11 +381,10 @@ class UpdateViewMesEjercido(View):
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
 		NuevaModificacionForm = ModificacionForm()
-
 		context = {
-		'mes': mes,
-		'partida': partida,
-		'NuevaModificacionForm': NuevaModificacionForm
+			'mes': mes,
+			'partida': partida,
+			'NuevaModificacionForm': NuevaModificacionForm
 		}
 		return render(request, template_name, context)	
 	def post(self,request, pk):

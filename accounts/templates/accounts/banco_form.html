@@ -5,17 +5,16 @@
 {%block content%}
 
 	{%if object%}
-	<h4>Edita el programa <i>{{object}}</i></h4>
+	<h3>Edita el nombre banco <i>{{object}}</i></h3>
 	{%else%}
-	<h4>Crea un programa</h4>
+	<h3>Registra el nombre de un banco</h3>
 	{%endif%}
 
 	<form method="post" enctype="multipart/form-data">
 		{%csrf_token%}
 		{{form | bootstrap}}
 		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
-
-		<a href="{%url 'presupuesto:ListViewProgramas'%}"><input class="" type="button" value="Cancelar"></a>
+		<a href="{%url 'accounts:ListViewBancos'%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 
 {%endblock content%}

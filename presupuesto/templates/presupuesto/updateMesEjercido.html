@@ -5,32 +5,31 @@
 {%block content%}
 
 	<h4>Realizar una ejerción del mes de
-			{%if mes.mes == 1%}
-				Enero
-			{%elif mes.mes == 2%}
-				Febrero
-			{%elif mes.mes == 3%}
-				Marzo
-			{%elif mes.mes == 4%}
-				Abril
-			{%elif mes.mes == 5%}
-				Mayo
-			{%elif mes.mes == 6%}
-				Junio
-			{%elif mes.mes == 7%}
-				Julio
-			{%elif mes.mes == 8%}
-				Agosto
-			{%elif mes.mes == 9%}
-				Septiembre
-			{%elif mes.mes == 10%}
-				Octubre
-			{%elif mes.mes == 11%}
-				Noviembre
-			{%elif mes.mes == 12%}
-				Diciembre
-			{%endif%} de la partida {{partida.codigo}} {{partida.descripcion}}</h4>
-	<br>
+		{%if mes.mes == 1%}
+			Enero
+		{%elif mes.mes == 2%}
+			Febrero
+		{%elif mes.mes == 3%}
+			Marzo
+		{%elif mes.mes == 4%}
+			Abril
+		{%elif mes.mes == 5%}
+			Mayo
+		{%elif mes.mes == 6%}
+			Junio
+		{%elif mes.mes == 7%}
+			Julio
+		{%elif mes.mes == 8%}
+			Agosto
+		{%elif mes.mes == 9%}
+			Septiembre
+		{%elif mes.mes == 10%}
+			Octubre
+		{%elif mes.mes == 11%}
+			Noviembre
+		{%elif mes.mes == 12%}
+			Diciembre
+		{%endif%} de la partida {{partida.codigo}} {{partida.descripcion}}</h4>
 	<h5>Informacion: </h5>
 	<p>Monto por ejercer: {{mes.monto_por_ejercer}}</p>
 
@@ -38,15 +37,15 @@
 
 	{% if messages %}
 
-	<div class="messages">
+		<div class="messages">
 
-		{% for message in messages %}
-	
-		<div {% if message.tags %} class="alert alert-danger"{% endif %}>{{ message }}</div>
+			{% for message in messages %}
 		
-		{% endfor %}
-	
-	</div>
+			<div {% if message.tags %} class="alert alert-danger"{% endif %}>{{ message }}</div>
+			
+			{% endfor %}
+		
+		</div>
 
 	{% endif %}
 
@@ -55,7 +54,7 @@
 	<form action="." method="post">
 		{%csrf_token%}
 		{{NuevaModificacionForm | bootstrap}}
-			<input type="submit" value="Guardar">
+			<input type="submit" value="Realizar ejerción">
 			<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 

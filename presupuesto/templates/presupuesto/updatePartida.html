@@ -4,11 +4,11 @@
 
 {%block content%}
 
-	<h3>Edita la partida <i>{{partida.descripcion}}</i></h3>
 	<form action="." method="post">
+		<h4>Edita la partida <i>{{partida.descripcion}}</i></h4>
 		{%csrf_token%}
 		{{EdicionPartidaForm | bootstrap}}
-		<input type="submit" value="Guardar">
+		<input type="submit" value="Guardar cambios">
 		<a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 

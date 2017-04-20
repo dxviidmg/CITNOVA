@@ -1,11 +1,15 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
-<p>Folio: {{folio}}</p>
-<form action="." method="post">
+	
+	<h4>Crear Solicitud de Recurso Financiero para Proveedor</h4>
+	<p>Folio: {{folio}}</p>
+	<form action="." method="post">
 		{%csrf_token%}
-		{{SolicitudRecursoFinancieroForm.as_p}}
-		<input type="submit" value="Crear Usuario">
-</form>
+		{{SolicitudRecursoFinancieroForm | bootstrap}}	
+		<input type="submit" value="Crear solicitud">
+	</form>
 
 {%endblock content%}

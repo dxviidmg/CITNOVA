@@ -1,12 +1,16 @@
 {%extends 'baseUser.html'%}
 
 {%block content%}
-<p>Lista de solicitudes Por pagar</p>
+	<h4 class="text-center">Lista de solicitudes por pagar</h4>
 
-{%for solicitud in solicitudes%}
-<a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}"><p>{{solicitud.folio}}</p></a>
-{%empty%}
-Lista vacia
-{%endfor%}
+	{%for solicitud in solicitudes%}
+
+	<a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}"><p class="text-center">{{solicitud.folio}}</p></a>
+	
+	{%empty%}
+	
+	<p>Lista vacia</p>
+	
+	{%endfor%}
 
 {%endblock content%}

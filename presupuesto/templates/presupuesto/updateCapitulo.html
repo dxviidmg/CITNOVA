@@ -5,10 +5,11 @@
 {%block content%}
 
 	<form action="." method="post">
+		<h4>Edita el capitulo</h4>
 		{%csrf_token%}
 		{{EdicionCapituloForm | bootstrap}}
-			<input type="submit" value="Crear">
-			<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
+		<input type="submit" value="Guardar cambios">
+		<a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 
 {%endblock content%}

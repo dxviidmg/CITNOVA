@@ -5,6 +5,7 @@ from .forms import *
 from accounts.models import Perfil
 import datetime
 from presupuesto.models import *
+from django.contrib import messages
 
 class ListViewSolicitudesPropias(View):
 	#@method_decorator(login_required)
@@ -31,7 +32,6 @@ class CreateViewSolicitudEmpleado(View):
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
 
 		programas = Programa.objects.filter(año=hoy.year, departamento=departamento)
-		print(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year))
 		SolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento, )
 		context = {
 			'departamento': departamento,
@@ -142,6 +142,7 @@ class DetailViewSolicitudPendiente(View):
 		EdicionSolicitudForm=SolicitudRecursoFinancieroEditForm(instance=solicitud, data=request.POST)
 
 		if EdicionSolicitudForm.is_valid():
+			messages.success(request, "Se cambió el estatus correctamente")
 			EdicionSolicitudForm.save()
-
+			
 		return redirect("solicitudes:DetailViewSolicitudPendiente", pk=solicitud.pk)

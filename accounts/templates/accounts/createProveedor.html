@@ -1,12 +1,16 @@
 {%extends 'baseUser.html'%}
 
+{% load bootstrap %}
+
 {%block content%}
-<p>Registro de nuevo proveedor</p>
-<form action="." method="post" enctype="multipart/form-data">
-		{%csrf_token%}
-		{{UserProveedorForm.as_p}}
-		{{PerfilProveedorForm.as_p}}
-		{{ExpedienteProveedorForm.as_p}}
-		<input type="submit" value="Registrar proveedor">
-</form>
+
+	<h4>Registro de nuevo proveedor</h4>
+	<form action="." method="post" enctype="multipart/form-data">
+			{%csrf_token%}
+			{{UserProveedorForm | bootstrap}}
+			{{PerfilProveedorForm | bootstrap}}
+			{{ExpedienteProveedorForm | bootstrap}}			
+			<input type="submit" value="Registrar proveedor">
+	</form>
+
 {%endblock content%}

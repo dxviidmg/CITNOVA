@@ -30,7 +30,6 @@
 		{%elif mes.mes == 12%}
 			Diciembre
 		{%endif%} de la partida {{partida.codigo}} {{partida.descripcion}}</h4>
-		<br>
 		<h5>Informacion: </h5>
 
 		<p>Monto actual: {{mes.monto_modificado}}</p>
@@ -40,7 +39,7 @@
 	<form action="." method="post">
 		{%csrf_token%}
 		{{NuevaModificacionForm | bootstrap}}
-		<input type="submit" value="Guardar">
+		<input type="submit" value="Realizar reducción">
 		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 

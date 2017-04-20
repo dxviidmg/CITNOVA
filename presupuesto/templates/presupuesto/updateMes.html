@@ -33,7 +33,7 @@
 	<form action="." method="post">
 		{%csrf_token%}
 		{{EdicionMesForm | bootstrap}}
-			<input type="submit" value="Crear">
+			<input type="submit" value="Guardar cambios">
 			<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 

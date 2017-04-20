@@ -5,7 +5,7 @@
 {%block content%}
 
 	<form action="." method="post">
-		<h3>Crea una partida para el capitulo {{capitulo.codigo}} {{capitulo.nombre}}</h3>
+		<h4>Crea una partida para el capitulo {{capitulo.codigo}} {{capitulo.nombre}}</h4>
 		{%csrf_token%}
 		{{NuevaPartidaForm | bootstrap}}
 		<input type="submit" value="Crear">

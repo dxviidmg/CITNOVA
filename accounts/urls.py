@@ -13,5 +13,12 @@ urlpatterns = [
 
 	url(r'^accounts/empleados/$',views.ListViewEmpleados.as_view(), name='ListViewEmpleados'),
 	url(r'^accounts/proveedores/$',views.ListViewProveedores.as_view(), name='ListViewProveedores'),
+
+	url(r'^accounts/bancos/actualizar/(?P<pk>\d+)$',views.UpdateViewBanco.as_view(), name='UpdateViewBanco'),
+	url(r'^accounts/bancos/eliminar/(?P<pk>\d+)$',views.DeleteViewBanco.as_view(), name='DeleteViewBanco'),
+	url(r'^accounts/bancos/nuevo/$',views.CreateViewBanco.as_view(), name='CreateViewBanco'),
+	
+	url(r'^accounts/bancos/$',views.ListViewBancos.as_view(), name='ListViewBancos'),
+
 	url(r'^accounts/profile/$',views.profile.as_view(), name='profile'),
 ]

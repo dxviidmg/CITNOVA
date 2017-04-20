@@ -3,13 +3,15 @@ from django.views.generic import View
 from django.contrib.auth.models import User
 from .forms import *
 from django.db.models import Count
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
 
 class ListViewEmpleados(View):
 	#@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/ListViewEmpleados.html"
 
-		empleados = User.objects.filter(username__startswith='EMPL' ,is_staff=False, is_active=True, departamento=request.user.departamento).order_by('username')
+		empleados = User.objects.filter(departamento=request.user.departamento).order_by('username')
 
 		context = {
 			'empleados': empleados,
@@ -176,6 +178,29 @@ class UpdateViewProveedor(View):
 			EdicionExpedienteForm.save()
 
 		return redirect("accounts:UpdateViewProveedor", pk=user.pk)
+
+class ListViewBancos(View):
+	def get(self, request):
+		template_name = "accounts/listBancos.html"
+		bancos = Banco.objects.all()
+		context = {
+			'bancos': bancos
+		}
+		return render(request,template_name, context)
+
+class CreateViewBanco(CreateView):
+	model = Banco
+	success_url = reverse_lazy('accounts:ListViewBancos')
+	fields = ['nombre',]
+
+class UpdateViewBanco(UpdateView):
+	model = Banco
+	success_url = reverse_lazy('accounts:ListViewBancos')
+	fields = ['nombre',]
+
+class DeleteViewBanco(DeleteView):
+	model = Banco
+	success_url = reverse_lazy('accounts:ListViewBancos')
 
 class profile(View):
 	#@method_decorator(login_required)

@@ -2,24 +2,43 @@
 
 {%block content%}
 
-<p>Folio: {{solicitud.folio}}</p>
-<p>Programa: {{solicitud.programa}}</p>
-<p>A nombre de: {{solicitud.a_nombre_de}}</p>
-<p>Concepto: {{solicitud.concepto}}</p>
-<p>Importe con numero: {{solicitud.importe_numero}}</p>
-<p>Importe con letra: {{solicitud.importe_letra}}</p>
-<p>Metodo: {{solicitud.metodo_pago}}</p>
-<p>CLABE: {{solicitud.clabe}}</p>
-<p>Cración: {{solicitud.creacion}}</p>
-{%if solicitud.comprobante%} 
-<p><a href="{{solicitud.comprobante.url}}">Ver comprobante(s)</a></p>
-{%else%}
-<p>Falta comprobante</p>
-{%endif%}
+	<div>
 
-<form action="." method="post">
-	{%csrf_token%}
-	{{EdicionSolicitudForm.as_p}}
-		<input type="submit" value="Crear">
-</form>
+	{% if messages %}
+
+		<div class="messages">
+
+			{% for message in messages %}
+		
+			<div {% if message.tags %} class="alert alert-success"{% endif %}>{{ message }}</div>
+			
+			{% endfor %}
+		
+		</div>
+
+	{% endif %}
+
+	</div>
+
+	<p>Folio: {{solicitud.folio}}</p>
+	<p>Programa: {{solicitud.programa}}</p>
+	<p>A nombre de: {{solicitud.a_nombre_de}}</p>
+	<p>Concepto: {{solicitud.concepto}}</p>
+	<p>Importe con numero: {{solicitud.importe_numero}}</p>
+	<p>Importe con letra: {{solicitud.importe_letra}}</p>
+	<p>Metodo: {{solicitud.metodo_pago}}</p>
+	<p>CLABE: {{solicitud.clabe}}</p>
+	<p>Cración: {{solicitud.creacion}}</p>
+	{%if solicitud.comprobante%} 
+	<p><a href="{{solicitud.comprobante.url}}">Ver comprobante(s)</a></p>
+	{%else%}
+	<p>Falta comprobante</p>
+	{%endif%}
+
+	<form action="." method="post">
+		{%csrf_token%}
+		{{EdicionSolicitudForm.as_p}}		
+		<input type="submit" value="Cambiar status">
+	</form>
+
 {%endblock content%}

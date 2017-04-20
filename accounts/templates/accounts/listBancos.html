@@ -1,0 +1,35 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
+	<h4>Lista de bancos</h4>
+
+	<div class="table-responsive">
+		<table  class="table">
+			<thead>
+				<th>Nombre</th>
+				<th colspan="2">Acciones</th>
+			</thead>
+			<tbody>
+
+			{%for banco in bancos%}
+
+			<tr>
+				<td>{{banco.nombre}}</td>
+				<td><a href="{%url 'accounts:UpdateViewBanco' banco.pk%}">Editar</a></td>
+				<td><a href="{%url 'accounts:DeleteViewBanco' banco.pk%}">Borrar</a></td>
+			</tr>
+
+			{%empty%}
+
+			<tr>
+				<td colspan="3">Lista de bancos vacia</td>
+			</tr>
+
+			{%endfor%}
+			
+			</tbody>
+		</table>
+	</div>
+
+{%endblock content%}
