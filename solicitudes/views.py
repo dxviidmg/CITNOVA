@@ -7,6 +7,7 @@ import datetime
 from presupuesto.models import *
 from django.contrib import messages
 
+#Lista de solicitudes propias
 class ListViewSolicitudesPropias(View):
 	#@method_decorator(login_required)
 	def get(self, request):
@@ -21,6 +22,7 @@ class ListViewSolicitudesPropias(View):
 		}
 		return render(request,template_name,context)
 
+#Creación de Solicitud para un empleado
 class CreateViewSolicitudEmpleado(View):
 	def get(self, request):
 		template_name = "solicitudes/createSolicitudEmpleado.html"
@@ -40,7 +42,6 @@ class CreateViewSolicitudEmpleado(View):
 			'programas': programas,
 		}
 		return render(request,template_name,context)
-
 	def post(self,request):
 		template_name = "solicitudes/createSolicitudEmpleado.html"
 
@@ -63,6 +64,7 @@ class CreateViewSolicitudEmpleado(View):
 
 		return redirect("solicitudes:ListViewSolicitudesPropias")
 
+#Creación de Solicitud para un proveedor
 class CreateViewSolicitudProveedor(View):
 	def get(self, request):
 		template_name = "solicitudes/createSolicitudProveedor.html"
@@ -80,7 +82,6 @@ class CreateViewSolicitudProveedor(View):
 			'SolicitudRecursoFinancieroForm': SolicitudRecursoFinancieroForm,
 		}
 		return render(request,template_name,context)
-
 	def post(self,request):
 		template_name = "solicitudes/createSolicitudProveedor.html"
 
@@ -103,6 +104,7 @@ class CreateViewSolicitudProveedor(View):
 
 		return redirect("solicitudes:ListViewSolicitudesPropias")
 
+#Detalle de una Solicitud propia
 class DetailViewSolicitudPropia(View):
 	def get(self, request, pk):
 		template_name = "solicitudes/detailSolicitudPropia.html"
@@ -112,10 +114,10 @@ class DetailViewSolicitudPropia(View):
 		}
 		return render(request, template_name, context)
 
+#Lista de Solicitudes por pagar
 class ListViewSolicitudesPendientes(View):
 	#@method_decorator(login_required)
 	def get(self, request):
-
 		template_name = "solicitudes/listSolitudesPendientes.html"
 		hoy = datetime.datetime.now()
 
@@ -126,6 +128,7 @@ class ListViewSolicitudesPendientes(View):
 		}
 		return render(request,template_name,context)
 
+#Detalle de una Solicitud por pagar
 class DetailViewSolicitudPendiente(View):
 	def get(self, request, pk):
 		template_name = "solicitudes/detailSolicitudPendiente.html"

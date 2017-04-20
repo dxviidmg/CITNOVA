@@ -1,7 +1,23 @@
+html, body {
+	background-color: #FAFAFA;
+}
+
 th, td {
 	text-align: center;
 }
 
 h4 {
 	padding-bottom: 15px;
+}
+
+.navbar {
+	background-color: #6FB52B;
+}
+
+.dropdown-menu {
+	background-color: #88d241;
+}
+
+.dropdown-item:hover {
+		background-color: #a2dc6a;
 }

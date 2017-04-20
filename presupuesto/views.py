@@ -10,6 +10,7 @@ from decimal import Decimal
 from django.contrib import messages
 import datetime
 
+#Lista de programas
 class ListViewProgramas(View):
 	def get(self, request):
 		template_name = "presupuesto/listProgramas.html"
@@ -20,6 +21,7 @@ class ListViewProgramas(View):
 		}
 		return render(request, template_name, context)
 
+#Lista de capitulos
 class ListViewCapitulos(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/listCapitulos.html"
@@ -56,6 +58,7 @@ class ListViewCapitulos(View):
 		}
 		return render(request, template_name, context)
 
+#Lista de partidas
 class ListViewPartidas(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/listPartidas.html"
@@ -94,6 +97,7 @@ class ListViewPartidas(View):
 		}
 		return render(request, template_name, context)
 
+#Lista de Meses
 class ListViewMeses(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/listMeses.html"
@@ -134,23 +138,26 @@ class ListViewMeses(View):
 		}
 		return render(request, template_name, context)
 
+#Creación de un programa
 class CreateViewPrograma(CreateView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
 	fields = ['departamento', 'nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
 		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año']
 
+#Edición de un Programa
 class UpdateViewPrograma(UpdateView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
 	fields = ['departamento', 'nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
 		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año',]
 
+#Borrado de un Programa
 class DeleteViewPrograma(DeleteView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
 
-
+#Creación de un Capitulo
 class CreateViewCapitulo(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/createCapitulo.html"
@@ -171,6 +178,7 @@ class CreateViewCapitulo(View):
 			NuevoCapitulo.save()
 		return redirect("presupuesto:ListViewCapitulos", pk=programa.pk)
 
+#Edición de un Capitulo
 class UpdateViewCapitulo(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/updateCapitulo.html"
@@ -191,6 +199,7 @@ class UpdateViewCapitulo(View):
 			EdicionCapituloForm.save()
 		return redirect("presupuesto:ListViewCapitulos", pk=programa.pk)
 
+#Borrado de un Capitulo
 class DeleteViewCapitulo(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/deleteCapitulo.html"
@@ -209,6 +218,7 @@ class DeleteViewCapitulo(View):
 			capitulo.delete()
 		return redirect("presupuesto:ListViewCapitulos", pk=programa.pk)
 
+#Creación de una Partida
 class CreateViewPartida(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/createPartida.html"
@@ -229,6 +239,7 @@ class CreateViewPartida(View):
 			NuevaPartida.save()
 		return redirect("presupuesto:ListViewPartidas", pk=capitulo.pk)
 
+#Edicióm de una Partida
 class UpdateViewPartida(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/updatePartida.html"
@@ -250,6 +261,7 @@ class UpdateViewPartida(View):
 			EdicionPartidaForm.save()
 		return redirect("presupuesto:ListViewPartidas", pk=capitulo.pk)
 
+#Borrado de una Partida
 class DeleteViewPartida(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/deletePartida.html"
@@ -268,6 +280,7 @@ class DeleteViewPartida(View):
 			partida.delete()
 		return redirect("presupuesto:ListViewPartidas", pk=capitulo.pk)
 
+#Creación de un Mes
 class CreateViewMes(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/createMes.html"
@@ -288,6 +301,7 @@ class CreateViewMes(View):
 			NuevoMes.save()
 		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
 
+#Edición de un Mes
 class UpdateViewMes(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMes.html"
@@ -311,6 +325,7 @@ class UpdateViewMes(View):
 			EdicionMesForm.save()
 		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
 
+#Borrado de un Mes
 class DeleteViewMes(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/deleteMes.html"
@@ -329,6 +344,7 @@ class DeleteViewMes(View):
 			mes.delete()
 		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
 
+#Realización de una Ampliación
 class UpdateViewMesAmpliacion(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMesAmpliacion.html"
@@ -352,6 +368,7 @@ class UpdateViewMesAmpliacion(View):
 			mes.save()
 		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
 
+#Realización de una Reducción
 class UpdateViewMesReduccion(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMesReduccion.html"
@@ -375,6 +392,7 @@ class UpdateViewMesReduccion(View):
 			mes.save()
 		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
 
+#Realización de una Ejerción
 class UpdateViewMesEjercido(View):
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMesEjercido.html"

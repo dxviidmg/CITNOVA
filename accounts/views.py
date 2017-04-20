@@ -6,18 +6,20 @@ from django.db.models import Count
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 
+#Lista de empleados
 class ListViewEmpleados(View):
 	#@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/ListViewEmpleados.html"
 
-		empleados = User.objects.filter(departamento=request.user.departamento).order_by('username')
+		empleados = User.objects.filter(departamento=request.user.departamento, is_active=True).order_by('username')
 
 		context = {
 			'empleados': empleados,
 		}
 		return render(request,template_name,context)
 
+#Lista de proveedores
 class ListViewProveedores(View):
 	#@method_decorator(login_required)
 	def get(self, request):
@@ -30,6 +32,7 @@ class ListViewProveedores(View):
 		}
 		return render(request,template_name,context)
 
+#Creación de un empleado
 class CreateViewEmpleado(View):
 	#@method_decorator(login_required)
 	def get(self, request):
@@ -63,6 +66,7 @@ class CreateViewEmpleado(View):
 			NuevoPerfil.save()
 		return redirect("accounts:ListViewEmpleados")
 
+#Creación de un Proveedor
 class CreateViewProveedor(View):
 	#@method_decorator(login_required)
 	def get(self, request):
@@ -106,12 +110,7 @@ class CreateViewProveedor(View):
 			
 		return redirect("accounts:ListViewProveedores")
 
-class profile(View):
-	#@method_decorator(login_required)
-	def get(self, request):
-		template_name = "accounts/profile.html"
-		return render(request,template_name)
-
+#Edición de un empleado
 class UpdateViewEmpleado(View):
 	def get(self, request, pk):
 		template_name = "accounts/updateEmpleado.html"
@@ -141,6 +140,7 @@ class UpdateViewEmpleado(View):
 			EdicionPerfilForm.save()
 		return redirect("accounts:UpdateViewEmpleado", pk=user.pk)
 
+#Edición de un proveedor
 class UpdateViewProveedor(View):
 	def get(self, request, pk):
 		template_name = "accounts/updateProveedor.html"
@@ -179,6 +179,39 @@ class UpdateViewProveedor(View):
 
 		return redirect("accounts:UpdateViewProveedor", pk=user.pk)
 
+#Desactivación de un empleado o proveedor
+class DesactivateViewUser(View):
+	def get(self, request, pk):
+		template_name = "accounts/desactivateUser.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		expediente = Expediente.objects.filter(perfil=perfil)
+
+		DesactivaUserForm = UserDesactivateForm(instance=user)
+	
+		context = {
+			'user': user,
+			'perfil': perfil,
+			'DesactivaUserForm': DesactivaUserForm,
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "accounts/desactivateUser.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+		expediente = Expediente.objects.filter(perfil=perfil)
+
+		DesactivaUserForm = UserDesactivateForm(instance=user, data=request.POST)
+	
+		if DesactivaUserForm.is_valid:
+			DesactivaUserForm.save()
+
+		if expediente.exists():
+			return redirect("accounts:ListViewProveedores")
+		else:
+			return redirect("accounts:ListViewEmpleados")
+
+#Lista de bancos
 class ListViewBancos(View):
 	def get(self, request):
 		template_name = "accounts/listBancos.html"
@@ -188,20 +221,24 @@ class ListViewBancos(View):
 		}
 		return render(request,template_name, context)
 
+#creación de bancos
 class CreateViewBanco(CreateView):
 	model = Banco
 	success_url = reverse_lazy('accounts:ListViewBancos')
 	fields = ['nombre',]
 
+#Edición de bancos
 class UpdateViewBanco(UpdateView):
 	model = Banco
 	success_url = reverse_lazy('accounts:ListViewBancos')
 	fields = ['nombre',]
 
+#Borrado de Bancos
 class DeleteViewBanco(DeleteView):
 	model = Banco
 	success_url = reverse_lazy('accounts:ListViewBancos')
 
+#Perfil de usuario autenticado
 class profile(View):
 	#@method_decorator(login_required)
 	def get(self, request):

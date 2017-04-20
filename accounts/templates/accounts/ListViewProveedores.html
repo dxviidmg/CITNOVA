@@ -4,14 +4,33 @@
 
 	<h4 class="text-center">Catalogo de proveedores</h4>
 
-	{%for proveedor in proveedores%}
+	<div class="table-responsive">
+		<table class="table table table-striped table-bordered">
+			<thead>
+				<th>Nombre</th>
+				<th colspan="2">Acciones</th>
+			</thead>
+			<tbody>
+			
+			{%for proveedor in proveedores%}
 
-	<a href="{%url 'accounts:UpdateViewProveedor' proveedor.pk%}"><p class="text-center">{{proveedor.first_name}} {{proveedor.last_name}}</p></a>
+				<tr>
+					<td>{{proveedor.first_name}} {{proveedor.last_name}}</td>
+					<td><a href="{%url 'accounts:UpdateViewProveedor' proveedor.pk%}"><p class="text-center">Actualizar</p></a>
+					</td>
+					<td><a href="{%url 'accounts:DesactivateViewUser' proveedor.pk%}">Eliminar</a></td>
+				</tr>
 
-	{%empty%}
+			{%empty%}
 
-	<p>Lista vacía</p>
+				<tr>
+					<td colspan="3"> Lista de proveedores vacia</td>
+				</tr>
 
-	{%endfor%}
+			{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
 
 {%endblock content%}

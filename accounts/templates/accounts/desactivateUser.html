@@ -1,0 +1,19 @@
+{%extends 'baseUser.html'%}
+
+
+{% load bootstrap %}
+
+{%block content%}
+
+	<h4>Eliminar empleado</h4>
+
+	<p>Nombre: {{user.first_name}} {{user.last_name}}</p>
+	<p>Esta aplicación tiene información de interés histórico, por lo que la información del personal no puede ser borrada, pero al desmarcar la opción de <strong>Activo</strong>, ya no aparecerá en el catalogo actual.</p>
+	
+	<form action="." method="post">
+		{%csrf_token%}
+		{{DesactivaUserForm | bootstrap}}
+		<input type="submit" value="Desactivar">
+	</form>
+
+{%endblock content%}

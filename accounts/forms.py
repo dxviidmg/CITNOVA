@@ -26,3 +26,8 @@ class ExpedienteProveedorCreateForm(forms.ModelForm):
 	class Meta:
 		model = Expediente
 		fields = ('tipo', 'RFC', 'IFE')
+
+class UserDesactivateForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('is_active',)
