@@ -90,7 +90,7 @@ class CreateViewSolicitudProveedor(View):
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
-		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2(request.POST, request.FILES)
+		NuevoSolicitudRecursoFinancieroForm = SolicitudRecursoFinancieroCreateForm2(data=request.POST, files=request.FILES)
 		
 		proveedor = User.objects.get(pk=request.POST.get("a_nombre_de"))
 		perfilProveedor = Perfil.objects.get(user=proveedor)

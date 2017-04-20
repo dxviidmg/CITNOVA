@@ -1,51 +1,47 @@
 {%load static%}
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Administración CITNOVA</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{%static 'css/estilos.css'%}">
-</head>
-<body>
-
+    <head>
+    	<title>Administración CITNOVA</title>
+    	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{%static 'css/estilos.css'%}">
+    </head>
+    <body>
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-default">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand" href="#"><img src="{%static 'img/logo.png'%}" height="32"> Presupuestos y SRF</a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <ul class="navbar-nav">
-                
-                {%if request.user.is_authenticated%}
+
+                    {%if request.user.is_authenticated%}
 
                     <li class="nav-item">
                         <a class="nav-link" href="{%url 'accounts:profile'%}">Inicio</a>
                     </li>
 
-
                     {%if request.user.perfil.puesto == "Director"%}
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Registrar</a>
+                        Empleados</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{% url 'accounts:CreateViewEmpleado' %}">Empleado</a>
-                            <a class="dropdown-item" href="{% url 'accounts:CreateViewProveedor' %}">Proveedor</a>
+                            <a class="dropdown-item" href="{% url 'accounts:CreateViewEmpleado' %}">Registrar</a>
+                            <a class="dropdown-item" href="{% url 'accounts:ListViewEmpleados' %}">Catalogo</a>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Catalogos</a>
+                        Proveedores</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{% url 'accounts:ListViewEmpleados' %}">Empleados</a>
-                            <a class="dropdown-item" href="{% url 'accounts:ListViewProveedores' %}">Proveedores</a>
+                            <a class="dropdown-item" href="{% url 'accounts:CreateViewProveedor' %}">Registrar</a>
+                            <a class="dropdown-item" href="{% url 'accounts:ListViewProveedores' %}">Catalogo</a>
                         </div>
                     </li>              
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Solicitudes de Recurso Financiero</a>
@@ -55,9 +51,10 @@
                             <a class="dropdown-item" href="{% url 'solicitudes:ListViewSolicitudesPropias' %}">Mis solicitudes</a>
                         </div>
                     </li>
-                        {%endif%}
-                        {%if request.user.username == "administrador"%}
-                    
+
+                    {%endif%}
+                    {%if request.user.username == "administrador"%}
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Programas</a>
@@ -69,8 +66,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'solicitudes:ListViewSolicitudesPendientes' %}">Solicitudes pendientes</a>
                     </li>
-
-                   <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Bancos</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -78,26 +74,27 @@
                             <a class="dropdown-item" href="{% url 'accounts:ListViewBancos' %}">Catalogo</a>
                         </div>
                     </li> 
-                        {%endif%}
+
+                    {%endif%}
+
                     <li class="nav-item">
                         <a class="nav-link" href="{%url 'accounts:logout'%}">Salir</a>
                     </li>
- 
+
                     {%endif%}
 
                 </ul>
             </div>
-    </nav>
+        </nav>
 
-    <div class="container">
-        <br>
-        {%block content%}
-        {%endblock content%}
-    </div>
+        <div class="container">
+            <br>
+            {%block content%}
+            {%endblock content%}
+        </div>
 
+        <script type="text/javascript" src="{%static 'js/jquery.js'%}"></script>
 
-    <script type="text/javascript" src="{%static 'js/jquery.js'%}"></script>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-</body>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    </body>
 </html>

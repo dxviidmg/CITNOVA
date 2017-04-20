@@ -35,6 +35,8 @@
 	<p>Falta comprobante</p>
 	{%endif%}
 
+	<p><strong>Una vez concluido el proceso correspondiente, se tiene que activar la opción de pagado</strong></p>
+
 	<form action="." method="post">
 		{%csrf_token%}
 		{{EdicionSolicitudForm.as_p}}		

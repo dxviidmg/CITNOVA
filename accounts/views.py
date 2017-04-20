@@ -243,4 +243,9 @@ class profile(View):
 	#@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/profile.html"
-		return render(request,template_name)
+		perfil = Perfil.objects.get(user=request.user)
+		
+		context = {
+			'perfil': perfil
+		}		
+		return render(request,template_name, context)

@@ -3,14 +3,31 @@
 {%block content%}
 	<h4 class="text-center">Lista de solicitudes por pagar</h4>
 
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<th>Folio</th>
+				<th>Acciones</th>
+			</thead>
+			<tbody>
+
 	{%for solicitud in solicitudes%}
 
-	<a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}"><p class="text-center">{{solicitud.folio}}</p></a>
+				<tr>
+					<td>{{solicitud.folio}}</td>
+					<td><a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}">Realizar pago</a></td>
+				</tr>
 	
 	{%empty%}
 	
-	<p>Lista vacia</p>
-	
+				<tr>
+					<td colspan="2">Lista de solicitudes vacia</td>
+				</tr>	
 	{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
+
 
 {%endblock content%}

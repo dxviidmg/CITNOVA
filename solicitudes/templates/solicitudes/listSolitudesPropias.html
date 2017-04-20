@@ -3,14 +3,32 @@
 {%block content%}
 	
 	<h4 class="text-center">Lista de mis solicitudes de {% now " F Y" %}</h4>
+
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<th>Folio</th>
+				<th>Acciones</th>
+			</thead>
+			<tbody>
+	
 	{%for solicitud in solicitudes%}
 	
-	<a href="{%url 'solicitudes:DetailViewSolicitudPropia' solicitud.pk%}"><p class="text-center">{{solicitud.folio}}</p></a>
+				<tr>
+					<td>{{solicitud.folio}}</td>
+					<td><a href="{%url 'solicitudes:DetailViewSolicitudPropia' solicitud.pk%}">Ver información</a></td>
+				</tr>
 
-	{%empty%}
+			{%empty%}
 
-	<p>Lista vacia</p>
+				<tr>
+					<td colspan="2">Lista de solicitudes vacia</td>
+				</tr>
 
-	{%endfor%}
+			{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
 
 {%endblock content%}

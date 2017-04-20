@@ -2,6 +2,7 @@
 
 {%block content%}
 
-<h2 class="text-center">Bienvenido(a) {{request.user.first_name}} {{request.user.last_name}}</h2>
+	<h2 class="text-center">Bienvenido(a)</h2>
+	<h2 class="text-center">{{perfil.grado_profesional}} {{request.user.first_name}} {{request.user.last_name}}</h2>
 
 {%endblock content%}
