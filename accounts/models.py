@@ -36,7 +36,7 @@ class Perfil(models.Model):
 	user = models.OneToOneField(User)
 	grado_profesional = models.CharField(max_length=30, choices=GradoProfesional_CHOICES, blank=True, default="C.")
 	puesto = models.CharField(max_length=30, blank=True, null=True)
-	telefono = models.CharField(max_length=10, blank=True, null=True)
+	teléfono = models.CharField(max_length=10, blank=True, null=True)
 	banco = models.ForeignKey(Banco, blank=True, null=True)
 	cuenta_bancaria = models.CharField(max_length=16, blank=True, null=True)
 	CLABE = models.CharField(max_length=20, blank=True, null=True)
@@ -54,9 +54,15 @@ class Expediente(models.Model):
 	}
 	perfil = models.OneToOneField(Perfil, related_name='perfil', blank=True, null=True)
 	tipo = models.CharField(max_length=20, choices=Tipo_CHOICES)
-	IFE = models.FileField(upload_to='IFE/%Y/%m/%d/', null=True, blank=True)
+	Identifación_oficial = models.FileField(upload_to='IFE/%Y/%m/%d/', null=True, blank=True)
 	RFC = models.FileField(upload_to='RFC/%Y/%m/%d/', null=True, blank=True)
-		
+	Comprobante_de_domicilio = models.FileField(upload_to='Comprobante/%Y/%m/%d/', null=True, blank=True)
+	Registro_de_padrón_de_proveedores = models.FileField(upload_to='Registro de padron/%Y/%m/%d/', null=True, blank=True)
+	Tres_cotizaciones = models.FileField(upload_to='cotizaciones/%Y/%m/%d/', null=True, blank=True)
+	Opinión_de_cumplimiento = models.FileField(upload_to='Opinon de cumplimiento/%Y/%m/%d/', null=True, blank=True)
+	Acta_constitutiva = models.FileField(upload_to='Acta/%Y/%m/%d/', null=True, blank=True)
+	Representación_legal = models.FileField(upload_to='Representacion_legal/%Y/%m/%d/', null=True, blank=True)
+
 	def __str__(self):
 		return 'Expediente de {}'.format(self.perfil)
 
