@@ -4,12 +4,19 @@
 
 {% load humanize %}
 
+
 	<h4 class="text-center">Lista de capitulos del programa <i>{{programa.nombre}}</i></h4>
 
 	<ul class="nav nav-pills">
+
+		{%if request.user.username == "administrador"%}
+
 		<li class="nav-item">
 			<a class="nav-link" href="{%url 'presupuesto:CreateViewCapitulo' programa.pk%}">Crear capitulo</a>
 		</li>
+
+		{%endif%}
+
 		<li class="nav-item">
 			<a class="nav-link" href="{%url 'presupuesto:ListViewProgramas'%}">Regresar</a>
 		</li>
@@ -20,11 +27,17 @@
 			<thead>
 				<th>Código</th>
 				<th>Nombre</th>
+
+				{%if request.user.username == "administrador"%}
+
 				<th>Monto anual autorizado</th>
 				<th>Monto anual ampliación</th>
 				<th>Monto anual reducción</th>
 				<th>Monto anual modificado</th>
 				<th>Monto anual ejercido</th>
+
+				{%endif%}
+
 				<th>Monto anual por ejercer</th>
 				<th colspan="3">Acciones</th>
 			</thead>
@@ -35,6 +48,9 @@
 				<tr>
 					<td>{{capitulo.codigo}}</td>
 					<td>{%if capitulo.CreaNombre is None%}{{capitulo.nombre}}{%endif%}</td>
+
+					{%if request.user.username == "administrador"%}
+
 					<td>{% if capitulo.MontoAnualAutorizado is None%}
 							{%if capitulo.monto_anual_autorizado is None%}
 								Por definir
@@ -75,6 +91,9 @@
 							{%endif%}
 						{%endif%}
 					</td>
+
+					{%endif%}
+
 					<td>{% if capitulo.MontoAnualPorEjercer is None%}
 							{%if capitulo.monto_anual_por_ejercer is None%}
 								Por definir
@@ -84,8 +103,13 @@
 						{%endif%}
 					</td>
 					<td><a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}">Ver partidas</a></td>
+
+					{%if request.user.username == "administrador"%}
+
 					<td><a href="{%url 'presupuesto:UpdateViewCapitulo' capitulo.pk%}">Editar</a></td>
 					<td><a href="{%url 'presupuesto:DeleteViewCapitulo' capitulo.pk%}">Eliminar</a></td>
+
+					{%endif%}
 				</tr>
 
 		{%empty%}
@@ -98,6 +122,9 @@
 
 				<tr>
 					<td colspan="2"><p align="right">Total</p></td>
+
+					{%if request.user.username == "administrador"%}
+
 					<td>{%if total_monto_anual_autorizado is None%}
 						{%else%}
 							${{total_monto_anual_autorizado|intcomma}}
@@ -123,6 +150,11 @@
 							${{total_monto_anual_ejercido|intcomma}}
 						{%endif%}
 					</td>
+
+					{%endif%}
+
+
+
 					<td>{%if total_monto_anual_por_ejercer is None%}
 						{%else%}
 							${{total_monto_anual_por_ejercer|intcomma}}

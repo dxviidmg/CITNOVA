@@ -9,13 +9,22 @@ from django.contrib import messages
 from decimal import Decimal
 from django.contrib import messages
 import datetime
+from accounts.models import Perfil
 
 #Lista de programas
 class ListViewProgramas(View):
 	def get(self, request):
 		template_name = "presupuesto/listProgramas.html"
 		hoy = datetime.datetime.now()
-		programas = Programa.objects.filter(año=hoy.year).order_by('nombre')
+		user = request.user
+		
+		if user.departamento is None:
+			programas = Programa.objects.filter(año=hoy.year).order_by('nombre')
+		else:
+			programas = Programa.objects.filter(año=hoy.year, departamento=user.departamento).order_by('nombre')
+
+
+	
 		context = {
 			'programas': programas,
 		}

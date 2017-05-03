@@ -7,9 +7,15 @@
 	<h4 class="text-center">Lista de meses de la partida {{partida.codigo}} {{partida.descripcion}} del capitulo {{capitulo.codigo}} {{capitulo.nombre}} del programa {{programa.nombre}}</h4>
 
 	<ul class="nav nav-pills">
+
+		{%if request.user.username == "administrador"%}
+		
 		<li class="nav-item">
 			<a class="nav-link" href="{%url 'presupuesto:CreateViewMes' partida.pk%}">Crear mes</a>
 		</li>
+
+		{%endif%}
+
 		<li class="nav-item">
 			<a class="nav-link" href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}">Regresar</a>
 		</li>
@@ -19,12 +25,19 @@
 		<table class="table table-striped table-bordered">
 			<thead>
 				<th>Mes</th>
+
+				{%if request.user.username == "administrador"%}
+
 				<th>Autorizado</th>
 				<th>Ampliación</th>
 				<th>Reducción</th>
 				<th>Modificado</th>
 				<th>Ejercido</th>
+
+				{%endif%}
+
 				<th>Por ejercer</th>
+
 				<th colspan="5">Acciones</th>
 			</thead>
 			<tbody>
@@ -59,17 +72,29 @@
 							Diciembre
 						{%endif%}
 					</td>
+
+					{%if request.user.username == "administrador"%}
+
 					<td>${{mes.monto_autorizado|intcomma}}</td>
 					<td>${{mes.monto_ampliacion|intcomma}}</td>
 					<td>${{mes.monto_reduccion|intcomma}}</td>
 					<td>${%if mes.MontoModificado is NONE%}{{mes.monto_modificado|intcomma}}{%endif%}</td>
 					<td>${{mes.monto_ejercido|intcomma}}</td>
+
+					{%endif%}
 					<td>${%if mes.MontoPorEjercer is NONE%}{{mes.monto_por_ejercer|intcomma}}{%endif%}</td>
+
+					{%if request.user.username == "administrador"%}
+					
 					<td><a href="{%url 'presupuesto:UpdateViewMesAmpliacion' mes.pk%}">Ampliar</a></td>
 					<td><a href="{%url 'presupuesto:UpdateViewMesReduccion' mes.pk%}">Reducir</a></td>
-					<td><a href="{%url 'presupuesto:UpdateViewMesEjercido' mes.pk%}">Ejercer</a></td>
 					<td><a href="{%url 'presupuesto:UpdateViewMes' mes.pk%}">Editar</a></td>
 					<td><a href="{%url 'presupuesto:DeleteViewMes' mes.pk%}">Eliminar</a></td>
+					{%else%}
+
+					<td><a href="{%url 'presupuesto:UpdateViewMesEjercido' mes.pk%}">Ejercer</a></td>
+
+					{%endif%}
 				</tr>
 
 		{%empty%}
@@ -82,6 +107,9 @@
 		
 				<tr>
 					<td><p align="right">Total</p></td>
+
+					{%if request.user.username == "administrador"%}
+
 					<td>{%if total_monto_autorizado is None%}
 						{%else%}
 							${{total_monto_autorizado|intcomma}}
@@ -107,6 +135,9 @@
 							${{total_monto_ejercido|intcomma}}
 						{%endif%}
 					</td>
+
+					{%endif%}
+					
 					<td>{%if total_monto_por_ejercer is None%}
 						{%else%}
 							${{total_monto_por_ejercer|intcomma}}

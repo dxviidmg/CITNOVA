@@ -16,13 +16,28 @@
 				<th>Unidad de medida</th>
 				<th>Fuente de financiamiento</th>
 				<th>Año</th>
+
+				{%if request.user.username == "administrador"%}
+				
 				<th>Monto autorizado</th>
 				<th>Monto ampliación</th>
 				<th>Monto reducción</th>
 				<th>Monto modificado</th>
 				<th>Monto ejercido</th>
+				
+				{%endif%}
+				
 				<th>Monto por ejercer</th>
+	
+				{%if request.user.username == "administrador"%}
+	
 				<th colspan="3">Acciones</th>
+
+				{%else%}
+
+				<th colspan="1">Acciones</th>
+
+				{%endif%}
 			</thead>
 			<tbody>
 		{%for programa in programas%}
@@ -42,6 +57,9 @@
 						{%endif%}
 					</td>
 					<td>{{programa.año}}</td>
+
+					{%if request.user.username == "administrador"%}
+
 					<td>{%if programa.MontoAnualAutorizado is None%}
 							{%if programa.monto_anual_autorizado is None%}
 							Por definir
@@ -77,6 +95,9 @@
 							 ${{programa.monto_anual_ejercido|intcomma}}
 							{%endif%}
 						{%endif%}</td>
+
+					{%endif%}
+
 					<td>{%if programa.MontoAnualPorEjercer is None%}
 							{%if programa.monto_anual_por_ejercer is None%}
 							Por definir
@@ -84,9 +105,14 @@
 							 ${{programa.monto_anual_por_ejercer|intcomma}}
 							{%endif%}
 						{%endif%}</td>
+
+					
 					<td><a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}">Ver capítulos</a></td>
+
+					{%if request.user.username == "administrador"%}
 					<td><a href="{%url 'presupuesto:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
 					<td><a href="{%url 'presupuesto:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>
+					{%endif%}
 				</tr>
 
 		{%empty%}
