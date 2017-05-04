@@ -226,7 +226,7 @@ class ListViewBancos(View):
 		}
 		return render(request,template_name, context)
 
-#creación de bancos
+#Creación de bancos
 class CreateViewBanco(CreateView):
 	model = Banco
 	success_url = reverse_lazy('accounts:ListViewBancos')
@@ -254,3 +254,82 @@ class profile(View):
 			'perfil': perfil
 		}		
 		return render(request,template_name, context)
+
+#Lista de bancos
+class ListViewDepartamentos(View):
+	def get(self, request):
+		template_name = "accounts/listDepartamentos.html"
+		departamentos = Departamento.objects.all()
+		context = {
+			'departamentos': departamentos
+		}
+		return render(request,template_name, context)
+
+#Creación de bancos
+class CreateViewDepartamento(CreateView):
+	model = Departamento
+	success_url = reverse_lazy('accounts:ListViewDepartamentos')
+	fields = ['nombre','codigo',]
+
+class UpdateViewDepartamento(UpdateView):
+	model = Departamento
+	success_url = reverse_lazy('accounts:ListViewDepartamentos')
+	fields = ['nombre','codigo',]
+
+class DeleteViewDepartamento(DeleteView):
+	model = Departamento
+	success_url = reverse_lazy('accounts:ListViewDepartamentos')
+
+#Lista de directores
+class ListViewDirectores(View):
+	#@method_decorator(login_required)
+	def get(self, request):
+		template_name = "accounts/ListViewDirectores.html"
+
+		users = User.objects.filter(is_active=True).order_by('username')
+
+		directores = []
+		for user in users:
+			perfil = Perfil.objects.get(user=user)
+			if perfil.puesto == "Director":		
+				directores.append({'user': user, 'perfil':Perfil.objects.filter(user=user)})
+		
+		context = {
+			'directores': directores
+		}
+		return render(request,template_name,context)
+
+#Creación de un director
+class CreateViewDirector(View):
+	#@method_decorator(login_required)
+	def get(self, request):
+		template_name = "accounts/createDirector.html"
+		
+		UserDirectorForm = UserDirectorCreateForm()
+		PerfilDirectorForm = PerfilDirectorCreateForm()
+		
+		context = {
+			'UserDirectorForm': UserDirectorForm,
+			'PerfilDirectorForm': PerfilDirectorForm,
+		}
+		return render(request,template_name,context)
+	def post(self,request):
+		template_name = "accounts/createDirector.html"
+
+		users = User.objects.filter(is_staff=False).count()
+		userActual = users + 1
+
+		NuevoUserForm = UserDirectorCreateForm(request.POST)
+		NuevoPerfilForm = PerfilDirectorCreateForm(request.POST)
+
+		if NuevoUserForm.is_valid(): 
+			NuevoUser = NuevoUserForm.save(commit=False)
+			NuevoUser.set_password(NuevoUserForm.cleaned_data['password'])
+			NuevoUser.save()
+
+		if NuevoPerfilForm.is_valid():
+			NuevoPerfil = NuevoPerfilForm.save(commit=False)
+			NuevoPerfil.user = NuevoUser
+			NuevoPerfil.puesto = "Director"
+			NuevoPerfil.save()
+		return redirect("accounts:ListViewDirectores")

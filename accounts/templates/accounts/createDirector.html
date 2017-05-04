@@ -1,0 +1,15 @@
+{%extends 'baseUser.html'%}
+
+{% load bootstrap %}
+
+{%block content%}
+
+	<h4>Registro de nuevo empleado</h4>
+	<form action="." method="post">
+		{%csrf_token%}
+		{{UserDirectorForm | bootstrap}}
+		{{PerfilDirectorForm | bootstrap}}
+		<input type="submit" value="Crear Usuario">
+	</form>
+	
+{%endblock content%}

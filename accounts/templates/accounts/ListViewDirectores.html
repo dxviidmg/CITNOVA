@@ -1,0 +1,35 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+
+	<h4 class="text-center">Catalogo del directores</h4>
+
+	<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<th>Nombre</th>
+				<th colspan="2">Acciones</th>
+			</thead>
+			<tbody>
+
+			{%for director in directores%}
+	
+				<tr>
+					<td>{{director.user.first_name}} {{director.user.last_name}}</td>
+					<td><a href="">Actualizar</a></td>
+					<td><a href="">Eliminar</a></td>
+				</tr>
+
+			{%empty%}
+	
+				<tr>
+					<td colspan="3"> Lista de directores vacia</td>
+				</tr>
+	
+			{%endfor%}
+			
+			</tbody>
+		</table>
+	</div>
+
+{%endblock content%}

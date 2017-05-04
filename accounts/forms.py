@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 
+#Formularios de empleado
 class UserEmpleadoCreateForm(forms.ModelForm):
 	class Meta:
 		model = User
@@ -12,6 +13,39 @@ class PerfilEmpleadoCreateForm(forms.ModelForm):
 		model = Perfil
 		fields = ('grado_profesional', 'puesto', 'teléfono', 'banco', 'cuenta_bancaria', 'CLABE')
 
+#formularios de director
+class UserDirectorCreateForm(forms.ModelForm):
+	password = forms.CharField(label='Password',widget=forms.PasswordInput)
+	password2 = forms.CharField(label='Repite tu password',widget=forms.PasswordInput)
+	class Meta:
+		model = User
+		fields = ('username','first_name', 'last_name', 'email', 'departamento')
+
+class PerfilDirectorCreateForm(forms.ModelForm):
+	class Meta:
+		model = Perfil
+		fields = ('grado_profesional', 'teléfono', 'banco', 'cuenta_bancaria', 'CLABE')
+
+	def clean_password2(self):
+		cd = self.cleaned_data
+		if cd['password'] != cd['password2']:
+			raise forms.ValidationError('Los passwords no coicinden')
+		return cd['password2']
+
+	def clean_username(self):
+		cd = self.cleaned_data['username']
+		if User.objects.filter(username=cd).exists():
+			raise forms.ValidationError("Este usuario ya ha sido registrado")
+		return cd
+
+	def clean_email(self):
+		cd = self.cleaned_data['email']
+		if User.objects.filter(email=cd).exists():
+			raise forms.ValidationError("Este correo electrónico ya ha sido registrado")
+		return cd
+
+
+#Formularios de proveedor
 class UserProveedorCreateForm(forms.ModelForm):
 	class Meta:
 		model = User

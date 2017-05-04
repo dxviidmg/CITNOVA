@@ -1,0 +1,35 @@
+{%extends 'baseUser.html'%}
+
+{%block content%}
+	
+	<h4 class="text-center">Lista de direcciones</h4>
+
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<th>Nombre</th>
+				<th colspan="2">Acciones</th>
+			</thead>
+			<tbody>
+	
+	{%for departamento in departamentos%}
+	
+				<tr>
+					<td>{{departamento.nombre}}</td>
+					<td><a href="{%url 'accounts:UpdateViewDepartamento' departamento.pk%}">Actualizar</a></td>
+					<td><a href="{%url 'accounts:DeleteViewDepartamento' departamento.pk%}">Eliminar</a></td>
+				</tr>
+
+			{%empty%}
+
+				<tr>
+					<td colspan="3">Lista de departamentos vacia</td>
+				</tr>
+
+			{%endfor%}
+
+			</tbody>
+		</table>
+	</div>
+
+{%endblock content%}

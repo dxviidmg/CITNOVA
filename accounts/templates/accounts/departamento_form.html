@@ -1,0 +1,20 @@
+{%extends 'baseUser.html'%}
+
+{% load bootstrap %}
+
+{%block content%}
+
+	{%if object%}
+	<h3>Edita la información dirección <i>{{object}}</i></h3>
+	{%else%}
+	<h3>Registra el nombre de una dirección</h3>
+	{%endif%}
+
+	<form method="post" enctype="multipart/form-data">
+		{%csrf_token%}
+		{{form | bootstrap}}
+		<input type="submit" value="{%if object%}Guardar cambios{%else%}Crear{%endif%}">
+		<a href="{%url 'accounts:ListViewDepartamentos'%}"><input class="" type="button" value="Cancelar"></a>
+	</form>
+
+{%endblock content%}
