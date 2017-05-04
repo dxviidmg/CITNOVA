@@ -4,9 +4,10 @@ from . import views
 urlpatterns = [
 
 	#Urls de detalla de solicitudes 
-	url(r'^solicitudes/consultar/(?P<pk>\d+)/$', views.DetailViewSolicitudPropia.as_view(), name="DetailViewSolicitudPropia"),
-	url(r'^solicitudes/por_pagar/consultar/(?P<pk>\d+)/$', views.DetailViewSolicitudPendiente.as_view(), name="DetailViewSolicitudPendiente"),
-	
+	url(r'^solicitudes/consultar/propias/(?P<pk>\d+)/$', views.DetailViewSolicitudPropia.as_view(), name="DetailViewSolicitudPropia"),
+	url(r'^solicitudes/consultar/ajenas/(?P<pk>\d+)/$', views.DetailViewSolicitudPendiente.as_view(), name="DetailViewSolicitudPendiente"),
+	url(r'^solicitudes/por_mes/(?P<pk>\d+)/$', views.ListViewSolicitudesPorMes.as_view(), name="ListViewSolicitudesPorMes"),
+
 	#Urls de creación de solicitudes
 	url(r'^solicitudes/empleado/nuevo/$',views.CreateViewSolicitudEmpleado.as_view(), name='CreateViewSolicitudEmpleado'),
 	url(r'^solicitudes/proveedor/nuevo/$',views.CreateViewSolicitudProveedor.as_view(), name='CreateViewSolicitudProveedor'),	

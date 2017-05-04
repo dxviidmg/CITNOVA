@@ -37,8 +37,17 @@
 				{%endif%}
 
 				<th>Por ejercer</th>
-
+	
+				{%if request.user.username == "administrador"%}
+	
+				<th colspan="3">Acciones</th>
+	
+				{%else%}
+	
 				<th colspan="5">Acciones</th>
+	
+				{%endif%}
+
 			</thead>
 			<tbody>
 
@@ -90,11 +99,18 @@
 					<td><a href="{%url 'presupuesto:UpdateViewMesReduccion' mes.pk%}">Reducir</a></td>
 					<td><a href="{%url 'presupuesto:UpdateViewMes' mes.pk%}">Editar</a></td>
 					<td><a href="{%url 'presupuesto:DeleteViewMes' mes.pk%}">Eliminar</a></td>
-					{%else%}
 
 					<td><a href="{%url 'presupuesto:UpdateViewMesEjercido' mes.pk%}">Ejercer</a></td>
 
+					{%else%}
+
+					<td><a href="{%url 'presupuesto:UpdateViewMesEjercido' mes.pk%}">Realizar SRF para un empleado</a></td>
+
+					<td><a href="{%url 'presupuesto:UpdateViewMesEjercido2' mes.pk%}">Realizar SRF para un proveedor</a></td>
+
 					{%endif%}
+
+					<td><a href="{%url 'solicitudes:ListViewSolicitudesPorMes' mes.pk%}">Lista de SRF</a></td>
 				</tr>
 
 		{%empty%}

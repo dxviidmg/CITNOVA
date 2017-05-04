@@ -5,6 +5,7 @@ from .forms import *
 from django.db.models import Count
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
+from django.contrib import messages
 
 #Lista de empleados
 class ListViewEmpleados(View):
@@ -138,6 +139,8 @@ class UpdateViewEmpleado(View):
 
 		if EdicionPerfilForm.is_valid:
 			EdicionPerfilForm.save()
+
+			messages.success(request, "Se han gaurdado los cambios correctamente")
 		return redirect("accounts:UpdateViewEmpleado", pk=user.pk)
 
 #Edición de un proveedor
@@ -176,6 +179,8 @@ class UpdateViewProveedor(View):
 
 		if EdicionExpedienteForm.is_valid():
 			EdicionExpedienteForm.save()
+
+			messages.success(request, "Se han gaurdado los cambios correctamente")
 
 		return redirect("accounts:UpdateViewProveedor", pk=user.pk)
 

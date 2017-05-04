@@ -4,7 +4,26 @@
 
 {%block content%}
 
-	<h4>Información del Proveedor</h4>
+	<div>
+
+	{% if messages %}
+
+
+		<div class="messages">
+
+			{% for message in messages %}
+		
+			<div {% if message.tags %} class="alert alert-success"{% endif %}>{{ message }}</div>
+			
+			{% endfor %}
+		
+		</div>
+
+	{% endif %}
+
+	</div>
+
+	<h4>Actualice la información del proveedor</h4>
 
 	<form action="." method="post" enctype="multipart/form-data">
 		{%csrf_token%}

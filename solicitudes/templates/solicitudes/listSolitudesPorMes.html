@@ -1,8 +1,7 @@
 {%extends 'baseUser.html'%}
 
 {%block content%}
-	
-	<h4 class="text-center">Lista de mis solicitudes de {% now " F Y" %}</h4>
+	<h4 class="text-center">Lista de solicitudes de {{mes.mes}}</h4>
 
 	<div class="table-responsive">
 		<table class="table">
@@ -12,25 +11,25 @@
 				<th>Acciones</th>
 			</thead>
 			<tbody>
-	
+
 	{%for solicitud in solicitudes%}
-	
+
 				<tr>
 					<td>{{solicitud.folio}}</td>
 					<td>{%if solicitud.pagado%}Pagado{%else%}Aun no sea pagado{%endif%}</td>
-					<td><a href="{%url 'solicitudes:DetailViewSolicitudPropia' solicitud.pk%}">Ver información</a></td>
+					<td><a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}">Ver detalle</a></td>
 				</tr>
-
-			{%empty%}
-
+	
+	{%empty%}
+	
 				<tr>
 					<td colspan="3">Lista de solicitudes vacia</td>
-				</tr>
-
-			{%endfor%}
+				</tr>	
+	{%endfor%}
 
 			</tbody>
 		</table>
 	</div>
+
 
 {%endblock content%}

@@ -4,15 +4,17 @@
 
 	<h4>Información de solicitud</h4>
 	<p>Folio: {{solicitud.folio}}</p>
-	<p>Programa: {{solicitud.programa}}</p>
+	<p>Cuenta bancaria del programa: {{solicitud.cuenta_bancaria_del_programa}}</p>
 	<p>A nombre de: {{solicitud.a_nombre_de}}</p>
 	<p>Concepto: {{solicitud.concepto}}</p>
 	<p>Importe con numero: {{solicitud.importe_numero}}</p>
 	<p>Importe con letra: {{solicitud.importe_letra}}</p>
 	<p>Metodo: {{solicitud.metodo_pago}}</p>
 	<p>CLABE: {{solicitud.clabe}}</p>
-	<p>Cración: {{solicitud.creacion}}</p>
-	<p>Pagada: {%if solicitud.pagado is True%}Si{%else%}Aún no {%endif%}</p>
+	<p>Creación: {{solicitud.creacion}}</p>
+	<p>Status: {%if solicitud.pagado is True%}Pagada</p>
+	<p>Fecha de pago: {{solicitud.fecha_pagado}}</p>
+	<p>{%else%}Aún no se ha pagado{%endif%}</p>
 	
 	{%if solicitud.comprobante%} 
 	

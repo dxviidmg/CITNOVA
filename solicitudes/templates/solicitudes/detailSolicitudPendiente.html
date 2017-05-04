@@ -20,28 +20,35 @@
 
 	</div>
 
+	<h4>Información de solicitud</h4>
 	<p>Folio: {{solicitud.folio}}</p>
-	<p>Programa: {{solicitud.programa}}</p>
+	<p>Cuenta bancaria del programa: {{solicitud.cuenta_bancaria_del_programa}}</p>
 	<p>A nombre de: {{solicitud.a_nombre_de}}</p>
 	<p>Concepto: {{solicitud.concepto}}</p>
 	<p>Importe con numero: {{solicitud.importe_numero}}</p>
 	<p>Importe con letra: {{solicitud.importe_letra}}</p>
 	<p>Metodo: {{solicitud.metodo_pago}}</p>
 	<p>CLABE: {{solicitud.clabe}}</p>
-	<p>Cración: {{solicitud.creacion}}</p>
+	<p>Creación: {{solicitud.creacion}}</p>
+	<p>Status: {%if solicitud.pagado%}Pagado<p>
+	<p>Fecha de pago: {{solicitud.fecha_pagado}}</p>
+	<p>{%else%}Aun no sea pagado{%endif%}</p>
+
 	{%if solicitud.comprobante%} 
 	<p><a href="{{solicitud.comprobante.url}}">Ver comprobante(s)</a></p>
 	{%else%}
 	<p>Falta comprobante</p>
 	{%endif%}
+	
+	{%if request.user.username == "administrador"%}
 
-	{{solicitud.FechaPagado}}
 	<p><strong>Una vez concluido el proceso correspondiente, se tiene que activar la opción de pagado</strong></p>
 
+	
 	<form action="." method="post">
 		{%csrf_token%}
 		{{EdicionSolicitudForm.as_p}}		
 		<input type="submit" value="Cambiar status">
 	</form>
-
+	{%endif%}
 {%endblock content%}

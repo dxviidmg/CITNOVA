@@ -10,6 +10,7 @@ from decimal import Decimal
 from django.contrib import messages
 import datetime
 from accounts.models import Perfil
+from solicitudes.forms import *
 
 #Lista de programas
 class ListViewProgramas(View):
@@ -22,8 +23,6 @@ class ListViewProgramas(View):
 			programas = Programa.objects.filter(año=hoy.year).order_by('nombre')
 		else:
 			programas = Programa.objects.filter(año=hoy.year, departamento=user.departamento).order_by('nombre')
-
-
 	
 		context = {
 			'programas': programas,
@@ -401,35 +400,142 @@ class UpdateViewMesReduccion(View):
 			mes.save()
 		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
 
-#Realización de una Ejerción
+#Realización de una Ejerción (Solicitud de RF para empleados)
 class UpdateViewMesEjercido(View):
 	def get(self, request, pk):
+		hoy = datetime.datetime.now()
+
 		template_name = "presupuesto/updateMesEjercido.html"
+		user = request.user
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
+		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
+
 		NuevaModificacionForm = ModificacionForm()
+		NuevaSolicitudForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento)
 		context = {
+			'folio': folio,
 			'mes': mes,
 			'partida': partida,
-			'NuevaModificacionForm': NuevaModificacionForm
+			'NuevaModificacionForm': NuevaModificacionForm,
+			'NuevaSolicitudForm': NuevaSolicitudForm,
 		}
 		return render(request, template_name, context)	
 	def post(self,request, pk):
+		hoy = datetime.datetime.now()
+
 		template_name = "presupuesto/updateMesEjercido.html"
+		user = request.user
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+
+		empleado = User.objects.get(pk=request.POST.get("a_nombre_de"))
+		perfilEmpleado = Perfil.objects.get(user=empleado)
+
 		mes = get_object_or_404(Mes, pk=pk)
 		partida = Partida.objects.get(mes=mes)
+		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
+
 		NuevaModificacionForm = ModificacionForm(request.POST)
-		if NuevaModificacionForm.is_valid():
-			ejercido = NuevaModificacionForm.cleaned_data['cantidad']
+		NuevaSolicitudForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento, data=request.POST, files=request.FILES)
+
+#		if NuevaModificacionForm.is_valid():
+		if NuevaSolicitudForm.is_valid():
+			ejercido = NuevaSolicitudForm.cleaned_data['importe_numero']
+#			ejercido = NuevaModificacionForm.cleaned_data['cantidad']
 			if ejercido > mes.monto_por_ejercer:
 				messages.error(request, "Error, el monto a ejercer es mayor que la cantidad dispoble por ejercer")
 				context = {
+					'folio': folio,
 					'mes': mes,
 					'partida': partida,
-					'NuevaModificacionForm': NuevaModificacionForm
-				}
+					'NuevaModificacionForm': NuevaModificacionForm,
+					'NuevaSolicitudForm': NuevaSolicitudForm,				}
 				return render(request,template_name,context)
 			else:
 				mes.monto_ejercido = ejercido + mes.monto_ejercido
 				mes.save()
-		return redirect("presupuesto:ListViewMeses", pk=partida.pk)
+
+				NuevaSolicitud = NuevaSolicitudForm.save(commit=False)
+				NuevaSolicitud.folio = folio
+				NuevaSolicitud.clabe =  perfilEmpleado.CLABE
+				NuevaSolicitud.solicitante = user
+				NuevaSolicitud.mes = mes
+				NuevaSolicitud.cuenta_bancaria_del_programa = programa.cuenta_bancaria
+				NuevaSolicitud.save()
+		return redirect("solicitudes:ListViewSolicitudesPorMes", pk=mes.pk)
+
+#Realización de una Ejerción (Solicitud de RF para proveedores)
+class UpdateViewMesEjercido2(View):
+	def get(self, request, pk):
+		hoy = datetime.datetime.now()
+
+		template_name = "presupuesto/updateMesEjercido2.html"
+		user = request.user
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
+
+		NuevaModificacionForm = ModificacionForm()
+		NuevaSolicitudForm = SolicitudRecursoFinancieroCreateForm2()
+		context = {
+			'folio': folio,
+			'mes': mes,
+			'partida': partida,
+			'NuevaModificacionForm': NuevaModificacionForm,
+			'NuevaSolicitudForm': NuevaSolicitudForm,
+		}
+		return render(request, template_name, context)	
+	def post(self,request, pk):
+		hoy = datetime.datetime.now()
+
+		template_name = "presupuesto/updateMesEjercido.html"
+		user = request.user
+		departamento = Departamento.objects.get(user=user)
+		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
+
+		empleado = User.objects.get(pk=request.POST.get("a_nombre_de"))
+		perfilEmpleado = Perfil.objects.get(user=empleado)
+
+		mes = get_object_or_404(Mes, pk=pk)
+		partida = Partida.objects.get(mes=mes)
+		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
+
+		NuevaModificacionForm = ModificacionForm(request.POST)
+		NuevaSolicitudForm = SolicitudRecursoFinancieroCreateForm2(data=request.POST, files=request.FILES)
+
+#		if NuevaModificacionForm.is_valid():
+		if NuevaSolicitudForm.is_valid():
+			ejercido = NuevaSolicitudForm.cleaned_data['importe_numero']
+#			ejercido = NuevaModificacionForm.cleaned_data['cantidad']
+			if ejercido > mes.monto_por_ejercer:
+				messages.error(request, "Error, el monto a ejercer es mayor que la cantidad dispoble por ejercer")
+				context = {
+					'folio': folio,
+					'mes': mes,
+					'partida': partida,
+					'NuevaModificacionForm': NuevaModificacionForm,
+					'NuevaSolicitudForm': NuevaSolicitudForm,				}
+				return render(request,template_name,context)
+			else:
+				mes.monto_ejercido = ejercido + mes.monto_ejercido
+				mes.save()
+
+				NuevaSolicitud = NuevaSolicitudForm.save(commit=False)
+				NuevaSolicitud.folio = folio
+				NuevaSolicitud.clabe =  perfilEmpleado.CLABE
+				NuevaSolicitud.solicitante = user
+				NuevaSolicitud.mes = mes
+				NuevaSolicitud.cuenta_bancaria_del_programa = programa.cuenta_bancaria
+				NuevaSolicitud.save()
+		return redirect("solicitudes:ListViewSolicitudesPorMes", pk=mes.pk)	

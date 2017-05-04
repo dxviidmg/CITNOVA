@@ -9,6 +9,20 @@ from django.contrib import messages
 from datetime import timedelta
 
 #Lista de solicitudes propias
+
+class ListViewSolicitudesPorMes(View):
+	#@method_decorator(login_required)
+	def get(self, request, pk):
+
+		template_name = "solicitudes/listSolitudesPorMes.html"
+		mes = get_object_or_404(Mes, pk=pk)
+		solicitudes = SolicitudRecursoFinanciero.objects.filter(mes=mes)
+
+		context = {
+			'solicitudes': solicitudes,
+		}
+		return render(request,template_name,context)
+
 class ListViewSolicitudesPropias(View):
 	#@method_decorator(login_required)
 	def get(self, request):
@@ -110,7 +124,9 @@ class DetailViewSolicitudPropia(View):
 	def get(self, request, pk):
 		template_name = "solicitudes/detailSolicitudPropia.html"
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
+		
 		context = {
+#			'mes': mes, 
 			'solicitud': solicitud
 		}
 		return render(request, template_name, context)
