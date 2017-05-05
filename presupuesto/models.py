@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.utils import timezone
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404
-from accounts.models import Departamento
+from accounts.models import Departamento, Banco
 
 class Programa(models.Model):
 	Fuente_CHOICES = (
@@ -29,7 +29,7 @@ class Programa(models.Model):
 	monto_anual_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	cuenta_bancaria = models.CharField(max_length=150, null=True, blank=True)
-	pp = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	banco = models.ForeignKey(Banco, blank=True, null=True)
 
 	def SacaPorcentaje(self):  
 		self.pp = (self.monto_anual_ejercido*100)/self.monto_anual_autorizado

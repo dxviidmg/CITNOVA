@@ -157,14 +157,14 @@ class CreateViewPrograma(CreateView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
 	fields = ['departamento', 'nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
-		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año']
+		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año', 'cuenta_bancaria']
 
 #Edición de un Programa
 class UpdateViewPrograma(UpdateView):
 	model = Programa
 	success_url = reverse_lazy('presupuesto:ListViewProgramas')
 	fields = ['departamento', 'nombre', 'objetivo', 'actividad', 'meta', 'unidad_de_medida', 
-		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año',]
+		'fuente_de_financiamiento', 'beneficiarios', 'oficio_de_autorizacion', 'año', 'cuenta_bancaria']
 
 #Borrado de un Programa
 class DeleteViewPrograma(DeleteView):

@@ -7,6 +7,9 @@
 		<table class="table">
 			<thead>
 				<th>Folio</th>
+				<th>A nombre de</th>
+				<th>Cantidad</th>
+				<th>Creación</th>
 				<th>Acciones</th>
 			</thead>
 			<tbody>
@@ -15,6 +18,9 @@
 
 				<tr>
 					<td>{{solicitud.folio}}</td>
+					<td>{{solicitud.a_nombre_de}}</td>
+					<td>${{solicitud.importe_numero}}</td>
+					<td>{{solicitud.creacion}}</td>
 					<td><a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}">Confirmar pago</a></td>
 				</tr>
 	

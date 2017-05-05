@@ -7,6 +7,9 @@
 		<table class="table">
 			<thead>
 				<th>Folio</th>
+				<th>A nombre de</th>
+				<th>Status</th>
+				<th>Cantidad</th>
 				<th>Status</th>
 				<th>Acciones</th>
 			</thead>
@@ -16,6 +19,9 @@
 
 				<tr>
 					<td>{{solicitud.folio}}</td>
+					<td>{{solicitud.a_nombre_de}}</td>
+					<td>${{solicitud.importe_numero}}</td>
+					<td>{{solicitud.creacion}}</td>
 					<td>{%if solicitud.pagado%}Pagado{%else%}Aun no sea pagado{%endif%}</td>
 					<td><a href="{%url 'solicitudes:DetailViewSolicitudPendiente' solicitud.pk%}">Ver detalle</a></td>
 				</tr>
