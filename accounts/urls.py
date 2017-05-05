@@ -5,7 +5,7 @@ from django.contrib.auth.views import login, logout
 urlpatterns = [
 	#urls de empleados
 #	url(r'^accounts/empleado/desactivar/(?P<pk>\d+)/$', views.DesactivateViewUser.as_view(), name="DesactivateViewUser"),
-#	url(r'^accounts/empleado/actualizar/(?P<pk>\d+)/$', views.UpdateViewEmpleado.as_view(), name="UpdateViewEmpleado"),
+	url(r'^accounts/director/actualizar/(?P<pk>\d+)/$', views.UpdateViewDirector.as_view(), name="UpdateViewDirector"),
 	url(r'^accounts/director/nuevo/$',views.CreateViewDirector.as_view(), name='CreateViewDirector'),
 	url(r'^accounts/directores/$',views.ListViewDirectores.as_view(), name='ListViewDirectores'),
 

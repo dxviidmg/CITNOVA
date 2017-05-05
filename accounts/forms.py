@@ -17,15 +17,10 @@ class PerfilEmpleadoCreateForm(forms.ModelForm):
 class UserDirectorCreateForm(forms.ModelForm):
 	password = forms.CharField(label='Password',widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Repite tu password',widget=forms.PasswordInput)
+
 	class Meta:
 		model = User
 		fields = ('username','first_name', 'last_name', 'email', 'departamento')
-
-class PerfilDirectorCreateForm(forms.ModelForm):
-	class Meta:
-		model = Perfil
-		fields = ('grado_profesional', 'teléfono', 'banco', 'cuenta_bancaria', 'CLABE')
-
 	def clean_password2(self):
 		cd = self.cleaned_data
 		if cd['password'] != cd['password2']:
@@ -43,6 +38,18 @@ class PerfilDirectorCreateForm(forms.ModelForm):
 		if User.objects.filter(email=cd).exists():
 			raise forms.ValidationError("Este correo electrónico ya ha sido registrado")
 		return cd
+
+class UserDirectorEditForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('first_name', 'last_name', 'email', 'departamento')
+
+class PerfilDirectorCreateForm(forms.ModelForm):
+	class Meta:
+		model = Perfil
+		fields = ('grado_profesional', 'teléfono', 'banco', 'cuenta_bancaria', 'CLABE')
+
+
 
 
 #Formularios de proveedor

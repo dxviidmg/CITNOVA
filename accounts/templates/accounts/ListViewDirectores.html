@@ -16,8 +16,8 @@
 	
 				<tr>
 					<td>{{director.user.first_name}} {{director.user.last_name}}</td>
-					<td><a href="">Actualizar</a></td>
-					<td><a href="">Eliminar</a></td>
+					<td><a href="{%url 'accounts:UpdateViewDirector' director.user.pk%}">Actualizar</a></td>
+					<td><a href="{%url 'accounts:DesactivateViewUser' director.user.pk%}">Eliminar</a></td>
 				</tr>
 
 			{%empty%}

@@ -211,10 +211,13 @@ class DesactivateViewUser(View):
 		if DesactivaUserForm.is_valid:
 			DesactivaUserForm.save()
 
-		if expediente.exists():
-			return redirect("accounts:ListViewProveedores")
+		if request.user.username == "administrador":
+			return redirect("accounts:ListViewDirectores")
 		else:
-			return redirect("accounts:ListViewEmpleados")
+			if expediente.exists():
+				return redirect("accounts:ListViewProveedores")
+			else:
+				return redirect("accounts:ListViewEmpleados")
 
 #Lista de bancos
 class ListViewBancos(View):
@@ -333,3 +336,35 @@ class CreateViewDirector(View):
 			NuevoPerfil.puesto = "Director"
 			NuevoPerfil.save()
 		return redirect("accounts:ListViewDirectores")
+
+#Edición de un empleado
+class UpdateViewDirector(View):
+	def get(self, request, pk):
+		template_name = "accounts/updateDirector.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+
+		EdicionDirectorForm=UserDirectorEditForm(instance=user)
+		EdicionPerfilForm=PerfilDirectorCreateForm(instance=perfil)
+	
+		context = {
+			'EdicionDirectorForm': EdicionDirectorForm,
+			'EdicionPerfilForm': EdicionPerfilForm,
+		}
+		return render(request, template_name, context)
+	def post(self,request, pk):
+		template_name = "accounts/updateDirector.html"
+		user = get_object_or_404(User, pk=pk)
+		perfil = Perfil.objects.get(user=user)
+
+		EdicionDirectorForm=UserDirectorEditForm(instance=user, data=request.POST)
+		EdicionPerfilForm=PerfilDirectorCreateForm(instance=perfil, data=request.POST)
+
+		if EdicionDirectorForm.is_valid:
+			EdicionDirectorForm.save()
+
+		if EdicionPerfilForm.is_valid:
+			EdicionPerfilForm.save()
+
+			messages.success(request, "Se han gaurdado los cambios correctamente")
+		return redirect("accounts:UpdateViewDirector", pk=user.pk)
