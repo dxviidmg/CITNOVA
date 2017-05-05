@@ -4,12 +4,15 @@
 
 {%block content%}
 
-	<p>Folio: {{folio}}</p>
 
-	<p>mes: {{mes.mes}}</p>
+
+	<h4>Registro una solicitud de recurso financiero para un empleado</h4>
+
+	<p><a href="{%url 'presupuesto:ListViewMeses' partida.pk%}">Regresar</a></p>
+
+	<p>Folio: {{folio}}</p>
 	
-	<h5>Informacion: </h5>
-	<p>Monto por ejercer: {{mes.monto_por_ejercer}}</p>
+	<p>Disponible: {{mes.monto_por_ejercer}}</p>
 
 	<div>
 
@@ -31,9 +34,9 @@
 
 	<form action="." method="post" enctype="multipart/form-data">
 		{%csrf_token%}
-		{{NuevaSolicitudForm.as_p}}
+		{{NuevaSolicitudForm | bootstrap}}
 
-		<input type="submit" value="Realizar ejerción">
+		<input type="submit" value="Realizar solicitud">
 		<a href="{%url 'presupuesto:ListViewMeses' partida.pk%}"><input class="" type="button" value="Cancelar"></a>
 	</form>
 

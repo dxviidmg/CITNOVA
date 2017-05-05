@@ -11,9 +11,12 @@ from django.contrib import messages
 import datetime
 from accounts.models import Perfil
 from solicitudes.forms import *
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 #Lista de programas
 class ListViewProgramas(View):
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "presupuesto/listProgramas.html"
 		hoy = datetime.datetime.now()
@@ -31,6 +34,7 @@ class ListViewProgramas(View):
 
 #Lista de capitulos
 class ListViewCapitulos(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/listCapitulos.html"
 		programa = get_object_or_404(Programa, pk=pk)
@@ -68,6 +72,7 @@ class ListViewCapitulos(View):
 
 #Lista de partidas
 class ListViewPartidas(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/listPartidas.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
@@ -107,6 +112,7 @@ class ListViewPartidas(View):
 
 #Lista de Meses
 class ListViewMeses(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/listMeses.html"
 		partida = get_object_or_404(Partida, pk=pk)
@@ -167,6 +173,7 @@ class DeleteViewPrograma(DeleteView):
 
 #Creación de un Capitulo
 class CreateViewCapitulo(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/createCapitulo.html"
 		programa = get_object_or_404(Programa, pk=pk)
@@ -188,6 +195,7 @@ class CreateViewCapitulo(View):
 
 #Edición de un Capitulo
 class UpdateViewCapitulo(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/updateCapitulo.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
@@ -209,6 +217,7 @@ class UpdateViewCapitulo(View):
 
 #Borrado de un Capitulo
 class DeleteViewCapitulo(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/deleteCapitulo.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
@@ -228,6 +237,7 @@ class DeleteViewCapitulo(View):
 
 #Creación de una Partida
 class CreateViewPartida(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/createPartida.html"
 		capitulo = get_object_or_404(Capitulo, pk=pk)
@@ -249,6 +259,7 @@ class CreateViewPartida(View):
 
 #Edicióm de una Partida
 class UpdateViewPartida(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/updatePartida.html"
 		partida = get_object_or_404(Partida, pk=pk)
@@ -271,6 +282,7 @@ class UpdateViewPartida(View):
 
 #Borrado de una Partida
 class DeleteViewPartida(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/deletePartida.html"
 		partida = get_object_or_404(Partida, pk=pk)
@@ -290,6 +302,7 @@ class DeleteViewPartida(View):
 
 #Creación de un Mes
 class CreateViewMes(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/createMes.html"
 		partida = get_object_or_404(Partida, pk=pk)
@@ -311,6 +324,7 @@ class CreateViewMes(View):
 
 #Edición de un Mes
 class UpdateViewMes(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMes.html"
 		mes = get_object_or_404(Mes, pk=pk)
@@ -335,6 +349,7 @@ class UpdateViewMes(View):
 
 #Borrado de un Mes
 class DeleteViewMes(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/deleteMes.html"
 		mes = get_object_or_404(Mes, pk=pk)
@@ -354,6 +369,7 @@ class DeleteViewMes(View):
 
 #Realización de una Ampliación
 class UpdateViewMesAmpliacion(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMesAmpliacion.html"
 		mes = get_object_or_404(Mes, pk=pk)
@@ -378,6 +394,7 @@ class UpdateViewMesAmpliacion(View):
 
 #Realización de una Reducción
 class UpdateViewMesReduccion(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "presupuesto/updateMesReduccion.html"
 		mes = get_object_or_404(Mes, pk=pk)
@@ -402,6 +419,7 @@ class UpdateViewMesReduccion(View):
 
 #Realización de una Ejerción (Solicitud de RF para empleados)
 class UpdateViewMesEjercido(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		hoy = datetime.datetime.now()
 
@@ -444,10 +462,8 @@ class UpdateViewMesEjercido(View):
 		NuevaModificacionForm = ModificacionForm(request.POST)
 		NuevaSolicitudForm = SolicitudRecursoFinancieroCreateForm(departamento=departamento, data=request.POST, files=request.FILES)
 
-#		if NuevaModificacionForm.is_valid():
 		if NuevaSolicitudForm.is_valid():
 			ejercido = NuevaSolicitudForm.cleaned_data['importe_numero']
-#			ejercido = NuevaModificacionForm.cleaned_data['cantidad']
 			if ejercido > mes.monto_por_ejercer:
 				messages.error(request, "Error, el monto a ejercer es mayor que la cantidad dispoble por ejercer")
 				context = {
@@ -472,6 +488,7 @@ class UpdateViewMesEjercido(View):
 
 #Realización de una Ejerción (Solicitud de RF para proveedores)
 class UpdateViewMesEjercido2(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		hoy = datetime.datetime.now()
 
@@ -514,10 +531,8 @@ class UpdateViewMesEjercido2(View):
 		NuevaModificacionForm = ModificacionForm(request.POST)
 		NuevaSolicitudForm = SolicitudRecursoFinancieroCreateForm2(data=request.POST, files=request.FILES)
 
-#		if NuevaModificacionForm.is_valid():
 		if NuevaSolicitudForm.is_valid():
 			ejercido = NuevaSolicitudForm.cleaned_data['importe_numero']
-#			ejercido = NuevaModificacionForm.cleaned_data['cantidad']
 			if ejercido > mes.monto_por_ejercer:
 				messages.error(request, "Error, el monto a ejercer es mayor que la cantidad dispoble por ejercer")
 				context = {

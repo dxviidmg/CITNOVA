@@ -6,10 +6,12 @@ from django.db.models import Count
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 #Lista de empleados
 class ListViewEmpleados(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/ListViewEmpleados.html"
 
@@ -22,7 +24,7 @@ class ListViewEmpleados(View):
 
 #Lista de proveedores
 class ListViewProveedores(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/ListViewProveedores.html"
 
@@ -35,7 +37,7 @@ class ListViewProveedores(View):
 
 #Creación de un empleado
 class CreateViewEmpleado(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/createEmpleado.html"
 		
@@ -69,7 +71,7 @@ class CreateViewEmpleado(View):
 
 #Creación de un Proveedor
 class CreateViewProveedor(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/createProveedor.html"
 		
@@ -113,6 +115,7 @@ class CreateViewProveedor(View):
 
 #Edición de un empleado
 class UpdateViewEmpleado(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "accounts/updateEmpleado.html"
 		user = get_object_or_404(User, pk=pk)
@@ -145,6 +148,7 @@ class UpdateViewEmpleado(View):
 
 #Edición de un proveedor
 class UpdateViewProveedor(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "accounts/updateProveedor.html"
 		user = get_object_or_404(User, pk=pk)
@@ -186,6 +190,7 @@ class UpdateViewProveedor(View):
 
 #Desactivación de un empleado o proveedor
 class DesactivateViewUser(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "accounts/desactivateUser.html"
 		user = get_object_or_404(User, pk=pk)
@@ -221,6 +226,7 @@ class DesactivateViewUser(View):
 
 #Lista de bancos
 class ListViewBancos(View):
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/listBancos.html"
 		bancos = Banco.objects.all()
@@ -248,7 +254,7 @@ class DeleteViewBanco(DeleteView):
 
 #Perfil de usuario autenticado
 class profile(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/profile.html"
 		perfil = Perfil.objects.get(user=request.user)
@@ -260,6 +266,7 @@ class profile(View):
 
 #Lista de bancos
 class ListViewDepartamentos(View):
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/listDepartamentos.html"
 		departamentos = Departamento.objects.all()
@@ -268,24 +275,26 @@ class ListViewDepartamentos(View):
 		}
 		return render(request,template_name, context)
 
-#Creación de bancos
+#Creación de Departamentos
 class CreateViewDepartamento(CreateView):
 	model = Departamento
 	success_url = reverse_lazy('accounts:ListViewDepartamentos')
 	fields = ['nombre','codigo',]
 
+#Edicion de Departamentos
 class UpdateViewDepartamento(UpdateView):
 	model = Departamento
 	success_url = reverse_lazy('accounts:ListViewDepartamentos')
 	fields = ['nombre','codigo',]
 
+#Borrado de Departamentos
 class DeleteViewDepartamento(DeleteView):
 	model = Departamento
 	success_url = reverse_lazy('accounts:ListViewDepartamentos')
 
 #Lista de directores
 class ListViewDirectores(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/ListViewDirectores.html"
 
@@ -302,9 +311,9 @@ class ListViewDirectores(View):
 		}
 		return render(request,template_name,context)
 
-#Creación de un director
+#Creación de un Director
 class CreateViewDirector(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "accounts/createDirector.html"
 		
@@ -337,8 +346,9 @@ class CreateViewDirector(View):
 			NuevoPerfil.save()
 		return redirect("accounts:ListViewDirectores")
 
-#Edición de un empleado
+#Edición de un Director
 class UpdateViewDirector(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "accounts/updateDirector.html"
 		user = get_object_or_404(User, pk=pk)

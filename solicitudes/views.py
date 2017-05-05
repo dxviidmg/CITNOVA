@@ -7,11 +7,12 @@ import datetime
 from presupuesto.models import *
 from django.contrib import messages
 from datetime import timedelta
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 #Lista de solicitudes propias
-
 class ListViewSolicitudesPorMes(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request, pk):
 
 		template_name = "solicitudes/listSolitudesPorMes.html"
@@ -23,8 +24,9 @@ class ListViewSolicitudesPorMes(View):
 		}
 		return render(request,template_name,context)
 
+#Lista de solicitudes creadas por un usuario logeado
 class ListViewSolicitudesPropias(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 
 		template_name = "solicitudes/listSolitudesPropias.html"
@@ -39,9 +41,9 @@ class ListViewSolicitudesPropias(View):
 
 #Creación de Solicitud para un empleado
 class CreateViewSolicitudEmpleado(View):
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/createSolicitudEmpleado.html"
-
 		hoy = datetime.datetime.now()
 
 		user = User.objects.get(pk=request.user.pk)
@@ -81,6 +83,7 @@ class CreateViewSolicitudEmpleado(View):
 
 #Creación de Solicitud para un proveedor
 class CreateViewSolicitudProveedor(View):
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/createSolicitudProveedor.html"
 
@@ -126,14 +129,13 @@ class DetailViewSolicitudPropia(View):
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
 		
 		context = {
-#			'mes': mes, 
 			'solicitud': solicitud
 		}
 		return render(request, template_name, context)
 
 #Lista de Solicitudes por pagar
 class ListViewSolicitudesPendientes(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/listSolitudesPendientes.html"
 		hoy = datetime.datetime.now()
@@ -147,6 +149,7 @@ class ListViewSolicitudesPendientes(View):
 
 #Detalle de una Solicitud por pagar
 class DetailViewSolicitudPendiente(View):
+	@method_decorator(login_required)
 	def get(self, request, pk):
 		template_name = "solicitudes/detailSolicitudPendiente.html"
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
@@ -170,8 +173,9 @@ class DetailViewSolicitudPendiente(View):
 
 		return redirect("solicitudes:DetailViewSolicitudPendiente", pk=solicitud.pk)
 
+#Lista de solicitudes pagadas en la ultima semana
 class ListViewSolicitudesPagadas(View):
-	#@method_decorator(login_required)
+	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/listSolitudesPagadas.html"
 		hoy = datetime.datetime.now()
