@@ -127,9 +127,16 @@ class DetailViewSolicitudPropia(View):
 	def get(self, request, pk):
 		template_name = "solicitudes/detailSolicitudPropia.html"
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
-		
+		mes = Mes.objects.get(pk=solicitud.mes.pk)
+		partida = Partida.objects.get(mes=mes)
+		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
 		context = {
-			'solicitud': solicitud
+			'solicitud': solicitud,
+			'mes': mes,
+			'partida': partida,
+			'capitulo': capitulo,
+			'programa': programa,
 		}
 		return render(request, template_name, context)
 
@@ -154,9 +161,17 @@ class DetailViewSolicitudPendiente(View):
 		template_name = "solicitudes/detailSolicitudPendiente.html"
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
 		EdicionSolicitudForm=SolicitudRecursoFinancieroEditForm(instance=solicitud)
+		mes = Mes.objects.get(pk=solicitud.mes.pk)
+		partida = Partida.objects.get(mes=mes)
+		capitulo = Capitulo.objects.get(partida=partida)
+		programa = Programa.objects.get(capitulo=capitulo)
 		context = {
 			'solicitud': solicitud,
 			'EdicionSolicitudForm': EdicionSolicitudForm,
+			'mes': mes,
+			'partida': partida,
+			'capitulo': capitulo,
+			'programa': programa,
 		}
 		return render(request, template_name, context)
 	def post (self, request, pk):
