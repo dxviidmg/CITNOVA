@@ -1,9 +1,14 @@
 {%extends 'baseUser.html'%}
 
 {%block content%}
-	
-	<h4 class="text-center">Lista de mis solicitudes de {% now " F Y" %}</h4>
 
+	<h4 class="text-center">Buscar solicitudes</h4>
+
+	<form method="GET" action="">
+		<input type="text" name="query" placeholder="Buscar" value="{{request.GET.query}}">
+		<input type="submit" value="Buscar">
+	</form>
+	<br>
 	<div class="table-responsive">
 		<table class="table">
 			<thead>
@@ -38,5 +43,5 @@
 			</tbody>
 		</table>
 	</div>
-
 {%endblock content%}
+	

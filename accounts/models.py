@@ -68,8 +68,7 @@ class Expediente(models.Model):
 
 User.add_to_class('departamento', models.ForeignKey(Departamento, blank = True, null=True))
 
-def get_first_name(self):
-#    return self.first_name
+def get_full_name(self):
 	return '{} {}'.format(self.first_name, self.last_name)
 
-User.add_to_class("__str__", get_first_name)
+User.add_to_class("__str__", get_full_name)

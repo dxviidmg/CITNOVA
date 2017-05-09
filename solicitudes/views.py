@@ -9,12 +9,14 @@ from django.contrib import messages
 from datetime import timedelta
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.db.models import Count
 
+hoy = datetime.datetime.now()
 #Lista de solicitudes propias
 class ListViewSolicitudesPorMes(View):
 	@method_decorator(login_required)
 	def get(self, request, pk):
-
 		template_name = "solicitudes/listSolitudesPorMes.html"
 		mes = get_object_or_404(Mes, pk=pk)
 		solicitudes = SolicitudRecursoFinanciero.objects.filter(mes=mes)
@@ -28,10 +30,7 @@ class ListViewSolicitudesPorMes(View):
 class ListViewSolicitudesPropias(View):
 	@method_decorator(login_required)
 	def get(self, request):
-
 		template_name = "solicitudes/listSolitudesPropias.html"
-		hoy = datetime.datetime.now()
-
 		solicitudes = SolicitudRecursoFinanciero.objects.filter(creacion__year=hoy.year, creacion__month=hoy.month, solicitante=request.user)
 
 		context = {
@@ -44,8 +43,6 @@ class CreateViewSolicitudEmpleado(View):
 	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/createSolicitudEmpleado.html"
-		hoy = datetime.datetime.now()
-
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
@@ -61,9 +58,6 @@ class CreateViewSolicitudEmpleado(View):
 		return render(request,template_name,context)
 	def post(self,request):
 		template_name = "solicitudes/createSolicitudEmpleado.html"
-
-		hoy = datetime.datetime.now()
-
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
@@ -86,9 +80,6 @@ class CreateViewSolicitudProveedor(View):
 	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/createSolicitudProveedor.html"
-
-		hoy = datetime.datetime.now()
-
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
@@ -102,9 +93,6 @@ class CreateViewSolicitudProveedor(View):
 		return render(request,template_name,context)
 	def post(self,request):
 		template_name = "solicitudes/createSolicitudProveedor.html"
-
-		hoy = datetime.datetime.now()
-
 		user = User.objects.get(pk=request.user.pk)
 		departamento = Departamento.objects.get(user=user)
 		folio = str(departamento.codigo) + "-" + str(SolicitudRecursoFinanciero.objects.filter(folio__contains=departamento.codigo, creacion__year=hoy.year).count() + 1) + "-" + str(hoy.year)
@@ -145,10 +133,7 @@ class ListViewSolicitudesPendientes(View):
 	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/listSolitudesPendientes.html"
-		hoy = datetime.datetime.now()
-
-		solicitudes = SolicitudRecursoFinanciero.objects.filter(pagado=False)
-
+		solicitudes = SolicitudRecursoFinanciero.objects.filter(pagado=False)		
 		context = {
 			'solicitudes': solicitudes,
 		}
@@ -175,9 +160,6 @@ class DetailViewSolicitudPendiente(View):
 		}
 		return render(request, template_name, context)
 	def post (self, request, pk):
-
-		hoy = datetime.datetime.now()
-
 		template_name = "solicitudes/detailSolicitudPendiente.html"
 		solicitud = get_object_or_404(SolicitudRecursoFinanciero, pk=pk)
 		EdicionSolicitudForm=SolicitudRecursoFinancieroEditForm(instance=solicitud, data=request.POST)
@@ -193,12 +175,47 @@ class ListViewSolicitudesPagadas(View):
 	@method_decorator(login_required)
 	def get(self, request):
 		template_name = "solicitudes/listSolitudesPagadas.html"
-		hoy = datetime.datetime.now()
 		semana_pasada = hoy - timedelta(days=7)
-
 		solicitudes = SolicitudRecursoFinanciero.objects.filter(fecha_pagado__isnull=False, fecha_pagado__range=[semana_pasada, hoy])
-
 		context = {
 			'solicitudes': solicitudes,
 		}
 		return render(request,template_name,context)
+
+class SearchSolicitudes(View):
+	@method_decorator(login_required)
+	def get(self, request):
+		template_name = "solicitudes/searchSolitudes.html"
+		query = request.GET.get("query")
+
+		if query:
+			solicitudes = SolicitudRecursoFinanciero.objects.filter(
+				(
+					Q(folio__contains=query) | 
+					Q(concepto__contains=query) |
+					Q(importe_numero__contains=query)
+				), 
+				creacion__year=hoy.year
+			).order_by("-creacion")
+
+			if not solicitudes.exists():
+				
+				users = User.objects.filter(
+					(
+						Q(first_name__contains=query) | 
+						Q(last_name__contains=query)
+					)
+				)
+				
+				solicitudes = SolicitudRecursoFinanciero.objects.filter(
+						a_nombre_de=users, 
+						creacion__year=hoy.year
+					).order_by("-creacion")
+	
+		else:
+			solicitudes = []
+	
+		context = {
+			'solicitudes': solicitudes,
+		}
+		return render(request,template_name, context)
