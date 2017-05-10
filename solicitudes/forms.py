@@ -34,6 +34,10 @@ class SolicitudRecursoFinancieroCreateForm2(forms.ModelForm):
 		super(SolicitudRecursoFinancieroCreateForm2, self).__init__(**kwargs)
 		self.fields['a_nombre_de'].queryset = User.objects.filter(is_active=True, departamento__isnull=True, is_staff=False).order_by('first_name', 'last_name')
 
+	def clean(self):
+		cd = self.cleaned_data
+		return cd
+		
 class SolicitudRecursoFinancieroEditForm(forms.ModelForm):
 
 	class Meta:

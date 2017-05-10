@@ -21,6 +21,7 @@ class UserDirectorCreateForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ('username','first_name', 'last_name', 'email', 'departamento')
+	
 	def clean_password2(self):
 		cd = self.cleaned_data
 		if cd['password'] != cd['password2']:
@@ -28,16 +29,12 @@ class UserDirectorCreateForm(forms.ModelForm):
 		return cd['password2']
 
 	def clean_username(self):
-		cd = self.cleaned_data['username']
-		if User.objects.filter(username=cd).exists():
-			raise forms.ValidationError("Este usuario ya ha sido registrado")
-		return cd
-
-	def clean_email(self):
-		cd = self.cleaned_data['email']
-		if User.objects.filter(email=cd).exists():
-			raise forms.ValidationError("Este correo electrónico ya ha sido registrado")
-		return cd
+	    username = self.cleaned_data['username']
+	    try:
+	        user = User.objects.exclude(pk=self.instance.pk).get(username=username)
+	    except User.DoesNotExist:
+	        return username
+	    raise forms.ValidationError(u'Username "%s" is already in use.' % username)
 
 class UserDirectorEditForm(forms.ModelForm):
 	class Meta:

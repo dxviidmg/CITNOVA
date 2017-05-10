@@ -1,0 +1,46 @@
+{%extends 'baseUser.html'%}
+
+{% load bootstrap %}
+
+{%block content%}
+
+	<form method="GET" action="">
+		<input type="text" name="mes_inicio" placeholder="Mes inicio" value="{{request.GET.query}}">
+
+		<input type="text" name="mes_final" placeholder="Mes final" value="{{request.GET.query}}">
+		<input type="submit" value="Buscar">
+	</form>
+
+<table>
+<thead>
+
+	<th>Capitulo</th>
+	<th>Partida</th>
+	<th>Mes</th>
+	<th>Monto autorizado</th>
+	<th>Monto amplicacion</th>
+	<th>Monto Reduccion</th>
+	<th>Monto Modificado</th>
+		<th>Monto Ejercido</th>
+			<th>Monto Por ejercer</th>
+</thead>
+<tbody>
+
+{%for m2 in meses2%}
+<tr>
+	<td>{{m2.mes.partida.capitulo}}</td>
+	<td>{{m2.mes.partida}}</td>
+	<td>{{m2.mes.mes}}</td>
+	<td>{{m2.mes.monto_autorizado}}</td>
+	<td>{{m2.mes.monto_ampliacion}}</td>
+	<td>{{m2.mes.monto_reduccion}}</td>
+	<td>{{m2.mes.monto_modificado}}</td>
+	<td>{{m2.mes.monto_ejercido}}</td>
+	<td>{{m2.mes.monto_por_ejercer}}</td>
+	
+
+</tr>
+{%endfor%}
+</tbody>
+</table>
+{%endblock content%}

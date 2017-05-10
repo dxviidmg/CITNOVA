@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'solicitudes',
     'presupuesto',
     'django.contrib.humanize',
-    'bootstrapform'
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [

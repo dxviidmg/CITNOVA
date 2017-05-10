@@ -4,7 +4,10 @@
 
 {%block content%}
 
-	<h4>Registro de nuevo empleado</h4>
+	<h4>Registro de nuevo director</h4>
+
+
+
 	<form action="." method="post">
 		{%csrf_token%}
 		{{UserDirectorForm | bootstrap}}
@@ -12,4 +15,21 @@
 		<input type="submit" value="Crear Usuario">
 	</form>
 	
+	<div>
+		
+		{% if messages %}
+		
+			<ul class="messages">
+    	
+    		{% for message in messages %}
+    	
+	    	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    	
+	    	{% endfor %}
+		
+			</ul>
+		
+		{% endif %}
+
+	</div>
 {%endblock content%}

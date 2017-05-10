@@ -554,3 +554,40 @@ class UpdateViewMesEjercido2(View):
 				NuevaSolicitud.cuenta_bancaria_del_programa = programa.cuenta_bancaria
 				NuevaSolicitud.save()
 		return redirect("solicitudes:ListViewSolicitudesPorMes", pk=mes.pk)	
+
+#Lista de programas
+class ListViewReporteAcumulado(View):
+	@method_decorator(login_required)
+	def get(self, request, pk):
+		template_name = "presupuesto/listViewReporteAcumulado.html"
+		hoy = datetime.datetime.now()
+		
+		programa=Programa.objects.get(pk=pk)
+		capitulos = Capitulo.objects.filter(programa=programa).order_by('codigo')
+#		partidas = Partida.objects.filter(capitulo=capitulos)
+#		meses = Mes.objects.filter(partida=partidas)
+	#	print(programa)
+	#	print(capitulos)
+	#	print(partidas)
+	#	print(meses)
+
+		mesInicio = request.GET.get("mes_inicio")
+		mesFinal = request.GET.get("mes_final")
+
+		meses2 = []
+		for capitulo in capitulos:
+			partidas = Partida.objects.filter(capitulo=capitulo)
+			for partida in partidas:
+				meses = Mes.objects.filter(partida=partida)
+				for mes in meses:
+					meses2.append({'mes': mes})
+
+		print(meses2)
+		context = {
+			'programa': programa,
+			'capitulos': capitulos,
+			'meses2': meses2
+			
+
+		}
+		return render(request, template_name, context)	

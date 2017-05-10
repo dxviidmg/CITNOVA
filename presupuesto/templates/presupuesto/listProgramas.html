@@ -110,6 +110,7 @@
 					<td><a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}">Ver capítulos</a></td>
 
 					{%if request.user.username == "administrador"%}
+					<td><a href="{%url 'presupuesto:ListViewReporteAcumulado' programa.pk%}">Acumulado</a></td>
 					<td><a href="{%url 'presupuesto:UpdateViewPrograma' programa.pk%}">Editar Información</a></td>
 					<td><a href="{%url 'presupuesto:DeleteViewPrograma' programa.pk%}">Eliminar</a></td>
 					{%endif%}

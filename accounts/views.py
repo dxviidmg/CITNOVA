@@ -328,9 +328,6 @@ class CreateViewDirector(View):
 	def post(self,request):
 		template_name = "accounts/createDirector.html"
 
-		users = User.objects.filter(is_staff=False).count()
-		userActual = users + 1
-
 		NuevoUserForm = UserDirectorCreateForm(request.POST)
 		NuevoPerfilForm = PerfilDirectorCreateForm(request.POST)
 
@@ -344,6 +341,15 @@ class CreateViewDirector(View):
 			NuevoPerfil.user = NuevoUser
 			NuevoPerfil.puesto = "Director"
 			NuevoPerfil.save()
+
+		else:			
+			context = {
+				'UserDirectorForm': UserDirectorForm,
+				'PerfilDirectorForm': PerfilDirectorForm,
+				
+			}
+			return render(request,template_name,context)
+
 		return redirect("accounts:ListViewDirectores")
 
 #Edición de un Director
