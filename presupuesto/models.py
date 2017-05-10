@@ -160,6 +160,7 @@ class Partida(models.Model):
 	capitulo = models.ForeignKey(Capitulo)
 	codigo = models.IntegerField()
 	descripcion = models.TextField()	
+	#Montos anuales
 	monto_anual_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
@@ -167,6 +168,39 @@ class Partida(models.Model):
 	monto_anual_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 	monto_anual_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
 
+	#Montos del primer trimestre
+	monto_1t_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_1t_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_1t_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_1t_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_1t_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_1t_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	
+	#Montos del segundo trimestre
+	monto_2t_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_2t_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_2t_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_2t_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_2t_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_2t_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	
+	#Montos del tercer trimestre
+	monto_3t_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_3t_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_3t_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_3t_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_3t_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_3t_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+
+	#Montos del cuarto trimestre
+	monto_4t_autorizado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_4t_ampliacion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_4t_reduccion = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_4t_modificado = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_4t_ejercido = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+	monto_4t_por_ejercer = models.DecimalField(max_digits=20,decimal_places=2, default=0, null=True)
+
+	#Calculos anuales
 	def MontoAnualAutorizado(self):
 		partida = Partida.objects.get(pk=self.pk)
 		total_monto_autorizado_dict = Mes.objects.filter(partida=partida).aggregate(Sum('monto_autorizado'))
@@ -203,6 +237,177 @@ class Partida(models.Model):
 		self.monto_anual_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
 		self.save()
 
+#Calculos primer trimestre
+	def Monto1TAutorizado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_autorizado_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_autorizado'))
+		self.monto_1t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto1TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_autorizado'))
+		self.monto_1t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto1TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_ampliacion'))
+		self.monto_1t_ampliacion = total_monto_ampliacion_dict['monto_ampliacion__sum']
+		self.save()
+
+	def Monto1TReduccion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_reduccion_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_reduccion'))
+		self.monto_1t_reduccion = total_monto_reduccion_dict['monto_reduccion__sum']
+		self.save()
+
+	def Monto1TModificado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_modificado_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_modificado'))
+		self.monto_1t_modificado = total_monto_modificado_dict['monto_modificado__sum']
+		self.save()
+
+	def Monto1TEjercido(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ejercido_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_ejercido'))
+		self.monto_1t_ejercido = total_monto_ejercido_dict['monto_ejercido__sum']
+		self.save()
+
+	def Monto1TPorEjercer(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_por_ejercer_dict = Mes.objects.filter(partida=partida, mes__gte=1, mes__lte=3).aggregate(Sum('monto_por_ejercer'))
+		self.monto_1t_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
+		self.save()
+
+#Calculos segundo trimestre
+	def Monto2TAutorizado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_autorizado_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_autorizado'))
+		self.monto_2t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto2TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_autorizado'))
+		self.monto_2t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto2TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_ampliacion'))
+		self.monto_2t_ampliacion = total_monto_ampliacion_dict['monto_ampliacion__sum']
+		self.save()
+
+	def Monto2TReduccion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_reduccion_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_reduccion'))
+		self.monto_2t_reduccion = total_monto_reduccion_dict['monto_reduccion__sum']
+		self.save()
+
+	def Monto2TModificado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_modificado_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_modificado'))
+		self.monto_2t_modificado = total_monto_modificado_dict['monto_modificado__sum']
+		self.save()
+
+	def Monto2TEjercido(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ejercido_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_ejercido'))
+		self.monto_2t_ejercido = total_monto_ejercido_dict['monto_ejercido__sum']
+		self.save()
+
+	def Monto2TPorEjercer(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_por_ejercer_dict = Mes.objects.filter(partida=partida, mes__gte=4, mes__lte=6).aggregate(Sum('monto_por_ejercer'))
+		self.monto_2t_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
+		self.save()
+
+#Calculos tercer trimestre
+	def Monto3TAutorizado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_autorizado_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_autorizado'))
+		self.monto_3t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto3TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_autorizado'))
+		self.monto_3t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto3TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_ampliacion'))
+		self.monto_3t_ampliacion = total_monto_ampliacion_dict['monto_ampliacion__sum']
+		self.save()
+
+	def Monto3TReduccion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_reduccion_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_reduccion'))
+		self.monto_3t_reduccion = total_monto_reduccion_dict['monto_reduccion__sum']
+		self.save()
+
+	def Monto3TModificado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_modificado_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_modificado'))
+		self.monto_3t_modificado = total_monto_modificado_dict['monto_modificado__sum']
+		self.save()
+
+	def Monto3TEjercido(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ejercido_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_ejercido'))
+		self.monto_3t_ejercido = total_monto_ejercido_dict['monto_ejercido__sum']
+		self.save()
+
+	def Monto3TPorEjercer(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_por_ejercer_dict = Mes.objects.filter(partida=partida, mes__gte=7, mes__lte=9).aggregate(Sum('monto_por_ejercer'))
+		self.monto_3t_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
+		self.save()
+
+#Calculos cuarto trimestre
+	def Monto4TAutorizado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_autorizado_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_autorizado'))
+		self.monto_4t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto4TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_autorizado'))
+		self.monto_4t_autorizado = total_monto_autorizado_dict['monto_autorizado__sum']
+		self.save()
+
+	def Monto4TAmpliacion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ampliacion_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_ampliacion'))
+		self.monto_4t_ampliacion = total_monto_ampliacion_dict['monto_ampliacion__sum']
+		self.save()
+
+	def Monto4TReduccion(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_reduccion_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_reduccion'))
+		self.monto_4t_reduccion = total_monto_reduccion_dict['monto_reduccion__sum']
+		self.save()
+
+	def Monto4TModificado(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_modificado_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_modificado'))
+		self.monto_4t_modificado = total_monto_modificado_dict['monto_modificado__sum']
+		self.save()
+
+	def Monto4TEjercido(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_ejercido_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_ejercido'))
+		self.monto_4t_ejercido = total_monto_ejercido_dict['monto_ejercido__sum']
+		self.save()
+
+	def Monto4TPorEjercer(self):
+		partida = Partida.objects.get(pk=self.pk)
+		total_monto_por_ejercer_dict = Mes.objects.filter(partida=partida, mes__gte=10, mes__lte=12).aggregate(Sum('monto_por_ejercer'))
+		self.monto_4t_por_ejercer = total_monto_por_ejercer_dict['monto_por_ejercer__sum']
+		self.save()
 	def __str__(self):
 		return '{} {}'.format(self.codigo, self.descripcion)
 

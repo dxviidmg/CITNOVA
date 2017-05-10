@@ -26,21 +26,13 @@
 </thead>
 <tbody>
 
-{%for m2 in meses2%}
+{%for p in partidas%}
 <tr>
-	<td>{{m2.mes.partida.capitulo}}</td>
-	<td>{{m2.mes.partida}}</td>
-	<td>{{m2.mes.mes}}</td>
-	<td>{{m2.mes.monto_autorizado}}</td>
-	<td>{{m2.mes.monto_ampliacion}}</td>
-	<td>{{m2.mes.monto_reduccion}}</td>
-	<td>{{m2.mes.monto_modificado}}</td>
-	<td>{{m2.mes.monto_ejercido}}</td>
-	<td>{{m2.mes.monto_por_ejercer}}</td>
-	
+{{p}}
 
 </tr>
-{%endfor%}
+
 </tbody>
+{%endfor%}
 </table>
 {%endblock content%}

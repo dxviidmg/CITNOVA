@@ -79,6 +79,7 @@ class ListViewPartidas(View):
 		partidas = Partida.objects.filter(capitulo=capitulo).order_by('codigo')
 		programa = Programa.objects.get(capitulo=capitulo)
 		
+		#Sumatoria anual
 		total_monto_anual_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_autorizado'))
 		total_monto_anual_autorizado = total_monto_anual_autorizado_dict['monto_anual_autorizado__sum']
 		
@@ -97,6 +98,82 @@ class ListViewPartidas(View):
 		total_monto_anual_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_anual_por_ejercer'))
 		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
 
+		#Sumatoria primer trimestre
+		total_monto_1t_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_1t_autorizado'))
+		total_monto_1t_autorizado = total_monto_1t_autorizado_dict['monto_1t_autorizado__sum']
+
+		total_monto_1t_ampliacion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_1t_ampliacion'))
+		total_monto_1t_ampliacion = total_monto_1t_ampliacion_dict['monto_1t_ampliacion__sum']
+
+		total_monto_1t_reduccion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_1t_reduccion'))
+		total_monto_1t_reduccion = total_monto_1t_reduccion_dict['monto_1t_reduccion__sum']
+
+		total_monto_1t_modificado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_1t_modificado'))
+		total_monto_1t_modificado = total_monto_1t_modificado_dict['monto_1t_modificado__sum']
+
+		total_monto_1t_ejercido_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_1t_ejercido'))
+		total_monto_1t_ejercido = total_monto_1t_ejercido_dict['monto_1t_ejercido__sum']
+		
+		total_monto_1t_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_1t_por_ejercer'))
+		total_monto_1t_por_ejercer = total_monto_1t_por_ejercer_dict['monto_1t_por_ejercer__sum']
+
+		#Sumatoria segundo trimestre
+		total_monto_2t_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_2t_autorizado'))
+		total_monto_2t_autorizado = total_monto_2t_autorizado_dict['monto_2t_autorizado__sum']
+
+		total_monto_2t_ampliacion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_2t_ampliacion'))
+		total_monto_2t_ampliacion = total_monto_2t_ampliacion_dict['monto_2t_ampliacion__sum']
+
+		total_monto_2t_reduccion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_2t_reduccion'))
+		total_monto_2t_reduccion = total_monto_2t_reduccion_dict['monto_2t_reduccion__sum']
+
+		total_monto_2t_modificado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_2t_modificado'))
+		total_monto_2t_modificado = total_monto_2t_modificado_dict['monto_2t_modificado__sum']
+
+		total_monto_2t_ejercido_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_2t_ejercido'))
+		total_monto_2t_ejercido = total_monto_2t_ejercido_dict['monto_2t_ejercido__sum']
+		
+		total_monto_2t_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_2t_por_ejercer'))
+		total_monto_2t_por_ejercer = total_monto_2t_por_ejercer_dict['monto_2t_por_ejercer__sum']
+
+		#Sumatoria tercer trimestre
+		total_monto_3t_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_3t_autorizado'))
+		total_monto_3t_autorizado = total_monto_3t_autorizado_dict['monto_3t_autorizado__sum']
+
+		total_monto_3t_ampliacion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_3t_ampliacion'))
+		total_monto_3t_ampliacion = total_monto_3t_ampliacion_dict['monto_3t_ampliacion__sum']
+
+		total_monto_3t_reduccion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_3t_reduccion'))
+		total_monto_3t_reduccion = total_monto_3t_reduccion_dict['monto_3t_reduccion__sum']
+
+		total_monto_3t_modificado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_3t_modificado'))
+		total_monto_3t_modificado = total_monto_3t_modificado_dict['monto_3t_modificado__sum']
+
+		total_monto_3t_ejercido_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_3t_ejercido'))
+		total_monto_3t_ejercido = total_monto_3t_ejercido_dict['monto_3t_ejercido__sum']
+		
+		total_monto_3t_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_3t_por_ejercer'))
+		total_monto_3t_por_ejercer = total_monto_3t_por_ejercer_dict['monto_3t_por_ejercer__sum']
+
+		#Sumatoria segundo trimestre
+		total_monto_4t_autorizado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_4t_autorizado'))
+		total_monto_4t_autorizado = total_monto_4t_autorizado_dict['monto_4t_autorizado__sum']
+
+		total_monto_4t_ampliacion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_4t_ampliacion'))
+		total_monto_4t_ampliacion = total_monto_4t_ampliacion_dict['monto_4t_ampliacion__sum']
+
+		total_monto_4t_reduccion_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_4t_reduccion'))
+		total_monto_4t_reduccion = total_monto_4t_reduccion_dict['monto_4t_reduccion__sum']
+
+		total_monto_4t_modificado_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_4t_modificado'))
+		total_monto_4t_modificado = total_monto_4t_modificado_dict['monto_4t_modificado__sum']
+
+		total_monto_4t_ejercido_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_4t_ejercido'))
+		total_monto_4t_ejercido = total_monto_4t_ejercido_dict['monto_4t_ejercido__sum']
+		
+		total_monto_4t_por_ejercer_dict = Partida.objects.filter(capitulo=capitulo).aggregate(Sum('monto_4t_por_ejercer'))
+		total_monto_4t_por_ejercer = total_monto_4t_por_ejercer_dict['monto_4t_por_ejercer__sum']	
+
 		context = {
 			'capitulo': capitulo,
 			'partidas': partidas,
@@ -107,6 +184,35 @@ class ListViewPartidas(View):
 			'total_monto_anual_modificado': total_monto_anual_modificado,
 			'total_monto_anual_ejercido': total_monto_anual_ejercido,
 			'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
+
+			'total_monto_1t_autorizado': total_monto_1t_autorizado,
+			'total_monto_1t_ampliacion': total_monto_1t_ampliacion,
+			'total_monto_1t_reduccion': total_monto_1t_reduccion,
+			'total_monto_1t_modificado': total_monto_1t_modificado,
+			'total_monto_1t_ejercido': total_monto_1t_ejercido,
+			'total_monto_1t_por_ejercer': total_monto_1t_por_ejercer,
+
+			'total_monto_2t_autorizado': total_monto_2t_autorizado,
+			'total_monto_2t_ampliacion': total_monto_2t_ampliacion,
+			'total_monto_2t_reduccion': total_monto_2t_reduccion,
+			'total_monto_2t_modificado': total_monto_2t_modificado,
+			'total_monto_2t_ejercido': total_monto_2t_ejercido,
+			'total_monto_2t_por_ejercer': total_monto_2t_por_ejercer,
+
+			'total_monto_3t_autorizado': total_monto_3t_autorizado,
+			'total_monto_3t_ampliacion': total_monto_3t_ampliacion,
+			'total_monto_3t_reduccion': total_monto_3t_reduccion,
+			'total_monto_3t_modificado': total_monto_3t_modificado,
+			'total_monto_3t_ejercido': total_monto_3t_ejercido,
+			'total_monto_3t_por_ejercer': total_monto_3t_por_ejercer,
+
+			'total_monto_4t_autorizado': total_monto_4t_autorizado,
+			'total_monto_4t_ampliacion': total_monto_4t_ampliacion,
+			'total_monto_4t_reduccion': total_monto_4t_reduccion,
+			'total_monto_4t_modificado': total_monto_4t_modificado,
+			'total_monto_4t_ejercido': total_monto_4t_ejercido,
+			'total_monto_4t_por_ejercer': total_monto_4t_por_ejercer,
+
 		}
 		return render(request, template_name, context)
 
@@ -562,32 +668,24 @@ class ListViewReporteAcumulado(View):
 		template_name = "presupuesto/listViewReporteAcumulado.html"
 		hoy = datetime.datetime.now()
 		
-		programa=Programa.objects.get(pk=pk)
-		capitulos = Capitulo.objects.filter(programa=programa).order_by('codigo')
-#		partidas = Partida.objects.filter(capitulo=capitulos)
-#		meses = Mes.objects.filter(partida=partidas)
-	#	print(programa)
-	#	print(capitulos)
-	#	print(partidas)
-	#	print(meses)
-
 		mesInicio = request.GET.get("mes_inicio")
 		mesFinal = request.GET.get("mes_final")
 
-		meses2 = []
+		programa=Programa.objects.get(pk=pk)
+
+		capitulos = Capitulo.objects.filter(programa=programa).order_by('codigo')
 		for capitulo in capitulos:
 			partidas = Partida.objects.filter(capitulo=capitulo)
+			
 			for partida in partidas:
-				meses = Mes.objects.filter(partida=partida)
-				for mes in meses:
-					meses2.append({'mes': mes})
+				suma = Mes.objects.filter(partida=partida).aggregate(Sum('monto_autorizado'))
+				print(suma)
 
-		print(meses2)
+
 		context = {
 			'programa': programa,
 			'capitulos': capitulos,
-			'meses2': meses2
-			
+
 
 		}
 		return render(request, template_name, context)	
