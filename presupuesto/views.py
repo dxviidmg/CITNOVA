@@ -27,8 +27,136 @@ class ListViewProgramas(View):
 		else:
 			programas = Programa.objects.filter(año=hoy.year, departamento=user.departamento).order_by('nombre')
 	
+		total_monto_anual_autorizado_dict = programas.aggregate(Sum('monto_anual_autorizado'))
+		total_monto_anual_autorizado = total_monto_anual_autorizado_dict['monto_anual_autorizado__sum']
+
+		total_monto_anual_ampliacion_dict = programas.aggregate(Sum('monto_anual_ampliacion'))
+		total_monto_anual_ampliacion = total_monto_anual_ampliacion_dict['monto_anual_ampliacion__sum']
+	
+		total_monto_anual_reduccion_dict = programas.aggregate(Sum('monto_anual_reduccion'))
+		total_monto_anual_reduccion = total_monto_anual_reduccion_dict['monto_anual_reduccion__sum']
+	
+		total_monto_anual_modificado_dict = programas.aggregate(Sum('monto_anual_modificado'))
+		total_monto_anual_modificado = total_monto_anual_modificado_dict['monto_anual_modificado__sum']
+
+		total_monto_anual_ejercido_dict = programas.aggregate(Sum('monto_anual_ejercido'))
+		total_monto_anual_ejercido = total_monto_anual_ejercido_dict['monto_anual_ejercido__sum']
+
+		total_monto_anual_por_ejercer_dict = programas.aggregate(Sum('monto_anual_por_ejercer'))
+		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
+
+		#Sumatoria del primer trimestre
+		total_monto_1t_autorizado_dict = programas.aggregate(Sum('monto_1t_autorizado'))
+		total_monto_1t_autorizado = total_monto_1t_autorizado_dict['monto_1t_autorizado__sum']
+
+		total_monto_1t_ampliacion_dict = programas.aggregate(Sum('monto_1t_ampliacion'))
+		total_monto_1t_ampliacion = total_monto_1t_ampliacion_dict['monto_1t_ampliacion__sum']
+	
+		total_monto_1t_reduccion_dict = programas.aggregate(Sum('monto_1t_reduccion'))
+		total_monto_1t_reduccion = total_monto_1t_reduccion_dict['monto_1t_reduccion__sum']
+	
+		total_monto_1t_modificado_dict = programas.aggregate(Sum('monto_1t_modificado'))
+		total_monto_1t_modificado = total_monto_1t_modificado_dict['monto_1t_modificado__sum']
+
+		total_monto_1t_ejercido_dict = programas.aggregate(Sum('monto_1t_ejercido'))
+		total_monto_1t_ejercido = total_monto_1t_ejercido_dict['monto_1t_ejercido__sum']
+
+		total_monto_1t_por_ejercer_dict = programas.aggregate(Sum('monto_1t_por_ejercer'))
+		total_monto_1t_por_ejercer = total_monto_1t_por_ejercer_dict['monto_1t_por_ejercer__sum']
+
+		total_monto_2t_autorizado_dict = programas.aggregate(Sum('monto_2t_autorizado'))
+		total_monto_2t_autorizado = total_monto_2t_autorizado_dict['monto_2t_autorizado__sum']
+
+		total_monto_2t_ampliacion_dict = programas.aggregate(Sum('monto_2t_ampliacion'))
+		total_monto_2t_ampliacion = total_monto_2t_ampliacion_dict['monto_2t_ampliacion__sum']
+	
+		total_monto_2t_reduccion_dict = programas.aggregate(Sum('monto_2t_reduccion'))
+		total_monto_2t_reduccion = total_monto_2t_reduccion_dict['monto_2t_reduccion__sum']
+	
+		total_monto_2t_modificado_dict = programas.aggregate(Sum('monto_2t_modificado'))
+		total_monto_2t_modificado = total_monto_2t_modificado_dict['monto_2t_modificado__sum']
+
+		total_monto_2t_ejercido_dict = programas.aggregate(Sum('monto_2t_ejercido'))
+		total_monto_2t_ejercido = total_monto_2t_ejercido_dict['monto_2t_ejercido__sum']
+
+		total_monto_2t_por_ejercer_dict = programas.aggregate(Sum('monto_2t_por_ejercer'))
+		total_monto_2t_por_ejercer = total_monto_2t_por_ejercer_dict['monto_2t_por_ejercer__sum']
+
+		total_monto_3t_autorizado_dict = programas.aggregate(Sum('monto_3t_autorizado'))
+		total_monto_3t_autorizado = total_monto_3t_autorizado_dict['monto_3t_autorizado__sum']
+
+		total_monto_3t_ampliacion_dict = programas.aggregate(Sum('monto_3t_ampliacion'))
+		total_monto_3t_ampliacion = total_monto_3t_ampliacion_dict['monto_3t_ampliacion__sum']
+	
+		total_monto_3t_reduccion_dict = programas.aggregate(Sum('monto_3t_reduccion'))
+		total_monto_3t_reduccion = total_monto_3t_reduccion_dict['monto_3t_reduccion__sum']
+	
+		total_monto_3t_modificado_dict = programas.aggregate(Sum('monto_3t_modificado'))
+		total_monto_3t_modificado = total_monto_3t_modificado_dict['monto_3t_modificado__sum']
+
+		total_monto_3t_ejercido_dict = programas.aggregate(Sum('monto_3t_ejercido'))
+		total_monto_3t_ejercido = total_monto_3t_ejercido_dict['monto_3t_ejercido__sum']
+
+		total_monto_3t_por_ejercer_dict = programas.aggregate(Sum('monto_3t_por_ejercer'))
+		total_monto_3t_por_ejercer = total_monto_3t_por_ejercer_dict['monto_3t_por_ejercer__sum']
+
+		total_monto_4t_autorizado_dict = programas.aggregate(Sum('monto_4t_autorizado'))
+		total_monto_4t_autorizado = total_monto_4t_autorizado_dict['monto_4t_autorizado__sum']
+
+		total_monto_4t_ampliacion_dict = programas.aggregate(Sum('monto_4t_ampliacion'))
+		total_monto_4t_ampliacion = total_monto_4t_ampliacion_dict['monto_4t_ampliacion__sum']
+	
+		total_monto_4t_reduccion_dict = programas.aggregate(Sum('monto_4t_reduccion'))
+		total_monto_4t_reduccion = total_monto_4t_reduccion_dict['monto_4t_reduccion__sum']
+	
+		total_monto_4t_modificado_dict = programas.aggregate(Sum('monto_4t_modificado'))
+		total_monto_4t_modificado = total_monto_4t_modificado_dict['monto_4t_modificado__sum']
+
+		total_monto_4t_ejercido_dict = programas.aggregate(Sum('monto_4t_ejercido'))
+		total_monto_4t_ejercido = total_monto_4t_ejercido_dict['monto_4t_ejercido__sum']
+
+		total_monto_4t_por_ejercer_dict = programas.aggregate(Sum('monto_4t_por_ejercer'))
+		total_monto_4t_por_ejercer = total_monto_4t_por_ejercer_dict['monto_4t_por_ejercer__sum']
+				
 		context = {
 			'programas': programas,
+
+			'total_monto_anual_autorizado': total_monto_anual_autorizado,
+			'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
+			'total_monto_anual_reduccion': total_monto_anual_reduccion,
+			'total_monto_anual_modificado': total_monto_anual_modificado,
+			'total_monto_anual_ejercido': total_monto_anual_ejercido,
+			'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
+
+			'total_monto_1t_autorizado': total_monto_1t_autorizado,
+			'total_monto_1t_ampliacion': total_monto_1t_ampliacion,
+			'total_monto_1t_reduccion': total_monto_1t_reduccion,
+			'total_monto_1t_modificado': total_monto_1t_modificado,
+			'total_monto_1t_ejercido': total_monto_1t_ejercido,
+			'total_monto_1t_por_ejercer': total_monto_1t_por_ejercer,
+
+			'total_monto_2t_autorizado': total_monto_2t_autorizado,
+			'total_monto_2t_ampliacion': total_monto_2t_ampliacion,
+			'total_monto_2t_reduccion': total_monto_2t_reduccion,
+			'total_monto_2t_modificado': total_monto_2t_modificado,
+			'total_monto_2t_ejercido': total_monto_2t_ejercido,
+			'total_monto_2t_por_ejercer': total_monto_2t_por_ejercer,
+
+			'total_monto_3t_autorizado': total_monto_3t_autorizado,
+			'total_monto_3t_ampliacion': total_monto_3t_ampliacion,
+			'total_monto_3t_reduccion': total_monto_3t_reduccion,
+			'total_monto_3t_modificado': total_monto_3t_modificado,
+			'total_monto_3t_ejercido': total_monto_3t_ejercido,
+			'total_monto_3t_por_ejercer': total_monto_3t_por_ejercer,
+
+			'total_monto_4t_autorizado': total_monto_4t_autorizado,
+			'total_monto_4t_ampliacion': total_monto_4t_ampliacion,
+			'total_monto_4t_reduccion': total_monto_4t_reduccion,
+			'total_monto_4t_modificado': total_monto_4t_modificado,
+			'total_monto_4t_ejercido': total_monto_4t_ejercido,
+			'total_monto_4t_por_ejercer': total_monto_4t_por_ejercer,
+
+
 		}
 		return render(request, template_name, context)
 
@@ -58,15 +186,119 @@ class ListViewCapitulos(View):
 		total_monto_anual_por_ejercer_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_anual_por_ejercer'))
 		total_monto_anual_por_ejercer = total_monto_anual_por_ejercer_dict['monto_anual_por_ejercer__sum']
 
+		#Sumatoria del primer trimestre
+		total_monto_1t_autorizado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_1t_autorizado'))
+		total_monto_1t_autorizado = total_monto_1t_autorizado_dict['monto_1t_autorizado__sum']
+
+		total_monto_1t_ampliacion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_1t_ampliacion'))
+		total_monto_1t_ampliacion = total_monto_1t_ampliacion_dict['monto_1t_ampliacion__sum']		
+
+		total_monto_1t_reduccion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_1t_reduccion'))
+		total_monto_1t_reduccion = total_monto_1t_reduccion_dict['monto_1t_reduccion__sum']
+
+		total_monto_1t_modificado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_1t_modificado'))
+		total_monto_1t_modificado = total_monto_1t_modificado_dict['monto_1t_modificado__sum']
+
+		total_monto_1t_ejercido_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_1t_ejercido'))
+		total_monto_1t_ejercido = total_monto_1t_ejercido_dict['monto_1t_ejercido__sum']
+
+		total_monto_1t_por_ejercer_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_1t_por_ejercer'))
+		total_monto_1t_por_ejercer = total_monto_1t_por_ejercer_dict['monto_1t_por_ejercer__sum']
+
+
+		total_monto_2t_autorizado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_2t_autorizado'))
+		total_monto_2t_autorizado = total_monto_2t_autorizado_dict['monto_2t_autorizado__sum']
+
+		total_monto_2t_ampliacion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_2t_ampliacion'))
+		total_monto_2t_ampliacion = total_monto_2t_ampliacion_dict['monto_2t_ampliacion__sum']		
+
+		total_monto_2t_reduccion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_2t_reduccion'))
+		total_monto_2t_reduccion = total_monto_2t_reduccion_dict['monto_2t_reduccion__sum']
+
+		total_monto_2t_modificado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_2t_modificado'))
+		total_monto_2t_modificado = total_monto_2t_modificado_dict['monto_2t_modificado__sum']
+
+		total_monto_2t_ejercido_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_2t_ejercido'))
+		total_monto_2t_ejercido = total_monto_2t_ejercido_dict['monto_2t_ejercido__sum']
+
+		total_monto_2t_por_ejercer_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_2t_por_ejercer'))
+		total_monto_2t_por_ejercer = total_monto_2t_por_ejercer_dict['monto_2t_por_ejercer__sum']
+
+		total_monto_3t_autorizado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_3t_autorizado'))
+		total_monto_3t_autorizado = total_monto_3t_autorizado_dict['monto_3t_autorizado__sum']
+
+		total_monto_3t_ampliacion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_3t_ampliacion'))
+		total_monto_3t_ampliacion = total_monto_3t_ampliacion_dict['monto_3t_ampliacion__sum']		
+
+		total_monto_3t_reduccion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_3t_reduccion'))
+		total_monto_3t_reduccion = total_monto_3t_reduccion_dict['monto_3t_reduccion__sum']
+
+		total_monto_3t_modificado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_3t_modificado'))
+		total_monto_3t_modificado = total_monto_3t_modificado_dict['monto_3t_modificado__sum']
+
+		total_monto_3t_ejercido_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_3t_ejercido'))
+		total_monto_3t_ejercido = total_monto_3t_ejercido_dict['monto_3t_ejercido__sum']
+
+		total_monto_3t_por_ejercer_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_3t_por_ejercer'))
+		total_monto_3t_por_ejercer = total_monto_3t_por_ejercer_dict['monto_3t_por_ejercer__sum']
+
+		total_monto_4t_autorizado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_4t_autorizado'))
+		total_monto_4t_autorizado = total_monto_4t_autorizado_dict['monto_4t_autorizado__sum']
+
+		total_monto_4t_ampliacion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_4t_ampliacion'))
+		total_monto_4t_ampliacion = total_monto_4t_ampliacion_dict['monto_4t_ampliacion__sum']		
+
+		total_monto_4t_reduccion_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_4t_reduccion'))
+		total_monto_4t_reduccion = total_monto_4t_reduccion_dict['monto_4t_reduccion__sum']
+
+		total_monto_4t_modificado_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_4t_modificado'))
+		total_monto_4t_modificado = total_monto_4t_modificado_dict['monto_4t_modificado__sum']
+
+		total_monto_4t_ejercido_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_4t_ejercido'))
+		total_monto_4t_ejercido = total_monto_4t_ejercido_dict['monto_4t_ejercido__sum']
+
+		total_monto_4t_por_ejercer_dict = Capitulo.objects.filter(programa=programa).aggregate(Sum('monto_4t_por_ejercer'))
+		total_monto_4t_por_ejercer = total_monto_4t_por_ejercer_dict['monto_4t_por_ejercer__sum']
+
 		context = {
 			'programa': programa,
 			'capitulos': capitulos,
+
 			'total_monto_anual_autorizado': total_monto_anual_autorizado,
 			'total_monto_anual_ampliacion': total_monto_anual_ampliacion,
 			'total_monto_anual_reduccion': total_monto_anual_reduccion,
 			'total_monto_anual_modificado': total_monto_anual_modificado,
 			'total_monto_anual_ejercido': total_monto_anual_ejercido,
 			'total_monto_anual_por_ejercer': total_monto_anual_por_ejercer,
+	
+			'total_monto_1t_autorizado': total_monto_1t_autorizado,
+			'total_monto_1t_ampliacion': total_monto_1t_ampliacion,
+			'total_monto_1t_reduccion': total_monto_1t_reduccion,
+			'total_monto_1t_modificado': total_monto_1t_modificado,
+			'total_monto_1t_ejercido': total_monto_1t_ejercido,
+			'total_monto_1t_por_ejercer': total_monto_1t_por_ejercer,
+
+			'total_monto_2t_autorizado': total_monto_2t_autorizado,
+			'total_monto_2t_ampliacion': total_monto_2t_ampliacion,
+			'total_monto_2t_reduccion': total_monto_2t_reduccion,
+			'total_monto_2t_modificado': total_monto_2t_modificado,
+			'total_monto_2t_ejercido': total_monto_2t_ejercido,
+			'total_monto_2t_por_ejercer': total_monto_2t_por_ejercer,
+
+			'total_monto_3t_autorizado': total_monto_3t_autorizado,
+			'total_monto_3t_ampliacion': total_monto_3t_ampliacion,
+			'total_monto_3t_reduccion': total_monto_3t_reduccion,
+			'total_monto_3t_modificado': total_monto_3t_modificado,
+			'total_monto_3t_ejercido': total_monto_3t_ejercido,
+			'total_monto_3t_por_ejercer': total_monto_3t_por_ejercer,
+
+			'total_monto_4t_autorizado': total_monto_4t_autorizado,
+			'total_monto_4t_ampliacion': total_monto_4t_ampliacion,
+			'total_monto_4t_reduccion': total_monto_4t_reduccion,
+			'total_monto_4t_modificado': total_monto_4t_modificado,
+			'total_monto_4t_ejercido': total_monto_4t_ejercido,
+			'total_monto_4t_por_ejercer': total_monto_4t_por_ejercer,
+
 		}
 		return render(request, template_name, context)
 
@@ -212,7 +444,6 @@ class ListViewPartidas(View):
 			'total_monto_4t_modificado': total_monto_4t_modificado,
 			'total_monto_4t_ejercido': total_monto_4t_ejercido,
 			'total_monto_4t_por_ejercer': total_monto_4t_por_ejercer,
-
 		}
 		return render(request, template_name, context)
 
