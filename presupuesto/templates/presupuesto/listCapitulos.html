@@ -26,11 +26,19 @@
 		<table class="table table-striped table-bordered">
 			<thead>
 				<th colspan="2">Información</th>
+				
+				{%if request.user.username == "administrador"%}
+
 				<th colspan="6">Montos anuales</th>
 				<th colspan="6">Montos del primer trimestre</th>
 				<th colspan="6">Montos del segundo trimestre</th>
 				<th colspan="6">Montos del tercer trimestre</th>
 				<th colspan="6">Montos del cuarto trimestre</th>
+				{%else%}
+
+				<th>Monto</th>
+
+				{%endif%}
 			</thead>
 			<thead>
 				<th>Código</th>
@@ -67,9 +75,21 @@
 				<th>Reducción</th>
 				<th>Modificado</th>
 				<th>Ejercido</th>
-				<th>Por ejercer</th>
+				
 				{%endif%}
+
+				<th>Por ejercer</th>
+
+				{%if request.user.username == "administrador"%}
+
 				<th colspan="3">Acciones</th>
+
+				{%else%}	
+
+				<th colspan="1">Acciones</th>
+				
+				{%endif%}
+
 			</thead>
 			<tbody>
 
@@ -132,6 +152,9 @@
 							{%endif%}
 						{%endif%}
 					</td>
+
+				{%if request.user.username == "administrador"%}
+
 					<td>{% if capitulo.Monto1TAutorizado is None%}
 							{%if capitulo.monto_1t_autorizado is None%}
 								Por definir
@@ -325,6 +348,9 @@
 							{%endif%}
 						{%endif%}
 					</td>
+
+				{%endif%}
+
 					<td><a href="{%url 'presupuesto:ListViewPartidas' capitulo.pk%}">Ver partidas</a></td>
 
 					{%if request.user.username == "administrador"%}
@@ -346,7 +372,7 @@
 				<tr>
 					<td colspan="2"><p align="right">Total</p></td>
 
-					{%if request.user.username == "administrador"%}
+				{%if request.user.username == "administrador"%}
 
 					<td>{%if total_monto_anual_autorizado is None%}
 						{%else%}
@@ -376,13 +402,13 @@
 
 					{%endif%}
 
-
-
 					<td>{%if total_monto_anual_por_ejercer is None%}
 						{%else%}
 							${{total_monto_anual_por_ejercer|intcomma}}
 						{%endif%}
 					</td>
+
+				{%if request.user.username == "administrador"%}
 
 					<td>{%if total_monto_1t_autorizado is None%}
 						{%else%}
@@ -505,6 +531,9 @@
 							${{total_monto_4t_por_ejercer|intcomma}}
 						{%endif%}
 					</td>
+
+				{%endif%}
+				
 				</tr>
 			</tbody>
 		</table>

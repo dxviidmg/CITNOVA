@@ -9,12 +9,23 @@
 	<div class="table-responsive">
 		<table class="table table-striped table-bordered">
 			<thead>
+				
 				<th colspan="7">Información</th>
+
+				{%if request.user.username == "administrador"%}
+
 				<th colspan="6">Montos anuales</th>
 				<th colspan="6">Montos del primer trimestre</th>
 				<th colspan="6">Montos del segundo trimestre</th>
 				<th colspan="6">Montos del tercer trimestre</th>
 				<th colspan="6">Montos del cuarto trimestre</th>
+
+				{%else%}
+
+				<th colspan="1">Monto</th>
+				
+				{%endif%}
+
 			</thead>
 			<thead class="text-center">
 				<th>Departamento</th>
@@ -56,20 +67,21 @@
 				<th>Reducción</th>
 				<th>Modificado</th>
 				<th>Ejercido</th>
-				<th>Por ejercer</th>
+
 				{%endif%}
-				
-				
-	
+
+				<th>Por ejercer</th>
+
 				{%if request.user.username == "administrador"%}
-	
+
 				<th colspan="3">Acciones</th>
 
-				{%else%}
+				{%else%}	
 
 				<th colspan="1">Acciones</th>
-
+				
 				{%endif%}
+
 			</thead>
 			<tbody>
 		{%for programa in programas%}
@@ -90,7 +102,7 @@
 					</td>
 					<td>{{programa.año}}</td>
 
-					{%if request.user.username == "administrador"%}
+				{%if request.user.username == "administrador"%}
 
 					<td>{%if programa.MontoAnualAutorizado is None%}
 							{%if programa.monto_anual_autorizado is None%}
@@ -137,6 +149,9 @@
 							 ${{programa.monto_anual_por_ejercer|intcomma}}
 							{%endif%}
 						{%endif%}</td>
+
+				{%if request.user.username == "administrador"%}
+
 					<td>{%if programa.Monto1TAutorizado is None%}
 							{%if programa.monto_1t_autorizado is None%}
 							Por definir
@@ -320,6 +335,9 @@
 							 ${{programa.monto_4t_por_ejercer|intcomma}}
 							{%endif%}
 						{%endif%}</td>
+
+				{%endif%}
+
 					<td><a href="{%url 'presupuesto:ListViewCapitulos' programa.pk%}">Ver capítulos</a></td>
 
 					{%if request.user.username == "administrador"%}
@@ -339,7 +357,7 @@
 				<tr>
 					<td colspan="7"><p align="right">Total</p></td>
 
-					{%if request.user.username == "administrador"%}
+				{%if request.user.username == "administrador"%}
 
 					<td>{%if total_monto_anual_autorizado is None%}
 						{%else%}
@@ -367,15 +385,15 @@
 						{%endif%}
 					</td>
 
-					{%endif%}
-
-
+				{%endif%}
 
 					<td>{%if total_monto_anual_por_ejercer is None%}
 						{%else%}
 							${{total_monto_anual_por_ejercer|intcomma}}
 						{%endif%}
 					</td>
+
+				{%if request.user.username == "administrador"%}
 
 					<td>{%if total_monto_1t_autorizado is None%}
 						{%else%}
@@ -498,6 +516,8 @@
 							${{total_monto_4t_por_ejercer|intcomma}}
 						{%endif%}
 					</td>
+
+				{%endif%}
 				</tr>
 			</tbody>
 		</table>	
