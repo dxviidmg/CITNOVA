@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'presupuesto',
     'django.contrib.humanize',
     'bootstrapform',
-    'multiforloop',
 ]
 
 MIDDLEWARE = [

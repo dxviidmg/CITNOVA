@@ -28,6 +28,4 @@ urlpatterns = [
 	url(r'^programas/actualizar/(?P<pk>\d+)/$', views.UpdateViewPrograma.as_view(), name="UpdateViewPrograma"),
 	url(r'^programas/eliminar/(?P<pk>\d+)/$', views.DeleteViewPrograma.as_view(), name="DeleteViewPrograma"),
 	url(r'^programas/$',views.ListViewProgramas.as_view(),name='ListViewProgramas'),
-
-	url(r'^programas/reporte/(?P<pk>\d+)/$', views.ListViewReporteAcumulado.as_view(), name="ListViewReporteAcumulado"),
 ]
