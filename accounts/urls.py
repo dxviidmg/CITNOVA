@@ -35,6 +35,6 @@ urlpatterns = [
 	url(r'^accounts/profile/$',views.profile.as_view(), name='profile'),
 	
 	#url de login y logout
-	url(r'^login', login,name="login"),
+	url(r'^solicitudes/login/$', login,name="login"),
 	url(r'^logout/$', logout, name="logout"),
 ]
