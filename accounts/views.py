@@ -302,10 +302,13 @@ class ListViewDirectores(View):
 
 		directores = []
 		for user in users:
-			perfil = Perfil.objects.get(user=user)
-			if perfil.puesto == "Director":		
-				directores.append({'user': user, 'perfil':Perfil.objects.filter(user=user)})
-		
+			try:
+				perfil = Perfil.objects.get(user=user)
+				if perfil.puesto == "Director":		
+					directores.append({'user': user, 'perfil':Perfil.objects.filter(user=user)})
+			except Exception as e:
+				directores = []
+		print()
 		context = {
 			'directores': directores
 		}
